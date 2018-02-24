@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">DreamPlay</string>
+
+
+    <string name="italicFont">fonts/Raleway-MediumItalic.ttf</string>
+    <string name="semiBoldFont">fonts/Raleway-SemiBold.ttf</string>
+    <string name="defaultFont">fonts/Raleway-Medium.ttf</string>
+
+    <string name="facebook_app_id">348110495688418</string>
+    <string name="fb_login_protocol_scheme">fb348110495688418</string>
+
+    <string name="search_hint">Search&#8230;</string>
+    <string name="hint_prompt">Speak an item name</string>
+    <string name="cd_up_button">Up navigation button</string>
+    <string name="cd_voice_search">Voice search</string>
+    <string name="cd_clear_button">Clear field</string>
+    <string name="cd_suggestion_icon">List item icon</string>
+
+    <string name="html" translatable="false">
+        <![CDATA[
+        <html>
+            <head></head>
+            <body>%1$s</body>
+        </html>"
+        ]]>
+    </string>
+    <string name="terms_condition_str"><![CDATA[T&Cs]]></string>
+</resources>

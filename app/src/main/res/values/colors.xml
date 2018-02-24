@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+
+    <color name="card_background">#ffffff</color>
+    <color name="card_shadow">#10000000</color>
+
+    <color name="search_layover_bg">@color/gray</color>
+    <color name="search_field_bg">@color/white_ish</color>
+
+    <color name="white">#ffffffff</color>
+    <color name="black">#ff000000</color>
+    <color name="gray">#ff888888</color>
+
+    <color name="white_50">#88ffffff</color>
+    <color name="black_50">#88000000</color>
+    <color name="gray_50">#88888888</color>
+
+    <color name="white_ish">#fffefefe</color>
+
+    <color name="bb_inActiveBottomBarItemColor">#747474</color>
+    <color name="bb_darkBackgroundColor">#212121</color>
+    <color name="bb_tabletRightBorderDark">#505050</color>
+
+    <!-- Theme configuration -->
+    <color name="appThemeColor_1">#563794</color> <!--used for bg-->
+    <color name="appThemeColor_Dark_1">#462b7c</color> <!--used for Border OR Others-->
+    <color name="appThemeColor_hover_1">#764ccc</color> <!--used for hover-->
+    <color name="appThemeColor_TXT_1">#FFFFFF</color> <!--used for text color-->
+    <color name="appThemeColor_bg_parent_1">@android:color/transparent
+    </color> <!--used for parent bg color if applies-->
+
+    <color name="appThemeColor_2">#442D7D</color> <!--used for bg-->
+    <color name="appThemeColor_hover_2">#2c1b54</color> <!--used for hover-->
+    <color name="appThemeColor_TXT_2">#FFFFFF</color> <!--used for text color-->
+    <color name="appThemeColor_bg_parent_2">#231b39
+    </color> <!--used for parent bg color if applies-->
+    <!-- Theme configuration End-->
+
+    <!-- EditBox configuration Start-->
+    <color name="editBox_primary">#563794</color> <!--used for EditBox-->
+    <color name="editBox_primary_dark">#462b7c</color> <!--used for EditBox-->
+    <color name="editBox_accent">#563794</color> <!--used for EditBox-->
+    <!-- EditBox configuration End-->
+
+
+    <!--errorView colors-->
+    <color name="error_view_retry_btn_txt_color">#bc4100</color>
+    <color name="error_view_text">#656565</color>
+    <color name="error_view_text_dark">#CC000000</color>
+    <color name="error_view_text_light">#858585</color>
+
+    <color name="error_view_retry_button_background">#30000000</color>
+    <color name="error_view_retry_button_background_stroke">#50000000</color>
+    <!--error view colors finished-->
+
+    <color name="default_indicator_color_selected">#eeeeee</color>
+    <color name="default_indicator_color_unselected">#66eeeeee</color>
+
+
+    <color name="gen_black">#000000</color>
+    <color name="gen_white">#FFFFFF</color>
+    <color name="green_light">#43A047</color>
+    <color name="grey_light">#E0E0E0</color>
+
+</resources>

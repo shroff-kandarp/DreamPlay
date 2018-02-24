@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#171723"
+        android:src="@mipmap/bg_home" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="15dp"
+        android:orientation="horizontal"
+        android:paddingBottom="15dp">
+
+        <com.view.MTextView
+            android:id="@+id/signInTxtView"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/all_btn_height"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="SignIn"
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/txt_size_18" />
+
+        <View
+            android:layout_width="10dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0"
+            android:background="@android:color/transparent" />
+
+        <com.view.MTextView
+            android:id="@+id/signUpTxtView"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/all_btn_height"
+            android:layout_weight="1"
+            android:background="#FFFFFF"
+            android:gravity="center"
+            android:text="Register"
+            android:textColor="#1c1c1c"
+            android:textSize="@dimen/txt_size_18" />
+    </LinearLayout>
+
+</RelativeLayout>
