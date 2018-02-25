@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 
 import com.dreamplay.MainActivity;
-import com.dreamplay.RegisterActivity;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -30,7 +29,6 @@ public class LoginWithFacebook implements FacebookCallback<LoginResult> {
 
     CallbackManager mCallbackManager;
 
-    RegisterActivity registerAct;
 
     GeneralFunctions generalFunc;
 
@@ -39,8 +37,7 @@ public class LoginWithFacebook implements FacebookCallback<LoginResult> {
         this.mContext = mContext;
         this.mCallbackManager = mCallbackManager;
 
-        registerAct = (RegisterActivity) mContext;
-        generalFunc = registerAct.generalFunc;
+        generalFunc = new GeneralFunctions(mContext);
         initializeFacebookLogin();
     }
 

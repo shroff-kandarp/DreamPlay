@@ -2,7 +2,6 @@ package com.dreamplay;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.view.View;
 import android.widget.ImageView;
@@ -17,7 +16,7 @@ import com.view.editBox.MaterialEditText;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class SignInActivity extends AppCompatActivity {
+public class SignInActivity extends BaseActivity {
     public GeneralFunctions generalFunc;
     MTextView titleTxt;
     ImageView backImgView;

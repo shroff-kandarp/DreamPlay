@@ -2,7 +2,6 @@ package com.dreamplay;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.general.files.GeneralFunctions;
@@ -11,7 +10,7 @@ import com.utils.Utils;
 import com.view.CreateRoundedView;
 import com.view.MTextView;
 
-public class AppLoginActivity extends AppCompatActivity {
+public class AppLoginActivity extends BaseActivity {
 
     public GeneralFunctions generalFunc;
     MTextView signInTxtView;

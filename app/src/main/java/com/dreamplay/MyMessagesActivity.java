@@ -1,9 +1,8 @@
 package com.dreamplay;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 
-public class MyMessagesActivity extends AppCompatActivity {
+public class MyMessagesActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

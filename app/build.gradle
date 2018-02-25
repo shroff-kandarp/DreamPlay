@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
 
 android {
     signingConfigs {
@@ -82,8 +83,8 @@ dependencies {
 
     compile 'de.hdodenhof:circleimageview:2.2.0'
     compile 'org.jbundle.util.osgi.wrapped:org.jbundle.util.osgi.wrapped.org.apache.http.client:4.1.2'
-    compile('com.crashlytics.sdk.android:crashlytics:2.7.1@aar') {
-        transitive = true
+    compile('com.crashlytics.sdk.android:crashlytics:2.9.0@aar') {
+        transitive = true;
     }
     compile('com.stepstone.stepper:material-stepper:4.3.1') {
         exclude group: 'com.android.support', module: 'support-v4'

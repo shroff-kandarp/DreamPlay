@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -16,6 +15,7 @@ import com.facebook.CallbackManager;
 import com.general.files.ExecuteWebServerUrl;
 import com.general.files.GeneralFunctions;
 import com.general.files.LoginWithFacebook;
+import com.general.files.LoginWithGoogle;
 import com.general.files.StartActProcess;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
@@ -30,7 +30,7 @@ import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity extends BaseActivity {
     public GeneralFunctions generalFunc;
     MTextView titleTxt;
     ImageView backImgView;
@@ -42,8 +42,11 @@ public class RegisterActivity extends AppCompatActivity {
     MButton btn_type2;
 
     View facebookArea;
+    View googleArea;
     View inviteArea;
     CallbackManager mCallbackManager;
+
+    LoginWithGoogle loginWithGoogle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,11 +68,13 @@ public class RegisterActivity extends AppCompatActivity {
 
         inviteArea = findViewById(R.id.inviteArea);
         facebookArea = findViewById(R.id.facebookArea);
+        googleArea = findViewById(R.id.googleArea);
 
         btn_type2.setId(Utils.generateViewId());
         mCallbackManager = CallbackManager.Factory.create();
 
         backImgView.setOnClickListener(new setOnClickList());
+        googleArea.setOnClickListener(new setOnClickList());
         facebookArea.setOnClickListener(new setOnClickList());
         btn_type2.setOnClickListener(new setOnClickList());
 
@@ -180,7 +185,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == Utils.GOOGLE_SIGN_IN_REQ_CODE) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-//            loginWithGoogle.handleSignInResult(result);
+            loginWithGoogle.handleSignInResult(result);
         }
         mCallbackManager.onActivityResult(requestCode, resultCode, data);
     }
@@ -195,7 +200,8 @@ public class RegisterActivity extends AppCompatActivity {
                 checkData();
             } else if (view.getId() == facebookArea.getId()) {
                 new LoginWithFacebook(getActContext(), mCallbackManager);
-
+            } else if (view.getId() == googleArea.getId()) {
+                loginWithGoogle = new LoginWithGoogle(getActContext());
             }
         }
     }

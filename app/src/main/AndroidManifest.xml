@@ -32,6 +32,9 @@
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="876170062d45f901d55c928d67ee1b8a5fe2d4b9" />
 
         <activity android:name=".LauncherActivity">
             <intent-filter>

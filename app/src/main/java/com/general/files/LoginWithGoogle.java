@@ -1,32 +1,51 @@
 package com.general.files;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 
-//import com.google.android.gms.auth.api.Auth;
-//import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-//import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-//import com.google.android.gms.auth.api.signin.GoogleSignInResult;
-//import com.google.android.gms.common.ConnectionResult;
-//import com.google.android.gms.common.api.GoogleApiClient;
+import com.dreamplay.MainActivity;
+import com.dreamplay.RegisterActivity;
+import com.dreamplay.SignInActivity;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.utils.Utils;
+
+import java.util.HashMap;
 
 /**
  * Created by Shroff on 19-Nov-17.
  */
 
-public class LoginWithGoogle /*implements GoogleApiClient.OnConnectionFailedListener*/ {
+public class LoginWithGoogle implements GoogleApiClient.OnConnectionFailedListener {
     Context mContext;
 
-    /*GoogleApiClient mGoogleApiClient;
-    AppLoginActivity appLoginAct;
+    GoogleApiClient mGoogleApiClient;
 
     GeneralFunctions generalFunc;
+    SignInActivity signInAct;
+    RegisterActivity registerAct;
 
     public LoginWithGoogle(Context mContext) {
         this.mContext = mContext;
-        appLoginAct = (AppLoginActivity) mContext;
-        generalFunc = appLoginAct.generalFunc;
+        generalFunc = new GeneralFunctions(mContext);
+
+        if (mContext instanceof SignInActivity) {
+            signInAct = (SignInActivity) mContext;
+        }
+
+        if (mContext instanceof RegisterActivity) {
+            registerAct = (RegisterActivity) mContext;
+        }
 
         initializeGoogleLogin();
+
     }
 
     public void initializeGoogleLogin() {
@@ -36,13 +55,13 @@ public class LoginWithGoogle /*implements GoogleApiClient.OnConnectionFailedList
                 .requestEmail()
                 .build();
         mGoogleApiClient = new GoogleApiClient.Builder(mContext)
-                .enableAutoManage(appLoginAct, this)
+                .enableAutoManage(signInAct == null ? registerAct : signInAct, this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
 
 
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
-        appLoginAct.startActivityForResult(signInIntent, Utils.GOOGLE_SIGN_IN_REQ_CODE);
+        ((Activity) mContext).startActivityForResult(signInIntent, Utils.GOOGLE_SIGN_IN_REQ_CODE);
     }
 
     public void handleSignInResult(GoogleSignInResult result) {
@@ -60,15 +79,15 @@ public class LoginWithGoogle /*implements GoogleApiClient.OnConnectionFailedList
 
     public void registerUser(String name, String mobile, String countryCode, String countryId, String password, String email, String id) {
         HashMap<String, String> parameters = new HashMap<>();
-        parameters.put("type", "LoginWithSocialAcc");
-        parameters.put("name", name);
-        parameters.put("mobile", mobile);
-        parameters.put("country", countryCode);
-        parameters.put("country_id", countryId);
-        parameters.put("password", password);
-        parameters.put("email", email);
-        parameters.put("AppID", id);
-        parameters.put("loginType", "Facebook");
+        parameters.put("type", "registerUser");
+        parameters.put("vName", name);
+        parameters.put("vMobile", mobile);
+        parameters.put("vCountry", countryCode);
+        parameters.put("iCountryId", countryId);
+        parameters.put("vPassword", password);
+        parameters.put("vEmail", email);
+        parameters.put("vSocialId", id);
+        parameters.put("eRegisterFrom", "Google");
 
         ExecuteWebServerUrl exeWebServer = new ExecuteWebServerUrl(parameters);
         exeWebServer.setLoaderConfig(mContext, true, generalFunc);
@@ -102,5 +121,10 @@ public class LoginWithGoogle /*implements GoogleApiClient.OnConnectionFailedList
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
-    }*/
+        Utils.printLog("GoogleSignIn", "::" + connectionResult.getErrorMessage());
+
+        if (mGoogleApiClient != null) {
+            mGoogleApiClient.disconnect();
+        }
+    }
 }

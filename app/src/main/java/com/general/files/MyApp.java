@@ -6,9 +6,14 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.WindowManager;
 
+import com.crashlytics.android.Crashlytics;
 import com.dreamplay.R;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
+import com.google.firebase.FirebaseApp;
+import com.utils.Utils;
+
+import io.fabric.sdk.android.Fabric;
 
 //import android.support.multidex.MultiDex;
 
@@ -19,8 +24,8 @@ public class MyApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-//        Fabric.with(this, new Crashlytics());
-//        FirebaseApp.initializeApp(this);
+        Fabric.with(this, new Crashlytics());
+        FirebaseApp.initializeApp(this);
         setScreenOrientation();
 //        MultiDex.install(this);
 
@@ -46,6 +51,7 @@ public class MyApp extends Application {
             @Override
             public void onActivityStarted(Activity activity) {
 
+                Utils.printLog("ActivityName", "::" + activity.getClass().getSimpleName());
             }
 
             @Override
