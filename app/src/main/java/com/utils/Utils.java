@@ -56,7 +56,7 @@ public class Utils {
     public static final int ADD_DISCOUNT_REQ_CODE = 135;
     public static final int ADD_OPTION_REQ_CODE = 136;
     private static final AtomicInteger sNextGeneratedId = new AtomicInteger(1);
-    public static int minPasswordLength = 2;
+    public static int minPasswordLength = 4;
     public static String isFirstLaunchFinished = "isFirstLaunchFinished";
     public static String iMemberId_KEY = "iMemberId";
     public static String userLoggedIn_key = "isUserLoggedIn";
