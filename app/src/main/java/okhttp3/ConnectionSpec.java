@@ -42,17 +42,7 @@ import static okhttp3.internal.Util.nonEmptyIntersection;
  */
 public final class ConnectionSpec {
 
-    /**
-     * A backwards-compatible fallback connection for interop with obsolete servers.
-     */
-    public static final ConnectionSpec COMPATIBLE_TLS = new Builder(MODERN_TLS)
-            .tlsVersions(TlsVersion.TLS_1_0)
-            .supportsTlsExtensions(true)
-            .build();
-    /**
-     * Unencrypted, unauthenticated connections for {@code http:} URLs.
-     */
-    public static final ConnectionSpec CLEARTEXT = new Builder(false).build();
+
     // This is nearly equal to the cipher suites supported in Chrome 51, current as of 2016-05-25.
     // All of these suites are available on Android 7.0; earlier releases support a subset of these
     // suites. https://github.com/square/okhttp/issues/1972
@@ -77,6 +67,7 @@ public final class ConnectionSpec {
             CipherSuite.TLS_RSA_WITH_AES_256_CBC_SHA,
             CipherSuite.TLS_RSA_WITH_3DES_EDE_CBC_SHA,
     };
+
     /**
      * A modern TLS connection with extensions like SNI and ALPN available.
      */
@@ -85,6 +76,19 @@ public final class ConnectionSpec {
             .tlsVersions(TlsVersion.TLS_1_3, TlsVersion.TLS_1_2, TlsVersion.TLS_1_1, TlsVersion.TLS_1_0)
             .supportsTlsExtensions(true)
             .build();
+
+    /**
+     * A backwards-compatible fallback connection for interop with obsolete servers.
+     */
+    public static final ConnectionSpec COMPATIBLE_TLS = new Builder(MODERN_TLS)
+            .tlsVersions(TlsVersion.TLS_1_0)
+            .supportsTlsExtensions(true)
+            .build();
+    /**
+     * Unencrypted, unauthenticated connections for {@code http:} URLs.
+     */
+    public static final ConnectionSpec CLEARTEXT = new Builder(false).build();
+
     final boolean tls;
     final boolean supportsTlsExtensions;
     final @Nullable

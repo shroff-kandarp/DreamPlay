@@ -62,6 +62,8 @@ import java.util.TimeZone;
 public class DatePickerDialog extends DialogFragment implements
         OnClickListener, DatePickerController {
 
+    private Calendar mCalendar = Utils.trimToMidnight(Calendar.getInstance(getTimeZone()));
+
     private static final int UNINITIALIZED = -1;
     private static final int MONTH_AND_DAY_VIEW = 0;
     private static final int YEAR_VIEW = 1;
@@ -127,7 +129,6 @@ public class DatePickerDialog extends DialogFragment implements
     private int mCancelColor = -1;
     private Version mVersion;
     private TimeZone mTimezone;
-    private Calendar mCalendar = Utils.trimToMidnight(Calendar.getInstance(getTimeZone()));
     private DefaultDateRangeLimiter mDefaultLimiter = new DefaultDateRangeLimiter();
     private DateRangeLimiter mDateRangeLimiter = mDefaultLimiter;
     private HapticFeedbackController mHapticFeedbackController;
