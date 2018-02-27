@@ -185,8 +185,9 @@ public class GeneralFunctions {
         return false;
     }
 
-    public void storeUserData(String memberId) {
-        storedata(Utils.iMemberId_KEY, memberId);
+    public void storeUserData(String responseString) {
+        storedata(Utils.iMemberId_KEY, getJsonValue("iMemberId",responseString));
+        storedata(Utils.member_data_KEY, responseString);
         storedata(Utils.userLoggedIn_key, "1");
     }
 

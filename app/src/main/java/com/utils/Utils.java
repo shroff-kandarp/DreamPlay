@@ -59,6 +59,7 @@ public class Utils {
     public static int minPasswordLength = 4;
     public static String isFirstLaunchFinished = "isFirstLaunchFinished";
     public static String iMemberId_KEY = "iMemberId";
+    public static String member_data_KEY = "MEMBER_DATA";
     public static String userLoggedIn_key = "isUserLoggedIn";
     public static String device_type = "android";
     public static String action_str = "Action";

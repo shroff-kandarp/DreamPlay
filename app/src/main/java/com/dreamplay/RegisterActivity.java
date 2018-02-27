@@ -33,6 +33,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class RegisterActivity extends BaseActivity {
     public GeneralFunctions generalFunc;
     MTextView titleTxt;
+    MTextView goToSignInTxtView;
     ImageView backImgView;
     CircleImageView hImgView;
     MaterialEditText nameBox;
@@ -56,6 +57,7 @@ public class RegisterActivity extends BaseActivity {
         generalFunc = new GeneralFunctions(getActContext());
 
         titleTxt = (MTextView) findViewById(R.id.titleTxt);
+        goToSignInTxtView = (MTextView) findViewById(R.id.goToSignInTxtView);
         backImgView = (ImageView) findViewById(R.id.backImgView);
         backImgView.setOnClickListener(new setOnClickList());
 
@@ -77,6 +79,7 @@ public class RegisterActivity extends BaseActivity {
         googleArea.setOnClickListener(new setOnClickList());
         facebookArea.setOnClickListener(new setOnClickList());
         btn_type2.setOnClickListener(new setOnClickList());
+        goToSignInTxtView.setOnClickListener(new setOnClickList());
 
         btn_type2.setAlpha((float) 0.85);
 
@@ -194,6 +197,7 @@ public class RegisterActivity extends BaseActivity {
 
         @Override
         public void onClick(View view) {
+            Bundle bn = new Bundle();
             if (view.getId() == backImgView.getId()) {
                 RegisterActivity.super.onBackPressed();
             } else if (view.getId() == btn_type2.getId()) {
@@ -202,6 +206,13 @@ public class RegisterActivity extends BaseActivity {
                 new LoginWithFacebook(getActContext(), mCallbackManager);
             } else if (view.getId() == googleArea.getId()) {
                 loginWithGoogle = new LoginWithGoogle(getActContext());
+            } else if (view.getId() == goToSignInTxtView.getId()) {
+                if (getIntent().getStringExtra("isFromSignIn") != null) {
+                    backImgView.performClick();
+                } else {
+                    bn.putString("isFromRegister", "Yes");
+                    (new StartActProcess(getActContext())).startActWithData(SignInActivity.class, bn);
+                }
             }
         }
     }

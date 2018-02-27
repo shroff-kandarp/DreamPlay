@@ -2,6 +2,10 @@ apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 
 android {
+    configurations {
+        all*.exclude group: 'com.squareup.okhttp', module: 'okhttp'
+        all*.exclude group: 'com.squareup.okhttp3', module: 'okhttp'
+    }
     signingConfigs {
         config {
             keyAlias 'DreamPlay'
