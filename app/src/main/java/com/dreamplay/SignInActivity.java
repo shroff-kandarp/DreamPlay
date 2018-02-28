@@ -84,10 +84,10 @@ public class SignInActivity extends BaseActivity {
     }
 
     public void setData() {
-//        emailBox.setBothText("Email Or Mobile", "Enter your email or mobile no");
-        emailBox.setBothText("Email", "Enter your email");
+        emailBox.setBothText("Email Or Mobile", "Enter your email or mobile no");
+//        emailBox.setBothText("Email", "Enter your email");
         passBox.setBothText("Password", "Enter your password");
-        btn_type2.setText("SignIn");
+        btn_type2.setText("Sign In");
         emailBox.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS | InputType.TYPE_CLASS_TEXT);
 
         passBox.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
@@ -125,7 +125,7 @@ public class SignInActivity extends BaseActivity {
 
     public void checkData() {
         boolean emailEntered = Utils.checkText(emailBox) ?
-                (generalFunc.isEmailValid(Utils.getText(emailBox)) ? true : Utils.setErrorFields(emailBox, "Invalid email"))
+                (generalFunc.isEmailValid(Utils.getText(emailBox)) ? true : (android.text.TextUtils.isDigitsOnly(Utils.getText(emailBox)) ? true : Utils.setErrorFields(emailBox, "Invalid email or mobile")))
                 : Utils.setErrorFields(emailBox, "Required");
 
         boolean passwordEntered = Utils.checkText(passBox) ?

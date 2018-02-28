@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -7,6 +8,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#FFFFFF"
         android:orientation="vertical">
 
         <include
@@ -14,13 +16,78 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="170dp"
+            android:background="#D8D6D9">
+
+            <ImageView
+                android:id="@+id/bannerLoadImgView"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_centerInParent="true"
+                android:background="#D8D6D9"
+                android:src="@mipmap/img_load"
+                android:tint="#FFFFFF" />
+
+            <com.view.anim.loader.AVLoadingIndicatorView
+                android:id="@+id/bannerLoaderView"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:background="@android:color/transparent"
+                android:visibility="visible"
+                app:indicator="BallPulse"
+                app:indicator_color="#FFFFFF" />
+
+            <com.bannerslider.views.BannerSlider
+                android:id="@+id/bannerSlider"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:animateIndicators="true"
+                app:defaultBanner="1"
+                app:defaultIndicators="round_square"
+                app:emptyView="@layout/banner_loading_empty_view"
+                app:indicatorSize="12dp"
+                app:interval="5000"
+                app:loopSlides="true" />
+
+        </RelativeLayout>
+
+        <com.view.MTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="Game Center"
+            android:textColor="@color/appThemeColor_Dark_1"
+            android:textSize="@dimen/txt_size_18"
+            android:background="#f5f4f4"/>
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:background="@color/tab_bg"
+            app:tabBackground="@color/tab_bg"
+            app:tabGravity="fill"
+            app:tabTextColor="#BBBBBB"
+            app:tabSelectedTextColor="@color/appThemeColor_Dark_1"
+            app:tabIndicatorColor="@color/appThemeColor_Dark_1"
+            app:tabMode="fixed" />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </LinearLayout>
+
     <include
         layout="@layout/menu_drawer_design"
         android:layout_width="match_parent"
-        android:layout_marginEnd="80dp"
         android:layout_height="match_parent"
-        android:layout_gravity="start" />
+        android:layout_gravity="start"
+        android:layout_marginEnd="80dp" />
 
 </android.support.v4.widget.DrawerLayout>
 
