@@ -58,27 +58,38 @@ public class BannerSlider extends FrameLayout implements ViewPager.OnPageChangeL
     private boolean setupIsCalled = false;
     private boolean mustWrapContent;
 
+    public AttributeSet attrSet;
+
     public BannerSlider(Context context) {
         super(context);
     }
 
     public BannerSlider(Context context, AttributeSet attrs) {
         super(context, attrs);
-        parseCustomAttributes(attrs);
+
+        attrSet = attrs;
+//        parseCustomAttributes(attrs);
     }
 
     public BannerSlider(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        parseCustomAttributes(attrs);
+        attrSet = attrs;
+//        parseCustomAttributes(attrs);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public BannerSlider(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        parseCustomAttributes(attrs);
+        attrSet = attrs;
+//        parseCustomAttributes(attrs);
     }
 
-    private void parseCustomAttributes(AttributeSet attributeSet) {
+    public void parseCustomAttributes(AttributeSet attributeSet, AppCompatActivity hostActivity) {
+        this.hostActivity = hostActivity;
+
+        if(hostActivity == null){
+            return;
+        }
         if (attributeSet != null) {
             TypedArray typedArray = getContext().obtainStyledAttributes(attributeSet, R.styleable.BannerSlider);
             try {
@@ -115,11 +126,12 @@ public class BannerSlider extends FrameLayout implements ViewPager.OnPageChangeL
             post(new Runnable() {
                 @Override
                 public void run() {
-                    if (getContext() instanceof AppCompatActivity) {
-                        hostActivity = (AppCompatActivity) getContext();
-                    } else {
-                        throw new RuntimeException("Host activity must extend AppCompatActivity");
-                    }
+//                    if (getContext() instanceof AppCompatActivity) {
+//                        hostActivity = (AppCompatActivity) getContext();
+//                    } else {
+////                        throw new RuntimeException("Host activity must extend AppCompatActivity");
+//                        return;
+//                    }
                     boolean mustMakeViewPagerWrapContent = getLayoutParams().height == ViewGroup.LayoutParams.WRAP_CONTENT;
 
                     viewPager = new CustomViewPager(getContext(), mustMakeViewPagerWrapContent);

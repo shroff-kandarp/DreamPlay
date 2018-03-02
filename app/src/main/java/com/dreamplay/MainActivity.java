@@ -54,6 +54,8 @@ public class MainActivity extends BaseActivity implements DrawerMenuRecycleAdapt
     TabLayout tabLayout;
     ViewPager viewPager;
 
+    boolean bannerDataSet = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +82,16 @@ public class MainActivity extends BaseActivity implements DrawerMenuRecycleAdapt
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (bannerDataSet == false) {
+            bannerSlider.parseCustomAttributes(bannerSlider.attrSet, this);
+            bannerDataSet = true;
+        }
+    }
+
     public void setLabels() {
         titleTxt.setText("");
         logoImgView.setVisibility(View.VISIBLE);
@@ -92,11 +104,13 @@ public class MainActivity extends BaseActivity implements DrawerMenuRecycleAdapt
     }
 
     public void setupViewPager() {
-        TabAdapter adapter = new TabAdapter(getSupportFragmentManager());
+        final TabAdapter adapter = new TabAdapter(getSupportFragmentManager());
         adapter.addFrag(new FixturesFragment(), "FIXTURES");
         adapter.addFrag(new LiveFragment(), "Live");
         adapter.addFrag(new ResultsFragment(), "Results");
+
         viewPager.setAdapter(adapter);
+
     }
 
 
@@ -196,6 +210,7 @@ public class MainActivity extends BaseActivity implements DrawerMenuRecycleAdapt
                 }
             }
         });
+
         generateAlert.setContentMessage("Confirm", "Are you sure, you want to logout from this device?");
         generateAlert.setPositiveBtn("YES");
         generateAlert.setNegativeBtn("NO");

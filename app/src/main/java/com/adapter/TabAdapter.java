@@ -11,7 +11,7 @@ import java.util.ArrayList;
  */
 
 public class TabAdapter extends FragmentPagerAdapter {
-    private final ArrayList<Fragment> mFragmentList = new ArrayList<>();
+     public final ArrayList<Fragment> mFragmentList = new ArrayList<>();
     private final ArrayList<String> mFragmentTitleList = new ArrayList<>();
 
     public TabAdapter(FragmentManager manager) {

@@ -1,85 +1,148 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#FFFFFF"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:context=".MainActivity">
 
-        <include
-            layout="@layout/design_toolbar_main"
+        <include layout="@layout/design_toolbar_main" />
+
+        <android.support.design.widget.CoordinatorLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            tools:context=".MainActivity">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="170dp"
-            android:background="#D8D6D9">
+            <android.support.design.widget.AppBarLayout
+                android:id="@+id/app_bar_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fitsSystemWindows="true"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-            <ImageView
-                android:id="@+id/bannerLoadImgView"
-                android:layout_width="75dp"
-                android:layout_height="75dp"
-                android:layout_centerInParent="true"
-                android:background="#D8D6D9"
-                android:src="@mipmap/img_load"
-                android:tint="#FFFFFF" />
 
-            <com.view.anim.loader.AVLoadingIndicatorView
-                android:id="@+id/bannerLoaderView"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:background="@android:color/transparent"
-                android:visibility="visible"
-                app:indicator="BallPulse"
-                app:indicator_color="#FFFFFF" />
+                <android.support.design.widget.CollapsingToolbarLayout
+                    android:id="@+id/collapsing_toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:animateLayoutChanges="true"
+                    android:fitsSystemWindows="true"
+                    app:contentScrim="?attr/colorPrimary"
+                    app:expandedTitleMarginEnd="64dp"
+                    app:expandedTitleMarginStart="48dp"
+                    app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                    tools:context=".MainActivity">
 
-            <com.bannerslider.views.BannerSlider
-                android:id="@+id/bannerSlider"
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="170dp"
+                        android:background="#D8D6D9">
+
+                        <ImageView
+                            android:id="@+id/bannerLoadImgView"
+                            android:layout_width="75dp"
+                            android:layout_height="75dp"
+                            android:layout_centerInParent="true"
+                            android:background="#D8D6D9"
+                            android:src="@mipmap/img_load"
+                            android:tint="#FFFFFF" />
+
+                        <com.view.anim.loader.AVLoadingIndicatorView
+                            android:id="@+id/bannerLoaderView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:layout_alignParentBottom="true"
+                            android:layout_centerHorizontal="true"
+                            android:background="@android:color/transparent"
+                            android:visibility="visible"
+                            app:indicator="BallPulse"
+                            app:indicator_color="#FFFFFF" />
+
+                        <com.bannerslider.views.BannerSlider
+                            android:id="@+id/bannerSlider"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            app:animateIndicators="true"
+                            app:defaultBanner="1"
+                            app:defaultIndicators="round_square"
+                            app:emptyView="@layout/banner_loading_empty_view"
+                            app:indicatorSize="12dp"
+                            app:interval="5000"
+                            app:loopSlides="true"
+                            tools:context=".MainActivity" />
+
+                    </RelativeLayout>
+
+
+                </android.support.design.widget.CollapsingToolbarLayout>
+            </android.support.design.widget.AppBarLayout>
+
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:animateIndicators="true"
-                app:defaultBanner="1"
-                app:defaultIndicators="round_square"
-                app:emptyView="@layout/banner_loading_empty_view"
-                app:indicatorSize="12dp"
-                app:interval="5000"
-                app:loopSlides="true" />
+                android:orientation="vertical"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        </RelativeLayout>
+                <com.view.MTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#f5f4f4"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="Game Center"
+                    android:textAllCaps="true"
+                    android:textColor="@color/appThemeColor_Dark_1"
+                    android:textSize="@dimen/txt_size_18"
+                    android:textStyle="bold" />
 
-        <com.view.MTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="10dp"
-            android:text="Game Center"
-            android:textColor="@color/appThemeColor_Dark_1"
-            android:textSize="@dimen/txt_size_18"
-            android:background="#f5f4f4"/>
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tabLayout"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:background="@color/tab_bg"
-            app:tabBackground="@color/tab_bg"
-            app:tabGravity="fill"
-            app:tabTextColor="#BBBBBB"
-            app:tabSelectedTextColor="@color/appThemeColor_Dark_1"
-            app:tabIndicatorColor="@color/appThemeColor_Dark_1"
-            app:tabMode="fixed" />
+                <android.support.design.widget.TabLayout
+                    android:id="@+id/tabLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:background="@color/tab_bg"
+                    app:tabBackground="@color/tab_bg"
+                    app:tabGravity="fill"
+                    app:tabIndicatorColor="@color/appThemeColor_Dark_1"
+                    app:tabMode="fixed"
+                    app:tabSelectedTextColor="@color/appThemeColor_Dark_1"
+                    app:tabTextColor="#BBBBBB" />
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/viewPager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+
+                <com.view.MTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="2dp"
+                    android:background="@color/appThemeColor_Dark_1"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:text="Select a Match"
+                    android:textAllCaps="true"
+                    android:textColor="@color/appThemeColor_TXT_1"
+                    android:textSize="@dimen/txt_size_18"
+                    android:textStyle="bold" />
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/viewPager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="2dp" />
+            </LinearLayout>
+
+
+        </android.support.design.widget.CoordinatorLayout>
+
+
     </LinearLayout>
 
     <include
