@@ -115,6 +115,7 @@ public class ResultsFragment extends Fragment {
                                 map.put("eTeam2Won", generalFunc.getJsonValue("eTeam2Won", temp_obj));
                                 map.put("vMatchType", generalFunc.getJsonValue("vMatchType", temp_obj));
                                 map.put("dStartDate", generalFunc.getJsonValue("dStartDate", temp_obj));
+                                map.put("matchStartDate", generalFunc.getJsonValue("matchStartDate", temp_obj));
                                 map.put("TYPE", ""+FixturesRecyclerAdapter.TYPE_ITEM);
 
                                 list.add(map);

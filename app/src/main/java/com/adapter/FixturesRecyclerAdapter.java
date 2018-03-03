@@ -34,6 +34,8 @@ public class FixturesRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
     FooterViewHolder footerHolder;
     private OnItemClickListener mItemClickListener;
 
+    long currentTimerValue = 0;
+
     public FixturesRecyclerAdapter(Context mContext, ArrayList<HashMap<String, String>> list, GeneralFunctions generalFunc, boolean isFooterEnabled) {
         this.mContext = mContext;
         this.list = list;
@@ -43,6 +45,10 @@ public class FixturesRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     public void setOnItemClickListener(OnItemClickListener mItemClickListener) {
         this.mItemClickListener = mItemClickListener;
+    }
+
+    public void setCurrentTimerValue(long currentTimerValue) {
+        this.currentTimerValue = currentTimerValue;
     }
 
     @Override
@@ -88,6 +94,7 @@ public class FixturesRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
             viewHolder.infoTxtView.setText(item.get("vMatchType"));
             viewHolder.leftTeamNameTxtView.setText(item.get("vTeam1"));
             viewHolder.rightTeamNameTxtView.setText(item.get("vTeam2"));
+            viewHolder.dateInfoTxtView.setText(item.get("matchStartDate"));
 
             viewHolder.contentArea.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -97,6 +104,21 @@ public class FixturesRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
                     }
                 }
             });
+
+            if (item.get("matchStartDateInMilli") != null && !item.get("matchStartDateInMilli").equals("")) {
+                viewHolder.dateRemainsInfoTxtView.setVisibility(View.VISIBLE);
+                long milliSecRemains = (GeneralFunctions.parseLong(0, item.get("matchStartDateInMilli")) - (currentTimerValue * 1000));
+                long currMilliSecRemains = GeneralFunctions.parseLong(0, item.get("currentTimeInMilli"));
+                milliSecRemains = milliSecRemains - currMilliSecRemains;
+                if (milliSecRemains > 1) {
+                    viewHolder.dateRemainsInfoTxtView.setText(Utils.getDurationBreakdown(milliSecRemains));
+                } else {
+                    viewHolder.dateRemainsInfoTxtView.setText("LIVE");
+                }
+            } else {
+                viewHolder.dateRemainsInfoTxtView.setVisibility(View.VISIBLE);
+            }
+
 
             if ((position + 1) == list.size()) {
                 viewHolder.seperatorView.setVisibility(View.GONE);
@@ -170,6 +192,8 @@ public class FixturesRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
         public MTextView infoTxtView;
         public MTextView leftTeamNameTxtView;
         public MTextView rightTeamNameTxtView;
+        public MTextView dateInfoTxtView;
+        public MTextView dateRemainsInfoTxtView;
         public ImageView leftImgView;
         public ImageView rightImgView;
         public View contentArea;
@@ -181,10 +205,13 @@ public class FixturesRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
             infoTxtView = (MTextView) view.findViewById(R.id.infoTxtView);
             leftTeamNameTxtView = (MTextView) view.findViewById(R.id.leftTeamNameTxtView);
             rightTeamNameTxtView = (MTextView) view.findViewById(R.id.rightTeamNameTxtView);
+            dateInfoTxtView = (MTextView) view.findViewById(R.id.dateInfoTxtView);
+            dateRemainsInfoTxtView = (MTextView) view.findViewById(R.id.dateRemainsInfoTxtView);
             leftImgView = (ImageView) view.findViewById(R.id.leftImgView);
             rightImgView = (ImageView) view.findViewById(R.id.rightImgView);
             seperatorView = view.findViewById(R.id.seperatorView);
             contentArea = view;
+
         }
     }
 

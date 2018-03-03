@@ -16,6 +16,7 @@ import com.dreamplay.MainActivity;
 import com.dreamplay.R;
 import com.general.files.ExecuteWebServerUrl;
 import com.general.files.GeneralFunctions;
+import com.general.files.UpdateFrequentTask;
 import com.utils.Utils;
 import com.view.MTextView;
 
@@ -28,7 +29,7 @@ import java.util.HashMap;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FixturesFragment extends Fragment {
+public class FixturesFragment extends Fragment implements UpdateFrequentTask.OnTaskRunCalled {
 
     View view;
     RecyclerView dataListRecyclerView;
@@ -38,7 +39,10 @@ public class FixturesFragment extends Fragment {
 
     ProgressBar dataLoader;
     FixturesRecyclerAdapter adapter;
+    UpdateFrequentTask updateFrequentTask;
     ArrayList<HashMap<String, String>> list = new ArrayList<>();
+
+    long currentTimerValue = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,13 +53,14 @@ public class FixturesFragment extends Fragment {
         generalFunc = new GeneralFunctions(getActContext());
         dataListRecyclerView = (RecyclerView) view.findViewById(R.id.dataListRecyclerView);
         noDataTxtView = (MTextView) view.findViewById(R.id.noDataTxtView);
-        dataLoader = (ProgressBar)  view.findViewById(R.id.dataLoader);
+        dataLoader = (ProgressBar) view.findViewById(R.id.dataLoader);
 
         adapter = new FixturesRecyclerAdapter(getActContext(), list, generalFunc, false);
         dataListRecyclerView.setLayoutManager(new LinearLayoutManager(getActContext()));
         dataListRecyclerView.setNestedScrollingEnabled(false);
         dataListRecyclerView.setAdapter(adapter);
-
+        updateFrequentTask = new UpdateFrequentTask(1000);
+        updateFrequentTask.setTaskRunListener(this);
         findMatches();
 
         return view;
@@ -70,6 +75,9 @@ public class FixturesFragment extends Fragment {
         noDataTxtView.setVisibility(View.GONE);
         list.clear();
         adapter.notifyDataSetChanged();
+
+        updateFrequentTask.stopRepeatingTask();
+        currentTimerValue = 0;
 
         dataLoader.setVisibility(View.VISIBLE);
 
@@ -111,11 +119,15 @@ public class FixturesFragment extends Fragment {
                                 map.put("eTeam2Won", generalFunc.getJsonValue("eTeam2Won", temp_obj));
                                 map.put("vMatchType", generalFunc.getJsonValue("vMatchType", temp_obj));
                                 map.put("dStartDate", generalFunc.getJsonValue("dStartDate", temp_obj));
-                                map.put("TYPE", ""+FixturesRecyclerAdapter.TYPE_ITEM);
+                                map.put("matchStartDate", generalFunc.getJsonValue("matchStartDate", temp_obj));
+                                map.put("matchStartDateInMilli", generalFunc.getJsonValue("matchStartDateInMilli", temp_obj));
+                                map.put("currentTimeInMilli", generalFunc.getJsonValue("currentTimeInMilli", temp_obj));
+                                map.put("TYPE", "" + FixturesRecyclerAdapter.TYPE_ITEM);
 
                                 list.add(map);
                             }
                             adapter.notifyDataSetChanged();
+                            updateFrequentTask.startRepeatingTask();
                         } else {
                             noDataTxtView.setVisibility(View.VISIBLE);
                         }
@@ -135,4 +147,10 @@ public class FixturesFragment extends Fragment {
         exeWebServer.execute();
     }
 
+    @Override
+    public void onTaskRun() {
+        currentTimerValue = currentTimerValue + 1;
+        adapter.setCurrentTimerValue(currentTimerValue);
+        adapter.notifyDataSetChanged();
+    }
 }

@@ -92,6 +92,18 @@ public class GeneralFunctions {
 
     }
 
+
+    public static long parseLong(long orig, String value) {
+
+        try {
+            long value_int = Long.parseLong(value);
+            return value_int;
+        } catch (Exception e) {
+            return orig;
+        }
+
+    }
+
     public static View getCurrentView(Activity act) {
         View view = act.findViewById(android.R.id.content);
         return view;

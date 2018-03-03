@@ -114,12 +114,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|center_horizontal"
-                android:layout_weight="0"
+                android:layout_marginTop="4dp"
                 android:gravity="bottom|center"
                 android:text="2016-00-00"
-                android:textColor="#ca0404"
-                android:textSize="@dimen/txt_size_14"
-                android:visibility="gone" />
+                android:textColor="#2A2A2A"
+                android:textSize="@dimen/txt_size_14" />
+
+            <com.view.MTextView
+                android:id="@+id/dateRemainsInfoTxtView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginTop="4dp"
+                android:gravity="center"
+                android:text="2016-00-00"
+                android:drawableStart="@mipmap/ic_timer"
+                android:textColor="@color/appThemeColor_1"
+                android:textSize="@dimen/txt_size_16" />
         </LinearLayout>
     </android.support.v7.widget.CardView>
 

@@ -35,7 +35,7 @@ public class UpdateFrequentTask implements Runnable {
     }
 
     public void startRepeatingTask() {
-        isKilled = true;
+        isKilled = false;
         this.run();
     }
 
