@@ -278,10 +278,14 @@ public class Utils {
         StringBuilder sb = new StringBuilder(64);
         if(days > 0){
             sb.append(days);
-            sb.append(" Days ");
+            sb.append(days > 1 ? " Days " : " Day ");
         }
-        sb.append(hours);
-        sb.append("h ");
+
+        if(hours > 0){
+            sb.append(hours);
+            sb.append("h ");
+        }
+
         sb.append(minutes);
         sb.append("m ");
         sb.append(seconds);

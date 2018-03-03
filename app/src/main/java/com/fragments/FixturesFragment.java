@@ -56,6 +56,7 @@ public class FixturesFragment extends Fragment implements UpdateFrequentTask.OnT
         dataLoader = (ProgressBar) view.findViewById(R.id.dataLoader);
 
         adapter = new FixturesRecyclerAdapter(getActContext(), list, generalFunc, false);
+
         dataListRecyclerView.setLayoutManager(new LinearLayoutManager(getActContext()));
         dataListRecyclerView.setNestedScrollingEnabled(false);
         dataListRecyclerView.setAdapter(adapter);

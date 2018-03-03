@@ -55,6 +55,7 @@ public class LiveFragment extends Fragment {
         dataLoader = (ProgressBar)  view.findViewById(R.id.dataLoader);
 
         adapter = new FixturesRecyclerAdapter(getActContext(), list, generalFunc, false);
+        adapter.PAGE_TYPE = "LIVE";
         dataListRecyclerView.setLayoutManager(new LinearLayoutManager(getActContext()));
         dataListRecyclerView.setNestedScrollingEnabled(false);
         dataListRecyclerView.setAdapter(adapter);

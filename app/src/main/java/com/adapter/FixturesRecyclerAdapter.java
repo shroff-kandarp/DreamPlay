@@ -35,6 +35,7 @@ public class FixturesRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
     private OnItemClickListener mItemClickListener;
 
     long currentTimerValue = 0;
+    public String PAGE_TYPE = "";
 
     public FixturesRecyclerAdapter(Context mContext, ArrayList<HashMap<String, String>> list, GeneralFunctions generalFunc, boolean isFooterEnabled) {
         this.mContext = mContext;
@@ -116,6 +117,7 @@ public class FixturesRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
                     viewHolder.dateRemainsInfoTxtView.setText("LIVE");
                 }
             } else {
+                viewHolder.dateRemainsInfoTxtView.setText(PAGE_TYPE.equals("LIVE") ? "In Progress" : "Completed");
                 viewHolder.dateRemainsInfoTxtView.setVisibility(View.VISIBLE);
             }
 
