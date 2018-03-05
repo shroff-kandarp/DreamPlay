@@ -20,6 +20,7 @@ import com.fragments.FixturesFragment;
 import com.fragments.LiveFragment;
 import com.fragments.ResultsFragment;
 import com.general.files.GeneralFunctions;
+import com.general.files.StartActProcess;
 import com.utils.Utils;
 import com.view.GenerateAlertBox;
 import com.view.MTextView;
@@ -190,6 +191,9 @@ public class MainActivity extends BaseActivity implements DrawerMenuRecycleAdapt
         Bundle bn = new Bundle();
         switch (menuDataList.get(position).get("ID")) {
 
+            case MENU_PROFILE:
+                (new StartActProcess(getActContext())).startAct(MyProfileActivity.class);
+                break;
             case MENU_LOGOUT:
                 confirmSignOut();
                 break;
