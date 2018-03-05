@@ -47,7 +47,7 @@ public class BannerSlider extends FrameLayout implements ViewPager.OnPageChangeL
     private boolean mustLoopSlides;
 
     private SlideIndicatorsGroup slideIndicatorsGroup;
-    private int slideShowInterval = 1000;
+    private int slideShowInterval = 4000;
     private Timer timer;
     private int defaultBanner = 0;
     @LayoutRes
@@ -264,18 +264,20 @@ public class BannerSlider extends FrameLayout implements ViewPager.OnPageChangeL
                 if (timer == null) {
                     setupTimer();
                 }
-
                 break;
         }
     }
 
-    private void setupTimer() {
+    public void setupTimer() {
+//        if(hostActivity == null){
+//            return;
+//        }
         if (slideShowInterval > 0) {
             timer = new Timer();
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    ((AppCompatActivity) getContext()).runOnUiThread(new Runnable() {
+                    hostActivity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             if (!mustLoopSlides) {

@@ -99,7 +99,7 @@ public class MainActivity extends BaseActivity implements DrawerMenuRecycleAdapt
 
         if (!generalFunc.getMemberId().equals("")) {
             String member_data = generalFunc.retriveValue(Utils.member_data_KEY);
-            topHTxtView.setText(generalFunc.getJsonValue("vName", member_data));
+            topHTxtView.setText("Hi, " + generalFunc.getJsonValue("vName", member_data));
         }
         setBannerData(null);
     }
@@ -150,13 +150,13 @@ public class MainActivity extends BaseActivity implements DrawerMenuRecycleAdapt
         banners.add(new RemoteBanner("https://static.sticksports.com/images/sc_pt_holder_20130328.jpg"));
 
         bannerSlider.setBanners(banners);
-
         bannerSlider.setOnBannerClickListener(new OnBannerClickListener() {
             @Override
             public void onClick(int position) {
 //                Toast.makeText(MainActivity.this, "Banner with position " + String.valueOf(position) + " clicked!", Toast.LENGTH_SHORT).show();
             }
         });
+        bannerSlider.setupTimer();
     }
 
     public HashMap<String, String> getMenuItem(String name, String imgRes, String itemType, String itemID) {
@@ -191,6 +191,12 @@ public class MainActivity extends BaseActivity implements DrawerMenuRecycleAdapt
         Bundle bn = new Bundle();
         switch (menuDataList.get(position).get("ID")) {
 
+            case MENU_SUPPORT:
+                (new StartActProcess(getActContext())).startAct(SupportActivity.class);
+                break;
+            case MENU_INVITE_FRIENDS:
+                (new StartActProcess(getActContext())).startAct(InviteFriendsActivity.class);
+                break;
             case MENU_PROFILE:
                 (new StartActProcess(getActContext())).startAct(MyProfileActivity.class);
                 break;
