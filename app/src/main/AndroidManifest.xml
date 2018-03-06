@@ -67,7 +67,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".InviteFriendsActivity" />
-        <activity android:name=".SupportActivity"></activity>
+        <activity android:name=".SupportActivity" />
+        <activity android:name=".HelpActivity" />
+        <activity android:name=".QuestionAnswerActivity"></activity>
     </application>
 
 </manifest>

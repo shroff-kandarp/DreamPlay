@@ -191,6 +191,9 @@ public class MainActivity extends BaseActivity implements DrawerMenuRecycleAdapt
         Bundle bn = new Bundle();
         switch (menuDataList.get(position).get("ID")) {
 
+            case MENU_FAQ:
+                (new StartActProcess(getActContext())).startAct(HelpActivity.class);
+                break;
             case MENU_SUPPORT:
                 (new StartActProcess(getActContext())).startAct(SupportActivity.class);
                 break;
