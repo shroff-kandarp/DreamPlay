@@ -2,9 +2,9 @@
     <string name="app_name">DreamPlay</string>
 
 
-    <string name="italicFont">fonts/Raleway-MediumItalic.ttf</string>
-    <string name="semiBoldFont">fonts/Raleway-SemiBold.ttf</string>
-    <string name="defaultFont">fonts/Raleway-Medium.ttf</string>
+    <string name="italicFont">fonts/ConsolasItalic.ttf</string>
+    <string name="semiBoldFont">fonts/ConsolasBold.ttf</string>
+    <string name="defaultFont">fonts/Consolas.ttf</string>
 
     <string name="facebook_app_id">348110495688418</string>
     <string name="fb_login_protocol_scheme">fb348110495688418</string>

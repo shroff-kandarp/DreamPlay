@@ -13,7 +13,7 @@
         android:padding="2dp"
         android:tint="@color/appThemeColor_TXT_1" />
 
-    <TextView
+    <com.view.MTextView
         android:id="@+id/menuTitleTxt"
         android:layout_width="0dp"
         android:layout_height="45dp"

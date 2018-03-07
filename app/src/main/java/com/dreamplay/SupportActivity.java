@@ -74,7 +74,7 @@ public class SupportActivity extends AppCompatActivity {
                     new StartActProcess(getActContext()).startActWithData(StaticPageActivity.class, bn);
                     break;
                 case R.id.contactUsArea:
-//                    new StartActProcess(getActContext()).startAct(ContactUsActivity.class);
+                    new StartActProcess(getActContext()).startAct(ContactUsActivity.class);
                     break;
                 case R.id.termsCondArea:
                     bn.putString("PAGE_ID", "3");
