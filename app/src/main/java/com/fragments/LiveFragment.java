@@ -52,7 +52,7 @@ public class LiveFragment extends Fragment {
         generalFunc = new GeneralFunctions(getActContext());
         dataListRecyclerView = (RecyclerView) view.findViewById(R.id.dataListRecyclerView);
         noDataTxtView = (MTextView) view.findViewById(R.id.noDataTxtView);
-        dataLoader = (ProgressBar)  view.findViewById(R.id.dataLoader);
+        dataLoader = (ProgressBar) view.findViewById(R.id.dataLoader);
 
         adapter = new FixturesRecyclerAdapter(getActContext(), list, generalFunc, false);
         adapter.PAGE_TYPE = "LIVE";
@@ -117,21 +117,26 @@ public class LiveFragment extends Fragment {
                                 map.put("vMatchType", generalFunc.getJsonValue("vMatchType", temp_obj));
                                 map.put("dStartDate", generalFunc.getJsonValue("dStartDate", temp_obj));
                                 map.put("matchStartDate", generalFunc.getJsonValue("matchStartDate", temp_obj));
-                                map.put("TYPE", ""+FixturesRecyclerAdapter.TYPE_ITEM);
+                                map.put("TYPE", "" + FixturesRecyclerAdapter.TYPE_ITEM);
 
                                 list.add(map);
                             }
                             adapter.notifyDataSetChanged();
                         } else {
+                            noDataTxtView.setText("No data available");
                             noDataTxtView.setVisibility(View.VISIBLE);
                         }
                     } else {
+                        noDataTxtView.setText("No data available");
+
                         noDataTxtView.setVisibility(View.VISIBLE);
-                        generalFunc.showGeneralMessage("", generalFunc.getJsonValue(Utils.message_str, responseString));
+//                        generalFunc.showGeneralMessage("", generalFunc.getJsonValue(Utils.message_str, responseString));
                     }
 
                 } else {
-                    generalFunc.showError();
+//                    generalFunc.showError();
+                    noDataTxtView.setText("Please check your internet connection OR try again later.");
+                    noDataTxtView.setVisibility(View.VISIBLE);
                 }
 
 

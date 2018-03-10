@@ -41,7 +41,6 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.dreamplay.R;
 
@@ -283,7 +282,7 @@ public class MaterialTabs extends HorizontalScrollView {
     }
 
     private void addTab(final int position, CharSequence title, View tabView) {
-        TextView textView = (TextView) tabView.findViewById(R.id.mt_tab_title);
+        MTextView textView = (MTextView) tabView.findViewById(R.id.mt_tab_title);
         if (textView != null) {
             if (title != null) {
                 textView.setText(title);
@@ -314,7 +313,7 @@ public class MaterialTabs extends HorizontalScrollView {
         for (int i = 0; i < tabCount; i++) {
             View v = tabsContainer.getChildAt(i);
             v.setPadding(tabPadding, v.getPaddingTop(), tabPadding, v.getPaddingBottom());
-            TextView tab_title = (TextView) v.findViewById(R.id.mt_tab_title);
+            MTextView tab_title = (MTextView) v.findViewById(R.id.mt_tab_title);
 
             if (tab_title != null) {
                 tab_title.setTextSize(TypedValue.COMPLEX_UNIT_PX, tabTextSize);
@@ -432,7 +431,7 @@ public class MaterialTabs extends HorizontalScrollView {
     private void markNotSelected(int position) {
         View tab = tabsContainer.getChildAt(position);
         if (tab != null) {
-            TextView title = (TextView) tab.findViewById(R.id.mt_tab_title);
+            MTextView title = (MTextView) tab.findViewById(R.id.mt_tab_title);
             if (title != null) {
                 if (tabTypefaceUnselected != null) {
                     title.setTypeface(tabTypefaceUnselected);
@@ -454,7 +453,7 @@ public class MaterialTabs extends HorizontalScrollView {
     private void markSelected(int position) {
         View tab = tabsContainer.getChildAt(position);
         if (tab != null) {
-            TextView title = (TextView) tab.findViewById(R.id.mt_tab_title);
+            MTextView title = (MTextView) tab.findViewById(R.id.mt_tab_title);
             if (title != null) {
                 if (tabTypefaceSelected != null) {
                     title.setTypeface(tabTypefaceSelected);

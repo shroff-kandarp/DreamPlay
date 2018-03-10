@@ -16,7 +16,6 @@ import com.dreamplay.MainActivity;
 import com.dreamplay.R;
 import com.general.files.ExecuteWebServerUrl;
 import com.general.files.GeneralFunctions;
-import com.general.files.UpdateFrequentTask;
 import com.utils.Utils;
 import com.view.MTextView;
 
@@ -29,7 +28,7 @@ import java.util.HashMap;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FixturesFragment extends Fragment implements UpdateFrequentTask.OnTaskRunCalled {
+public class FixturesFragment extends Fragment {
 
     View view;
     RecyclerView dataListRecyclerView;
@@ -39,10 +38,8 @@ public class FixturesFragment extends Fragment implements UpdateFrequentTask.OnT
 
     ProgressBar dataLoader;
     FixturesRecyclerAdapter adapter;
-    UpdateFrequentTask updateFrequentTask;
     ArrayList<HashMap<String, String>> list = new ArrayList<>();
 
-    long currentTimerValue = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,8 +57,7 @@ public class FixturesFragment extends Fragment implements UpdateFrequentTask.OnT
         dataListRecyclerView.setLayoutManager(new LinearLayoutManager(getActContext()));
         dataListRecyclerView.setNestedScrollingEnabled(false);
         dataListRecyclerView.setAdapter(adapter);
-        updateFrequentTask = new UpdateFrequentTask(1000);
-        updateFrequentTask.setTaskRunListener(this);
+
         findMatches();
 
         return view;
@@ -77,8 +73,6 @@ public class FixturesFragment extends Fragment implements UpdateFrequentTask.OnT
         list.clear();
         adapter.notifyDataSetChanged();
 
-        updateFrequentTask.stopRepeatingTask();
-        currentTimerValue = 0;
 
         dataLoader.setVisibility(View.VISIBLE);
 
@@ -128,7 +122,6 @@ public class FixturesFragment extends Fragment implements UpdateFrequentTask.OnT
                                 list.add(map);
                             }
                             adapter.notifyDataSetChanged();
-                            updateFrequentTask.startRepeatingTask();
                         } else {
                             noDataTxtView.setVisibility(View.VISIBLE);
                         }
@@ -148,10 +141,4 @@ public class FixturesFragment extends Fragment implements UpdateFrequentTask.OnT
         exeWebServer.execute();
     }
 
-    @Override
-    public void onTaskRun() {
-        currentTimerValue = currentTimerValue + 1;
-        adapter.setCurrentTimerValue(currentTimerValue);
-        adapter.notifyDataSetChanged();
-    }
 }

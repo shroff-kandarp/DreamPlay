@@ -1,6 +1,7 @@
 package com.adapter;
 
 import android.content.Context;
+import android.os.CountDownTimer;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -34,7 +35,6 @@ public class FixturesRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
     FooterViewHolder footerHolder;
     private OnItemClickListener mItemClickListener;
 
-    long currentTimerValue = 0;
     public String PAGE_TYPE = "";
 
     public FixturesRecyclerAdapter(Context mContext, ArrayList<HashMap<String, String>> list, GeneralFunctions generalFunc, boolean isFooterEnabled) {
@@ -46,10 +46,6 @@ public class FixturesRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     public void setOnItemClickListener(OnItemClickListener mItemClickListener) {
         this.mItemClickListener = mItemClickListener;
-    }
-
-    public void setCurrentTimerValue(long currentTimerValue) {
-        this.currentTimerValue = currentTimerValue;
     }
 
     @Override
@@ -77,6 +73,11 @@ public class FixturesRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
         if (holder instanceof ViewHolder) {
             final HashMap<String, String> item = list.get(position);
             final ViewHolder viewHolder = (ViewHolder) holder;
+
+            if (viewHolder.timer != null) {
+                viewHolder.timer.cancel();
+                viewHolder.timer = null;
+            }
 
             if (!item.get("tTeam1Logo").equals("")) {
                 Picasso.with(mContext)
@@ -108,13 +109,25 @@ public class FixturesRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
 
             if (item.get("matchStartDateInMilli") != null && !item.get("matchStartDateInMilli").equals("")) {
                 viewHolder.dateRemainsInfoTxtView.setVisibility(View.VISIBLE);
-                long milliSecRemains = (GeneralFunctions.parseLong(0, item.get("matchStartDateInMilli")) - (currentTimerValue * 1000));
+                long milliSecRemains = (GeneralFunctions.parseLong(0, item.get("matchStartDateInMilli")));
                 long currMilliSecRemains = GeneralFunctions.parseLong(0, item.get("currentTimeInMilli"));
+
                 milliSecRemains = milliSecRemains - currMilliSecRemains;
                 if (milliSecRemains > 1) {
                     viewHolder.dateRemainsInfoTxtView.setText(Utils.getDurationBreakdown(milliSecRemains));
+
+                    viewHolder.timer = new CountDownTimer(milliSecRemains, 1000) {
+                        public void onTick(long millisUntilFinished) {
+                            viewHolder.dateRemainsInfoTxtView.setText(Utils.getDurationBreakdown(millisUntilFinished));
+                        }
+
+                        public void onFinish() {
+                            viewHolder.dateRemainsInfoTxtView.setText("");
+                        }
+                    }.start();
+
                 } else {
-                    viewHolder.dateRemainsInfoTxtView.setText("LIVE");
+                    viewHolder.dateRemainsInfoTxtView.setText(PAGE_TYPE.equals("LIVE") ? "In Progress" : "Completed");
                 }
             } else {
                 viewHolder.dateRemainsInfoTxtView.setText(PAGE_TYPE.equals("LIVE") ? "In Progress" : "Completed");
@@ -200,6 +213,7 @@ public class FixturesRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
         public ImageView rightImgView;
         public View contentArea;
         public View seperatorView;
+        public CountDownTimer timer;
 
         public ViewHolder(View view) {
             super(view);
