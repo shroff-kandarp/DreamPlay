@@ -1,13 +1,11 @@
 package com.dreamplay;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.general.files.ExecuteWebServerUrl;
 import com.general.files.GeneralFunctions;
@@ -18,13 +16,12 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
-public class ContactUsActivity extends BaseActivity {
+public class CreateContestActivity extends AppCompatActivity {
+
     MTextView titleTxt;
     ImageView backImgView;
-    MTextView emailTxtView;
-    MTextView phoneTxtView;
-    MTextView emailTapTxtView;
-    MTextView callTapTxtView;
+
+
     GeneralFunctions generalFunc;
     View containerView;
     ProgressBar loadingBar;
@@ -32,33 +29,28 @@ public class ContactUsActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_contact_us);
+        setContentView(R.layout.activity_create_contest);
 
         generalFunc = new GeneralFunctions(getActContext());
-
         titleTxt = (MTextView) findViewById(R.id.titleTxt);
-        emailTxtView = (MTextView) findViewById(R.id.emailTxtView);
-        phoneTxtView = (MTextView) findViewById(R.id.phoneTxtView);
-        emailTapTxtView = (MTextView) findViewById(R.id.emailTapTxtView);
-        callTapTxtView = (MTextView) findViewById(R.id.callTapTxtView);
         backImgView = (ImageView) findViewById(R.id.backImgView);
+
         containerView = findViewById(R.id.containerView);
         loadingBar = (ProgressBar) findViewById(R.id.loadingBar);
 
-        setLabels();
-
         backImgView.setOnClickListener(new setOnClickList());
-        emailTapTxtView.setOnClickListener(new setOnClickList());
-        callTapTxtView.setOnClickListener(new setOnClickList());
 
-        getUserData();
+        getMemberData();
+
+        setLabels();
     }
 
     public void setLabels() {
-        titleTxt.setText("Contact US");
+        titleTxt.setText("CREATE CONTEST");
     }
 
-    public void getUserData() {
+
+    public void getMemberData() {
         containerView.setVisibility(View.GONE);
         loadingBar.setVisibility(View.VISIBLE);
 
@@ -81,14 +73,6 @@ public class ContactUsActivity extends BaseActivity {
 
                         JSONObject obj_msg = generalFunc.getJsonObject(Utils.message_str, responseString);
 
-                        if (obj_msg != null) {
-                            String ADMIN_EMAIL = generalFunc.getJsonValue("ADMIN_EMAIL", generalFunc.getJsonObject("ConfigurationData", obj_msg.toString()));
-                            String ADMIN_PHONE = generalFunc.getJsonValue("ADMIN_PHONE", generalFunc.getJsonObject("ConfigurationData", obj_msg.toString()));
-
-
-                            phoneTxtView.setText(ADMIN_PHONE);
-                            emailTxtView.setText(ADMIN_EMAIL);
-                        }
 
                         containerView.setVisibility(View.VISIBLE);
 
@@ -104,40 +88,19 @@ public class ContactUsActivity extends BaseActivity {
         exeWebServer.execute();
     }
 
+
     public Context getActContext() {
-        return ContactUsActivity.this;
+        return CreateContestActivity.this;
     }
 
     public class setOnClickList implements View.OnClickListener {
 
         @Override
         public void onClick(View view) {
-            Utils.hideKeyboard(ContactUsActivity.this);
+            Utils.hideKeyboard(CreateContestActivity.this);
             switch (view.getId()) {
                 case R.id.backImgView:
-                    ContactUsActivity.super.onBackPressed();
-                    break;
-                case R.id.callTapTxtView:
-                    try {
-                        Intent intent = new Intent(Intent.ACTION_DIAL);
-                        intent.setData(Uri.parse("tel:" + phoneTxtView.getText().toString()));
-                        startActivity(intent);
-                    } catch (Exception e) {
-
-                    }
-                    break;
-                case R.id.emailTapTxtView:
-                    try {
-                        Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
-                        emailIntent.setData(Uri.parse("mailto:" + emailTxtView.getText().toString()));
-                        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "");
-                        emailIntent.putExtra(Intent.EXTRA_TEXT, "");
-
-                        startActivity(Intent.createChooser(emailIntent, "Send email using..."));
-                    } catch (android.content.ActivityNotFoundException ex) {
-                        Toast.makeText(getActContext(), "No email clients installed.", Toast.LENGTH_SHORT).show();
-                    }
-
+                    CreateContestActivity.super.onBackPressed();
                     break;
 
             }

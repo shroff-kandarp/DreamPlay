@@ -1,6 +1,7 @@
 package com.adapter;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -10,8 +11,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.dreamplay.ContestsActivity;
 import com.dreamplay.R;
 import com.general.files.GeneralFunctions;
+import com.general.files.StartActProcess;
 import com.squareup.picasso.Picasso;
 import com.utils.Utils;
 import com.view.MTextView;
@@ -140,6 +143,16 @@ public class FixturesRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
             } else {
                 viewHolder.seperatorView.setVisibility(View.VISIBLE);
             }
+
+            viewHolder.contentArea.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Bundle bn = new Bundle();
+                    bn.putString("iMatchId", item.get("iMatchId"));
+                    bn.putString("PAGE_TYPE", PAGE_TYPE);
+                    (new StartActProcess(mContext)).startActWithData(ContestsActivity.class, bn);
+                }
+            });
         } else if (holder instanceof HeaderViewHolder) {
             final HashMap<String, String> item = list.get(position);
             HeaderViewHolder headerHolder = (HeaderViewHolder) holder;
