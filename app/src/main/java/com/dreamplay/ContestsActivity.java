@@ -197,7 +197,10 @@ public class ContestsActivity extends AppCompatActivity {
                     ContestsActivity.super.onBackPressed();
                     break;
                 case R.id.createContestArea:
-                    (new StartActProcess(getActContext())).startAct(CreateContestActivity.class);
+                    Bundle bn = new Bundle();
+                    bn.putString("iMatchId", getIntent().getStringExtra("iMatchId"));
+                    bn.putString("PAGE_TYPE", PAGE_TYPE);
+                    (new StartActProcess(getActContext())).startActWithData(CreateContestActivity.class, bn);
                     break;
 
 

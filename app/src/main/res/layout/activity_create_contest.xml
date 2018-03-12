@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -12,14 +13,233 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
-            android:id="@+id/containerView"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#FFFFFF"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-        </LinearLayout>
+            <LinearLayout
+                android:id="@+id/containerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#FFFFFF"
+                android:orientation="vertical">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0"
+                    android:background="@color/appThemeColor_1"
+                    android:orientation="horizontal"
+                    android:padding="10dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/leftImgView"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_weight="0"
+                            android:src="@drawable/no_team_img" />
+
+                        <com.view.MTextView
+                            android:id="@+id/leftTeamNameTxtView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:gravity="center"
+                            android:textColor="@color/appThemeColor_TXT_1"
+                            android:textSize="@dimen/txt_size_16"
+                            app:customTypeFace="@string/semiBoldFont" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <com.view.MTextView
+                            android:id="@+id/infoTxtView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:gravity="center"
+                            android:text="ODD"
+                            android:textColor="@color/appThemeColor_TXT_1"
+                            android:textSize="@dimen/txt_size_18"
+                            app:customTypeFace="@string/semiBoldFont" />
+
+                        <com.view.MTextView
+                            android:layout_width="75dp"
+                            android:layout_height="33dp"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="4dp"
+                            android:gravity="center"
+                            android:text="VS"
+                            android:textColor="@color/appThemeColor_TXT_1"
+                            android:textStyle="bold" />
+
+                        <com.view.MTextView
+                            android:id="@+id/dateRemainsInfoTxtView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom|center_horizontal"
+                            android:layout_marginTop="1dp"
+                            android:drawablePadding="5dp"
+                            android:drawableStart="@mipmap/ic_timer"
+                            android:drawableTint="@color/appThemeColor_TXT_1"
+                            android:gravity="center"
+                            android:text="2016-00-00"
+                            android:textColor="@color/appThemeColor_TXT_1"
+                            android:textSize="@dimen/txt_size_16" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/rightTeamImgView"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_weight="0"
+                            android:src="@drawable/no_team_img" />
+
+                        <com.view.MTextView
+                            android:id="@+id/rightTeamNameTxtView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:gravity="center"
+                            android:textColor="@color/appThemeColor_TXT_1"
+                            android:textSize="@dimen/txt_size_16"
+                            app:customTypeFace="@string/semiBoldFont" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="#FFFFFF"
+                    app:cardBackgroundColor="#FFFFFF"
+                    app:cardElevation="2dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="10dp">
+
+                        <include
+                            android:id="@+id/contestNameBoxBox"
+                            layout="@layout/editbox_form_design"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                        <include
+                            android:id="@+id/totalWinningAmountBox"
+                            layout="@layout/editbox_form_design"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp" />
+
+
+                        <include
+                            android:id="@+id/contestSizeBox"
+                            layout="@layout/editbox_form_design"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp" />
+
+                        <Switch
+                            android:id="@+id/allowFriendsWithMTeamsSwitch"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:text="Allow friends to join with multiple teams" />
+
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="#FFFFFF"
+                    app:cardBackgroundColor="#FFFFFF"
+                    app:cardElevation="2dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="10dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <com.view.MTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="Entry Fee Per Team: "
+                                android:textColor="#272727"
+                                android:textSize="@dimen/txt_size_16" />
+
+                            <com.view.MTextView
+                                android:id="@+id/entryFeeTxtView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="0"
+                                android:textColor="#FF0000"
+                                android:textSize="@dimen/txt_size_16" />
+                        </LinearLayout>
+
+                        <com.view.MTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:gravity="center"
+                            android:text="Entry fee is calculated based on total prize amount and contest size."
+                            android:textColor="#606060"
+                            android:textSize="@dimen/txt_size_12" />
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+                <include
+                    android:id="@+id/btn_type2"
+                    layout="@layout/btn_type_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/all_btn_height"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="25dp"
+                    android:layout_marginStart="25dp" />
+
+            </LinearLayout>
+        </ScrollView>
+
 
         <ProgressBar
             android:id="@+id/loadingBar"

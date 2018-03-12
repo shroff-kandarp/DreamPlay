@@ -56,6 +56,7 @@ public class Utils {
     public static final int SELECT_ATTRIBUTES_REQ_CODE = 134;
     public static final int ADD_DISCOUNT_REQ_CODE = 135;
     public static final int ADD_OPTION_REQ_CODE = 136;
+    public static final int CREATE_TEAM_REQ_CODE = 137;
     private static final AtomicInteger sNextGeneratedId = new AtomicInteger(1);
     public static int minPasswordLength = 4;
     public static String isFirstLaunchFinished = "isFirstLaunchFinished";

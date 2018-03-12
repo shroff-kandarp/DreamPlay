@@ -72,7 +72,8 @@
         <activity android:name=".HelpActivity" />
         <activity android:name=".QuestionAnswerActivity" />
         <activity android:name=".ContestsActivity" />
-        <activity android:name=".CreateContestActivity"></activity>
+        <activity android:name=".CreateContestActivity" />
+        <activity android:name=".CreateTeamActivity"></activity>
     </application>
 
 </manifest>
