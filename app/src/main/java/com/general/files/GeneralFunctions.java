@@ -468,7 +468,7 @@ public class GeneralFunctions {
         ActivityCompat.finishAffinity((Activity) mContext);
     }
 
-    public void showMessage(View view, String message) {
+    public static void showMessage(View view, String message) {
         Snackbar snackbar = Snackbar
                 .make(view, message, Snackbar.LENGTH_LONG);
         snackbar.show();

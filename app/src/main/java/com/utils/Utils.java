@@ -21,6 +21,7 @@ import com.view.editBox.MaterialEditText;
 import org.jsoup.Jsoup;
 
 import java.io.IOException;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
@@ -57,6 +58,7 @@ public class Utils {
     public static final int ADD_DISCOUNT_REQ_CODE = 135;
     public static final int ADD_OPTION_REQ_CODE = 136;
     public static final int CREATE_TEAM_REQ_CODE = 137;
+    public static final int CHOOSE_CAPTAIN_REQ_CODE = 138;
     private static final AtomicInteger sNextGeneratedId = new AtomicInteger(1);
     public static int minPasswordLength = 4;
     public static String isFirstLaunchFinished = "isFirstLaunchFinished";
@@ -293,5 +295,15 @@ public class Utils {
         sb.append("s");
 
         return(sb.toString());
+    }
+
+    public static float randFloat(float min, float max) {
+
+        Random rand = new Random();
+
+        float result = rand.nextFloat() * (max - min) + min;
+
+        return result;
+
     }
 }

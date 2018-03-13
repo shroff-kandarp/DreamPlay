@@ -37,34 +37,30 @@
 
 
         <com.view.MTextView
-            android:id="@+id/pointsTxtView"
-            android:layout_width="80dp"
-            android:layout_height="match_parent"
+            android:id="@+id/captainTxtView"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_weight="0"
             android:gravity="center"
-            android:textSize="@dimen/txt_size_18" />
+            android:text="C"
+            android:textSize="@dimen/txt_size_20"
+            app:customTypeFace="@string/semiBoldFont" />
 
         <com.view.MTextView
-            android:id="@+id/creditsTxtView"
-            android:layout_width="80dp"
-            android:layout_height="match_parent"
+            android:id="@+id/viceCaptainTxtView"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_weight="0"
             android:gravity="center"
-            android:textSize="@dimen/txt_size_18" />
+            android:text="VC"
+            android:textSize="@dimen/txt_size_20"
+            app:customTypeFace="@string/semiBoldFont" />
 
 
     </LinearLayout>
 
-    <View
-        android:id="@+id/selectionView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="4dp"
-        android:alpha="0.54"
-        android:visibility="gone"
-        android:background="@color/appThemeColor_1" />
 </RelativeLayout>

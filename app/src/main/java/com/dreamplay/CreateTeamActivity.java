@@ -13,6 +13,7 @@ import android.widget.ProgressBar;
 import com.adapter.TeamPlayerListAdapter;
 import com.general.files.ExecuteWebServerUrl;
 import com.general.files.GeneralFunctions;
+import com.general.files.StartActProcess;
 import com.squareup.picasso.Picasso;
 import com.utils.Utils;
 import com.view.CreateRoundedView;
@@ -38,6 +39,14 @@ public class CreateTeamActivity extends AppCompatActivity {
     MTextView rightTeamNameTxtView;
     MTextView dateRemainsInfoTxtView;
     MTextView hintPlayRoleTxtView;
+    MTextView batsManCountTxtView;
+    MTextView wicketCountTxtView;
+    MTextView allRounderCountTxtView;
+    MTextView bowlerCountTxtView;
+
+    MTextView nextTxtView;
+    MTextView countTotalPlayersTxtView;
+    public MTextView countTotalCreditsInfoTxtView;
 
     MButton btn_type2;
 
@@ -63,6 +72,9 @@ public class CreateTeamActivity extends AppCompatActivity {
     View otherImgView;
 
     RecyclerView playerListRecyclerView;
+
+    public double totalAvailCredit = 0;
+    public double OrigAvailCredit = 0;
 
     TeamPlayerListAdapter adapter;
 
@@ -102,6 +114,13 @@ public class CreateTeamActivity extends AppCompatActivity {
         dateRemainsInfoTxtView = (MTextView) findViewById(R.id.dateRemainsInfoTxtView);
         leftImgView = (ImageView) findViewById(R.id.leftImgView);
         rightTeamImgView = (ImageView) findViewById(R.id.rightTeamImgView);
+        batsManCountTxtView = (MTextView) findViewById(R.id.batsManCountTxtView);
+        wicketCountTxtView = (MTextView) findViewById(R.id.wicketCountTxtView);
+        allRounderCountTxtView = (MTextView) findViewById(R.id.allRounderCountTxtView);
+        bowlerCountTxtView = (MTextView) findViewById(R.id.bowlerCountTxtView);
+        nextTxtView = (MTextView) findViewById(R.id.nextTxtView);
+        countTotalPlayersTxtView = (MTextView) findViewById(R.id.countTotalPlayersTxtView);
+        countTotalCreditsInfoTxtView = (MTextView) findViewById(R.id.countTotalCreditsInfoTxtView);
 
         containerView = findViewById(R.id.containerView);
         loadingBar = (ProgressBar) findViewById(R.id.loadingBar);
@@ -116,15 +135,15 @@ public class CreateTeamActivity extends AppCompatActivity {
         bowlerArea.setOnClickListener(new setOnClickList());
         otherArea.setOnClickListener(new setOnClickList());
 
-        new CreateRoundedView(Color.parseColor("#FFFFFF"), Utils.dipToPixels(getActContext(), 30), Utils.dipToPixels(getActContext(), 4), getResources().getColor(R.color.appThemeColor_1), wicketKeeperImgView);
-
-        new CreateRoundedView(Color.parseColor("#FFFFFF"), Utils.dipToPixels(getActContext(), 30), Utils.dipToPixels(getActContext(), 4), getResources().getColor(R.color.appThemeColor_1), batsManImgView);
-
-        new CreateRoundedView(Color.parseColor("#FFFFFF"), Utils.dipToPixels(getActContext(), 30), Utils.dipToPixels(getActContext(), 4), getResources().getColor(R.color.appThemeColor_1), allRounderImgView);
-
-        new CreateRoundedView(Color.parseColor("#FFFFFF"), Utils.dipToPixels(getActContext(), 30), Utils.dipToPixels(getActContext(), 4), getResources().getColor(R.color.appThemeColor_1), bowlerImgView);
 
         new CreateRoundedView(Color.parseColor("#FFFFFF"), Utils.dipToPixels(getActContext(), 30), Utils.dipToPixels(getActContext(), 4), getResources().getColor(R.color.appThemeColor_1), otherImgView);
+
+
+        new CreateRoundedView(Color.parseColor("#BBBBBB"), Utils.dipToPixels(getActContext(), 15), Utils.dipToPixels(getActContext(), 0), getResources().getColor(R.color.appThemeColor_1), batsManCountTxtView);
+
+        new CreateRoundedView(Color.parseColor("#BBBBBB"), Utils.dipToPixels(getActContext(), 15), Utils.dipToPixels(getActContext(), 0), getResources().getColor(R.color.appThemeColor_1), wicketCountTxtView);
+        new CreateRoundedView(Color.parseColor("#BBBBBB"), Utils.dipToPixels(getActContext(), 15), Utils.dipToPixels(getActContext(), 0), getResources().getColor(R.color.appThemeColor_1), allRounderCountTxtView);
+        new CreateRoundedView(Color.parseColor("#BBBBBB"), Utils.dipToPixels(getActContext(), 15), Utils.dipToPixels(getActContext(), 0), getResources().getColor(R.color.appThemeColor_1), bowlerCountTxtView);
 
         adapter = new TeamPlayerListAdapter(getActContext(), listWicketKeeperData, generalFunc, false);
 
@@ -133,6 +152,10 @@ public class CreateTeamActivity extends AppCompatActivity {
         getMatchData();
 
         setLabels();
+
+        adapter.countTotalPlayersTxtView = countTotalPlayersTxtView;
+        adapter.countTotalCreditsInfoTxtView = countTotalCreditsInfoTxtView;
+        nextTxtView.setOnClickListener(new setOnClickList());
     }
 
     public void setLabels() {
@@ -168,11 +191,14 @@ public class CreateTeamActivity extends AppCompatActivity {
                         JSONObject obj_msg = generalFunc.getJsonObject(Utils.message_str, responseString);
                         JSONObject obj_matchData = generalFunc.getJsonObject("MatchData", responseString);
                         obj_userData = generalFunc.getJsonObject("MemberData", responseString);
+                        totalAvailCredit = GeneralFunctions.parseDouble(0, generalFunc.getJsonValue("WalletBalance", obj_userData));
+                        OrigAvailCredit = GeneralFunctions.parseDouble(0, generalFunc.getJsonValue("WalletBalance", obj_userData));
 
                         if (obj_matchData != null) {
                             setMatchData(obj_matchData);
                         }
 
+                        countTotalCreditsInfoTxtView.setText("CREDITS LEFT " + totalAvailCredit + "/" + totalAvailCredit);
                         buildPlayerList(generalFunc.getJsonObject("PlayersOfMatch", responseString));
                         wicketKeeperArea.performClick();
                         containerView.setVisibility(View.VISIBLE);
@@ -262,6 +288,8 @@ public class CreateTeamActivity extends AppCompatActivity {
                 mapData.put("ePlayerType", generalFunc.getJsonValue("ePlayerType", obj_temp));
                 mapData.put("vImgName", generalFunc.getJsonValue("vImgName", obj_temp));
                 mapData.put("dAddedDate", generalFunc.getJsonValue("dAddedDate", obj_temp));
+                mapData.put("POINTS", "" + ((int) Utils.randFloat(1, 200)));
+                mapData.put("CREDITS", "" + String.format("%.2f", Utils.randFloat(1, 10)));
                 mapData.put("TYPE", "" + adapter.TYPE_ITEM);
 
                 listBowlerData.add(mapData);
@@ -285,6 +313,8 @@ public class CreateTeamActivity extends AppCompatActivity {
                 mapData.put("ePlayerType", generalFunc.getJsonValue("ePlayerType", obj_temp));
                 mapData.put("vImgName", generalFunc.getJsonValue("vImgName", obj_temp));
                 mapData.put("dAddedDate", generalFunc.getJsonValue("dAddedDate", obj_temp));
+                mapData.put("POINTS", "" + ((int) Utils.randFloat(1, 200)));
+                mapData.put("CREDITS", "" + String.format("%.2f", Utils.randFloat(1, 10)));
                 mapData.put("TYPE", "" + adapter.TYPE_ITEM);
 
                 listBastManData.add(mapData);
@@ -308,6 +338,8 @@ public class CreateTeamActivity extends AppCompatActivity {
                 mapData.put("ePlayerType", generalFunc.getJsonValue("ePlayerType", obj_temp));
                 mapData.put("vImgName", generalFunc.getJsonValue("vImgName", obj_temp));
                 mapData.put("dAddedDate", generalFunc.getJsonValue("dAddedDate", obj_temp));
+                mapData.put("POINTS", "" + ((int) Utils.randFloat(1, 200)));
+                mapData.put("CREDITS", "" + String.format("%.2f", Utils.randFloat(1, 10)));
                 mapData.put("TYPE", "" + adapter.TYPE_ITEM);
 
                 listWicketKeeperData.add(mapData);
@@ -330,6 +362,8 @@ public class CreateTeamActivity extends AppCompatActivity {
                 mapData.put("ePlayerType", generalFunc.getJsonValue("ePlayerType", obj_temp));
                 mapData.put("vImgName", generalFunc.getJsonValue("vImgName", obj_temp));
                 mapData.put("dAddedDate", generalFunc.getJsonValue("dAddedDate", obj_temp));
+                mapData.put("POINTS", "" + ((int) Utils.randFloat(1, 200)));
+                mapData.put("CREDITS", "" + String.format("%.2f", Utils.randFloat(1, 10)));
                 mapData.put("TYPE", "" + adapter.TYPE_ITEM);
 
                 listOtherData.add(mapData);
@@ -352,6 +386,8 @@ public class CreateTeamActivity extends AppCompatActivity {
                 mapData.put("ePlayerType", generalFunc.getJsonValue("ePlayerType", obj_temp));
                 mapData.put("vImgName", generalFunc.getJsonValue("vImgName", obj_temp));
                 mapData.put("dAddedDate", generalFunc.getJsonValue("dAddedDate", obj_temp));
+                mapData.put("POINTS", "" + ((int) Utils.randFloat(1, 200)));
+                mapData.put("CREDITS", "" + String.format("%.2f", Utils.randFloat(1, 10)));
                 mapData.put("TYPE", "" + adapter.TYPE_ITEM);
 
                 listAllRounderData.add(mapData);
@@ -373,22 +409,64 @@ public class CreateTeamActivity extends AppCompatActivity {
                 CreateTeamActivity.super.onBackPressed();
             } else if (i == btn_type2.getId()) {
                 checkData();
+            } else if (i == nextTxtView.getId()) {
+                checkData();
             } else if (i == wicketKeeperArea.getId()) {
                 hintPlayRoleTxtView.setText("Pick 1 Wicket-Keeper");
+                adapter.totalSizeForSelection = 1;
+                adapter.countSelectionTxtView = wicketCountTxtView;
+
+                adapter.totalSelectedPlayers = 0;
+                for (int j = 0; j < listWicketKeeperData.size(); j++) {
+                    if (adapter.chosenPlayersList.contains(listWicketKeeperData.get(j).get("iPlayerId"))) {
+                        adapter.totalSelectedPlayers = adapter.totalSelectedPlayers + 1;
+                    }
+                }
+
                 adapter.setDataList(listWicketKeeperData);
                 adapter.notifyDataSetChanged();
+                setSelectedType("Wicket");
             } else if (i == batsManArea.getId()) {
                 hintPlayRoleTxtView.setText("Pick 5 BatsMan");
+                adapter.totalSizeForSelection = 5;
+                adapter.countSelectionTxtView = batsManCountTxtView;
+                adapter.totalSelectedPlayers = 0;
+                for (int j = 0; j < listBastManData.size(); j++) {
+                    if (adapter.chosenPlayersList.contains(listBastManData.get(j).get("iPlayerId"))) {
+                        adapter.totalSelectedPlayers = adapter.totalSelectedPlayers + 1;
+                    }
+                }
+
                 adapter.setDataList(listBastManData);
                 adapter.notifyDataSetChanged();
+                setSelectedType("Batsman");
             } else if (i == allRounderArea.getId()) {
                 hintPlayRoleTxtView.setText("Pick 2 AllRounder");
+                adapter.totalSizeForSelection = 2;
+                adapter.countSelectionTxtView = allRounderCountTxtView;
+                adapter.totalSelectedPlayers = 0;
+                for (int j = 0; j < listAllRounderData.size(); j++) {
+                    if (adapter.chosenPlayersList.contains(listAllRounderData.get(j).get("iPlayerId"))) {
+                        adapter.totalSelectedPlayers = adapter.totalSelectedPlayers + 1;
+                    }
+                }
+
                 adapter.setDataList(listAllRounderData);
                 adapter.notifyDataSetChanged();
+                setSelectedType("AllRounder");
             } else if (i == bowlerArea.getId()) {
                 hintPlayRoleTxtView.setText("Pick 3 Bowlers");
+                adapter.totalSizeForSelection = 3;
+                adapter.countSelectionTxtView = bowlerCountTxtView;
+                adapter.totalSelectedPlayers = 0;
+                for (int j = 0; j < listBowlerData.size(); j++) {
+                    if (adapter.chosenPlayersList.contains(listBowlerData.get(j).get("iPlayerId"))) {
+                        adapter.totalSelectedPlayers = adapter.totalSelectedPlayers + 1;
+                    }
+                }
                 adapter.setDataList(listBowlerData);
                 adapter.notifyDataSetChanged();
+                setSelectedType("Bowler");
             } else if (i == otherArea.getId()) {
                 hintPlayRoleTxtView.setText("");
                 adapter.setDataList(listOtherData);
@@ -397,7 +475,73 @@ public class CreateTeamActivity extends AppCompatActivity {
         }
     }
 
+    public void setSelectedType(String eType) {
+        if (eType.equalsIgnoreCase("Wicket")) {
+
+            new CreateRoundedView(Color.parseColor("#FFFFFF"), Utils.dipToPixels(getActContext(), 30), Utils.dipToPixels(getActContext(), 4), getResources().getColor(R.color.appThemeColor_1), wicketKeeperImgView);
+
+
+            new CreateRoundedView(Color.parseColor("#FFFFFF"), Utils.dipToPixels(getActContext(), 30), Utils.dipToPixels(getActContext(), 0), getResources().getColor(R.color.appThemeColor_1), batsManImgView);
+
+            new CreateRoundedView(Color.parseColor("#FFFFFF"), Utils.dipToPixels(getActContext(), 30), Utils.dipToPixels(getActContext(), 0), getResources().getColor(R.color.appThemeColor_1), allRounderImgView);
+
+            new CreateRoundedView(Color.parseColor("#FFFFFF"), Utils.dipToPixels(getActContext(), 30), Utils.dipToPixels(getActContext(), 0), getResources().getColor(R.color.appThemeColor_1), bowlerImgView);
+        }
+
+        if (eType.equalsIgnoreCase("Batsman")) {
+
+            new CreateRoundedView(Color.parseColor("#FFFFFF"), Utils.dipToPixels(getActContext(), 30), Utils.dipToPixels(getActContext(), 0), getResources().getColor(R.color.appThemeColor_1), wicketKeeperImgView);
+
+
+            new CreateRoundedView(Color.parseColor("#FFFFFF"), Utils.dipToPixels(getActContext(), 30), Utils.dipToPixels(getActContext(), 4), getResources().getColor(R.color.appThemeColor_1), batsManImgView);
+
+            new CreateRoundedView(Color.parseColor("#FFFFFF"), Utils.dipToPixels(getActContext(), 30), Utils.dipToPixels(getActContext(), 0), getResources().getColor(R.color.appThemeColor_1), allRounderImgView);
+
+            new CreateRoundedView(Color.parseColor("#FFFFFF"), Utils.dipToPixels(getActContext(), 30), Utils.dipToPixels(getActContext(), 0), getResources().getColor(R.color.appThemeColor_1), bowlerImgView);
+        }
+
+
+        if (eType.equalsIgnoreCase("AllRounder")) {
+
+            new CreateRoundedView(Color.parseColor("#FFFFFF"), Utils.dipToPixels(getActContext(), 30), Utils.dipToPixels(getActContext(), 0), getResources().getColor(R.color.appThemeColor_1), wicketKeeperImgView);
+
+
+            new CreateRoundedView(Color.parseColor("#FFFFFF"), Utils.dipToPixels(getActContext(), 30), Utils.dipToPixels(getActContext(), 0), getResources().getColor(R.color.appThemeColor_1), batsManImgView);
+
+            new CreateRoundedView(Color.parseColor("#FFFFFF"), Utils.dipToPixels(getActContext(), 30), Utils.dipToPixels(getActContext(), 4), getResources().getColor(R.color.appThemeColor_1), allRounderImgView);
+
+            new CreateRoundedView(Color.parseColor("#FFFFFF"), Utils.dipToPixels(getActContext(), 30), Utils.dipToPixels(getActContext(), 0), getResources().getColor(R.color.appThemeColor_1), bowlerImgView);
+        }
+
+
+        if (eType.equalsIgnoreCase("Bowler")) {
+
+            new CreateRoundedView(Color.parseColor("#FFFFFF"), Utils.dipToPixels(getActContext(), 30), Utils.dipToPixels(getActContext(), 0), getResources().getColor(R.color.appThemeColor_1), wicketKeeperImgView);
+
+
+            new CreateRoundedView(Color.parseColor("#FFFFFF"), Utils.dipToPixels(getActContext(), 30), Utils.dipToPixels(getActContext(), 0), getResources().getColor(R.color.appThemeColor_1), batsManImgView);
+
+            new CreateRoundedView(Color.parseColor("#FFFFFF"), Utils.dipToPixels(getActContext(), 30), Utils.dipToPixels(getActContext(), 0), getResources().getColor(R.color.appThemeColor_1), allRounderImgView);
+
+            new CreateRoundedView(Color.parseColor("#FFFFFF"), Utils.dipToPixels(getActContext(), 30), Utils.dipToPixels(getActContext(), 4), getResources().getColor(R.color.appThemeColor_1), bowlerImgView);
+        }
+    }
+
     public void checkData() {
+
+        if (adapter.chosenPlayersList.size() < 11) {
+            generalFunc.showGeneralMessage("", "Please choose players.");
+            return;
+        }
+
+        if (totalAvailCredit == 0 || totalAvailCredit < 0) {
+            generalFunc.showGeneralMessage("", "You don't have much credits to continue. Please choose another players");
+            return;
+        }
+        Bundle bn = new Bundle();
+        bn.putString("iMatchId", getIntent().getStringExtra("iMatchId"));
+        bn.putString("PAGE_TYPE", PAGE_TYPE);
+        (new StartActProcess(getActContext())).startActForResult(ChooseCaptainActivity.class, bn, Utils.CHOOSE_CAPTAIN_REQ_CODE);
 
     }
 }

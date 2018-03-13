@@ -1,6 +1,5 @@
 package com.adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
@@ -10,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.dreamplay.CreateTeamActivity;
 import com.dreamplay.R;
 import com.general.files.GeneralFunctions;
 import com.squareup.picasso.Picasso;
@@ -23,10 +21,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * Created by Shroff on 12-Mar-18.
+ * Created by Shroff on 13-Mar-18.
  */
 
-public class TeamPlayerListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class TeamPListForCaptainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public static final int TYPE_HEADER = 1;
     public static final int TYPE_ITEM = 2;
     public static final int TYPE_FOOTER = 3;
@@ -38,21 +36,14 @@ public class TeamPlayerListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     FooterViewHolder footerHolder;
     private OnItemClickListener mItemClickListener;
 
-    public ArrayList<String> chosenPlayersList = new ArrayList<>();
-    public int totalSelectedPlayers = 0;
-    public int totalSizeForSelection = 0;
+    String selectedCaptainId = "";
+    String selectedViceCaptainId = "";
 
-    public MTextView countSelectionTxtView;
-    public MTextView countTotalPlayersTxtView;
-    public MTextView countTotalCreditsInfoTxtView;
-    CreateTeamActivity createTeamAct;
-
-    public TeamPlayerListAdapter(Context mContext, ArrayList<HashMap<String, String>> list, GeneralFunctions generalFunc, boolean isFooterEnabled) {
+    public TeamPListForCaptainAdapter(Context mContext, ArrayList<HashMap<String, String>> list, GeneralFunctions generalFunc, boolean isFooterEnabled) {
         this.mContext = mContext;
         this.list = list;
         this.generalFunc = generalFunc;
         this.isFooterEnabled = isFooterEnabled;
-        createTeamAct = (CreateTeamActivity) mContext;
     }
 
     public void setOnItemClickListener(OnItemClickListener mItemClickListener) {
@@ -75,7 +66,7 @@ public class TeamPlayerListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_manu_header_design, parent, false);
             return new HeaderViewHolder(v);
         } else {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_design_team_player_list, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_design_team_plist_captain, parent, false);
             return new ViewHolder(view);
         }
 
@@ -93,8 +84,6 @@ public class TeamPlayerListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
             viewHolder.playerNameTxtView.setText(Html.fromHtml(item.get("vPlayerName")));
 
-            viewHolder.pointsTxtView.setText(item.get("POINTS"));
-            viewHolder.creditsTxtView.setText(item.get("CREDITS"));
             if (!item.get("vImgName").equals("")) {
                 Picasso.with(mContext)
                         .load(item.get("vImgName"))
@@ -102,51 +91,56 @@ public class TeamPlayerListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                         .into(viewHolder.playerImgView, null);
             }
 
-            if (chosenPlayersList.contains(item.get("iPlayerId"))) {
-                viewHolder.selectionView.setVisibility(View.VISIBLE);
+            if (selectedCaptainId.equalsIgnoreCase(item.get("iPlayerId"))) {
+
+                new CreateRoundedView(Color.parseColor("#FDE7BD"), Utils.dipToPixels(mContext, 27), Utils.dipToPixels(mContext, 2), Color.parseColor("#FDE7BD"), viewHolder.captainTxtView);
             } else {
-                viewHolder.selectionView.setVisibility(View.GONE);
+
+                new CreateRoundedView(Color.parseColor("#FFFFFF"), Utils.dipToPixels(mContext, 27), Utils.dipToPixels(mContext, 2), Color.parseColor("#D4D4D4"), viewHolder.captainTxtView);
             }
+            if (selectedViceCaptainId.equalsIgnoreCase(item.get("iPlayerId"))) {
+                viewHolder.viceCaptainTxtView.setTextColor(mContext.getResources().getColor(R.color.appThemeColor_TXT_1));
+                new CreateRoundedView(mContext.getResources().getColor(R.color.appThemeColor_1), Utils.dipToPixels(mContext, 27), Utils.dipToPixels(mContext, 2), mContext.getResources().getColor(R.color.appThemeColor_1), viewHolder.viceCaptainTxtView);
+            } else {
+                viewHolder.viceCaptainTxtView.setTextColor(Color.parseColor("#272727"));
+
+                new CreateRoundedView(Color.parseColor("#FFFFFF"), Utils.dipToPixels(mContext, 27), Utils.dipToPixels(mContext, 2), Color.parseColor("#D4D4D4"), viewHolder.viceCaptainTxtView);
+            }
+
+            viewHolder.viceCaptainTxtView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (selectedViceCaptainId.equalsIgnoreCase(item.get("iPlayerId"))) {
+                        selectedViceCaptainId = "";
+                    } else if(selectedCaptainId.equals("")){
+                        selectedViceCaptainId = item.get("iPlayerId");
+                    } else if(!selectedCaptainId.equals("") && !selectedCaptainId.equalsIgnoreCase(item.get("iPlayerId"))){
+                        selectedViceCaptainId = item.get("iPlayerId");
+                    }
+                    notifyDataSetChanged();
+                }
+            });
+            viewHolder.captainTxtView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    if (selectedCaptainId.equalsIgnoreCase(item.get("iPlayerId"))) {
+                        selectedCaptainId = "";
+                    } else if(selectedViceCaptainId.equals("")){
+                        selectedCaptainId = item.get("iPlayerId");
+                    } else if(!selectedViceCaptainId.equals("") && !selectedViceCaptainId.equalsIgnoreCase(item.get("iPlayerId"))){
+                        selectedCaptainId = item.get("iPlayerId");
+                    }
+
+                    notifyDataSetChanged();
+                }
+            });
 
             viewHolder.contentArea.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
-                    if (chosenPlayersList.contains(item.get("iPlayerId"))) {
-                        chosenPlayersList.remove(item.get("iPlayerId"));
-                        totalSelectedPlayers = totalSelectedPlayers - 1;
-                        viewHolder.selectionView.setVisibility(View.GONE);
-                        createTeamAct.totalAvailCredit = createTeamAct.totalAvailCredit + GeneralFunctions.parseDouble(0.0, viewHolder.creditsTxtView.getText().toString());
-                    } else {
-                        if (totalSizeForSelection > totalSelectedPlayers) {
-                            chosenPlayersList.add(item.get("iPlayerId"));
-                            totalSelectedPlayers = totalSelectedPlayers + 1;
-                            viewHolder.selectionView.setVisibility(View.VISIBLE);
-                            createTeamAct.totalAvailCredit = createTeamAct.totalAvailCredit - GeneralFunctions.parseDouble(0.0, viewHolder.creditsTxtView.getText().toString());
-                        } else {
-                            if (totalSizeForSelection > 1) {
 
-                                GeneralFunctions.showMessage(GeneralFunctions.getCurrentView((Activity) mContext), "More then " + totalSizeForSelection + " players selection are not allowed for this category.");
-                            } else {
-
-                                GeneralFunctions.showMessage(GeneralFunctions.getCurrentView((Activity) mContext), "More then " + totalSizeForSelection + " player selection is not allowed for this category.");
-                            }
-                        }
-                    }
-                    if (countSelectionTxtView != null) {
-                        countSelectionTxtView.setText("" + totalSelectedPlayers);
-                        if (totalSizeForSelection == totalSelectedPlayers) {
-                            new CreateRoundedView(Color.parseColor("#32CD32"), Utils.dipToPixels(mContext, 15), Utils.dipToPixels(mContext, 0), mContext.getResources().getColor(R.color.appThemeColor_1), countSelectionTxtView);
-//                            countSelectionTxtView.setBackgroundColor(Color.parseColor("#32CD32"));
-                        } else {
-                            new CreateRoundedView(Color.parseColor("#BBBBBB"), Utils.dipToPixels(mContext, 15), Utils.dipToPixels(mContext, 0), mContext.getResources().getColor(R.color.appThemeColor_1), countSelectionTxtView);
-
-//                            countSelectionTxtView.setBackgroundColor(Color.parseColor("#BBBBBB"));
-                        }
-                    }
-
-                    countTotalPlayersTxtView.setText("PLAYERS " + chosenPlayersList.size() + "/11");
-                    createTeamAct.countTotalCreditsInfoTxtView.setText("CREDITS LEFT " + String.format("%2f", createTeamAct.totalAvailCredit) + "/" + createTeamAct.OrigAvailCredit);
                     if (mItemClickListener != null) {
                         mItemClickListener.onItemClickList(view, position);
                     }
@@ -155,7 +149,7 @@ public class TeamPlayerListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         } else if (holder instanceof HeaderViewHolder) {
             final HashMap<String, String> item = list.get(position);
             HeaderViewHolder headerHolder = (HeaderViewHolder) holder;
-            headerHolder.headerTxtView.setText(Html.fromHtml(item.get("name")));
+            headerHolder.headerTxtView.setText(Html.fromHtml(item.get("vName")));
 //            Utils.printLog("CCN","::"+item.get("name"));
         } else {
             FooterViewHolder footerHolder = (FooterViewHolder) holder;
@@ -217,20 +211,18 @@ public class TeamPlayerListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         public MTextView playerNameTxtView;
-        public MTextView pointsTxtView;
-        public MTextView creditsTxtView;
+        public MTextView captainTxtView;
+        public MTextView viceCaptainTxtView;
         public SelectableRoundedImageView playerImgView;
         public View contentArea;
-        public View selectionView;
 
         public ViewHolder(View view) {
             super(view);
 
             playerNameTxtView = (MTextView) view.findViewById(R.id.playerNameTxtView);
-            pointsTxtView = (MTextView) view.findViewById(R.id.pointsTxtView);
-            creditsTxtView = (MTextView) view.findViewById(R.id.creditsTxtView);
+            captainTxtView = (MTextView) view.findViewById(R.id.captainTxtView);
+            viceCaptainTxtView = (MTextView) view.findViewById(R.id.viceCaptainTxtView);
             playerImgView = (SelectableRoundedImageView) view.findViewById(R.id.playerImgView);
-            selectionView = view.findViewById(R.id.selectionView);
             contentArea = view;
         }
     }

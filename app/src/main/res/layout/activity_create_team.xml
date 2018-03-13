@@ -11,7 +11,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
         <LinearLayout
             android:id="@+id/containerView"
@@ -146,8 +147,8 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
                             android:layout_gravity="center"
+                            android:gravity="center"
                             android:orientation="horizontal">
 
                             <RelativeLayout
@@ -162,6 +163,32 @@
                                     android:layout_alignParentRight="true"
                                     android:layout_alignParentTop="true"
                                     android:src="@mipmap/wicket_keeper" />
+
+                                <com.view.MTextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/wicketKeeperImgView"
+                                    android:layout_centerHorizontal="true"
+                                    android:paddingLeft="20dp"
+                                    android:text="WK"
+                                    android:textColor="@color/appThemeColor_1"
+
+                                    android:textSize="@dimen/txt_size_18" />
+
+                                <com.view.MTextView
+                                    android:id="@+id/wicketCountTxtView"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:layout_alignParentBottom="true"
+                                    android:layout_alignParentLeft="true"
+                                    android:layout_marginBottom="10dp"
+                                    android:layout_marginLeft="10dp"
+                                    android:background="#BBBBBB"
+                                    android:gravity="center"
+                                    android:text="0"
+                                    android:textColor="#FFFFFF"
+                                    android:textSize="@dimen/txt_size_18"
+                                    app:customTypeFace="@string/semiBoldFont" />
                             </RelativeLayout>
 
                             <RelativeLayout
@@ -176,6 +203,32 @@
                                     android:layout_alignParentRight="true"
                                     android:layout_alignParentTop="true"
                                     android:src="@mipmap/ic_batsman" />
+
+                                <com.view.MTextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/batsManImgView"
+                                    android:layout_centerHorizontal="true"
+                                    android:paddingLeft="20dp"
+                                    android:text="BAT"
+                                    android:textColor="@color/appThemeColor_1"
+
+                                    android:textSize="@dimen/txt_size_18" />
+
+                                <com.view.MTextView
+                                    android:id="@+id/batsManCountTxtView"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:layout_alignParentBottom="true"
+                                    android:layout_alignParentLeft="true"
+                                    android:layout_marginBottom="10dp"
+                                    android:layout_marginLeft="10dp"
+                                    android:background="#BBBBBB"
+                                    android:gravity="center"
+                                    android:text="0"
+                                    android:textColor="#FFFFFF"
+                                    android:textSize="@dimen/txt_size_18"
+                                    app:customTypeFace="@string/semiBoldFont" />
                             </RelativeLayout>
 
                             <RelativeLayout
@@ -190,6 +243,32 @@
                                     android:layout_alignParentRight="true"
                                     android:layout_alignParentTop="true"
                                     android:src="@mipmap/ic_all_rounder" />
+
+                                <com.view.MTextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/allRounderImgView"
+                                    android:layout_centerHorizontal="true"
+                                    android:paddingLeft="20dp"
+                                    android:text="AR"
+                                    android:textColor="@color/appThemeColor_1"
+
+                                    android:textSize="@dimen/txt_size_18" />
+
+                                <com.view.MTextView
+                                    android:id="@+id/allRounderCountTxtView"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:layout_alignParentBottom="true"
+                                    android:layout_alignParentLeft="true"
+                                    android:layout_marginBottom="10dp"
+                                    android:layout_marginLeft="10dp"
+                                    android:background="#BBBBBB"
+                                    android:gravity="center"
+                                    android:text="0"
+                                    android:textColor="#FFFFFF"
+                                    android:textSize="@dimen/txt_size_18"
+                                    app:customTypeFace="@string/semiBoldFont" />
                             </RelativeLayout>
 
                             <RelativeLayout
@@ -204,6 +283,32 @@
                                     android:layout_alignParentRight="true"
                                     android:layout_alignParentTop="true"
                                     android:src="@mipmap/ic_bowler" />
+
+
+                                <com.view.MTextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/bowlerImgView"
+                                    android:layout_centerHorizontal="true"
+                                    android:paddingLeft="25dp"
+                                    android:text="BOWL"
+                                    android:textColor="@color/appThemeColor_1"
+                                    android:textSize="@dimen/txt_size_18" />
+
+                                <com.view.MTextView
+                                    android:id="@+id/bowlerCountTxtView"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:layout_alignParentBottom="true"
+                                    android:layout_alignParentLeft="true"
+                                    android:layout_marginBottom="10dp"
+                                    android:layout_marginLeft="10dp"
+                                    android:background="#BBBBBB"
+                                    android:gravity="center"
+                                    android:text="0"
+                                    android:textColor="#FFFFFF"
+                                    android:textSize="@dimen/txt_size_18"
+                                    app:customTypeFace="@string/semiBoldFont" />
                             </RelativeLayout>
 
                             <RelativeLayout
@@ -235,6 +340,69 @@
                         android:textColor="#5C5C5C"
                         android:textSize="@dimen/txt_size_16" />
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="5dp"
+                        android:background="#EEF5FD"
+                        android:orientation="horizontal"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp">
+
+                        <com.view.MTextView
+                            android:id="@+id/pInfoTxtView"
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:layout_weight="0"
+                            android:gravity="start"
+                            android:text="INFO"
+                            android:textColor="#4C5D8B"
+                            android:textSize="@dimen/txt_size_16" />
+
+
+                        <com.view.MTextView
+                            android:id="@+id/pHTxtView"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="PLAYER"
+                            android:textColor="#4C5D8B"
+                            android:textSize="@dimen/txt_size_16" />
+
+
+                        <com.view.MTextView
+                            android:id="@+id/pPointsTxtView"
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:layout_weight="0"
+                            android:gravity="center"
+                            android:text="POINTS"
+                            android:textColor="#4C5D8B"
+                            android:textSize="@dimen/txt_size_16" />
+
+
+                        <com.view.MTextView
+                            android:id="@+id/pCreditsTxtView"
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:layout_weight="0"
+                            android:gravity="center"
+                            android:text="CREDITS"
+                            android:textColor="#4C5D8B"
+                            android:textSize="@dimen/txt_size_16" />
+                    </LinearLayout>
+
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/playerListRecyclerView"
                         android:layout_width="match_parent"
@@ -253,7 +421,8 @@
                 android:layout_marginEnd="25dp"
                 android:layout_marginStart="25dp"
                 android:layout_marginTop="15dp"
-                android:layout_weight="0" />
+                android:layout_weight="0"
+                android:visibility="gone" />
         </LinearLayout>
 
         <ProgressBar
@@ -271,4 +440,50 @@
             android:visibility="gone" />
 
     </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:background="@color/appThemeColor_hover_1"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <com.view.MTextView
+                android:id="@+id/countTotalPlayersTxtView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="PLAYERS 0/11"
+                android:textColor="@color/appThemeColor_TXT_1"
+                android:textSize="@dimen/txt_size_16" />
+
+            <com.view.MTextView
+                android:id="@+id/countTotalCreditsInfoTxtView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="CREDITS LEFT 100/100"
+                android:textColor="@color/appThemeColor_TXT_1"
+                android:textSize="@dimen/txt_size_16" />
+        </LinearLayout>
+
+        <com.view.MTextView
+            android:id="@+id/nextTxtView"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_weight="0"
+            android:gravity="bottom"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="NEXT"
+            android:textColor="@color/appThemeColor_TXT_1"
+            android:textSize="@dimen/txt_size_18" />
+
+    </LinearLayout>
 </LinearLayout>
