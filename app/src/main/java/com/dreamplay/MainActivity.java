@@ -46,7 +46,7 @@ public class MainActivity extends BaseActivity implements DrawerMenuRecycleAdapt
     DrawerMenuRecycleAdapter drawerAdapter;
     RecyclerView menuRecyclerView;
 
-//    BannerSlider bannerSlider;
+    //    BannerSlider bannerSlider;
     TabLayout tabLayout;
     ViewPager viewPager;
 
@@ -186,6 +186,9 @@ public class MainActivity extends BaseActivity implements DrawerMenuRecycleAdapt
         Bundle bn = new Bundle();
         switch (menuDataList.get(position).get("ID")) {
 
+            case MENU_POINTS_SYS:
+                (new StartActProcess(getActContext())).startAct(FantasyPointsActivity.class);
+                break;
             case MENU_FAQ:
                 (new StartActProcess(getActContext())).startAct(HelpActivity.class);
                 break;

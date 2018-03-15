@@ -66,5 +66,6 @@
     <color name="green_light">#43A047</color>
     <color name="grey_light">#E0E0E0</color>
     <color name="tab_bg">#fcfcfc</color>
+    <color name="tab_bg1">#F2F0F5</color>
 
 </resources>
