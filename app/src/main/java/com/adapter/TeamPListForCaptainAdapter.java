@@ -140,7 +140,6 @@ public class TeamPListForCaptainAdapter extends RecyclerView.Adapter<RecyclerVie
                 @Override
                 public void onClick(View view) {
 
-
                     if (mItemClickListener != null) {
                         mItemClickListener.onItemClickList(view, position);
                     }

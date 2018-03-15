@@ -75,6 +75,8 @@ public class LoginWithFacebook implements FacebookCallback<LoginResult> {
 
                         } else {
 
+                            Utils.printLog("FaceBookData",":::"+me.toString());
+
                             String email_str = generalFunc.getJsonValue("email", me.toString());
                             String name_str = generalFunc.getJsonValue("name", me.toString());
                             String first_name_str = generalFunc.getJsonValue("first_name", me.toString());

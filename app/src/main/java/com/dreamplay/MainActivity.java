@@ -12,10 +12,6 @@ import android.widget.ImageView;
 
 import com.adapter.DrawerMenuRecycleAdapter;
 import com.adapter.TabAdapter;
-import com.bannerslider.banners.Banner;
-import com.bannerslider.banners.RemoteBanner;
-import com.bannerslider.events.OnBannerClickListener;
-import com.bannerslider.views.BannerSlider;
 import com.fragments.FixturesFragment;
 import com.fragments.LiveFragment;
 import com.fragments.ResultsFragment;
@@ -27,7 +23,6 @@ import com.view.MTextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class MainActivity extends BaseActivity implements DrawerMenuRecycleAdapter.OnItemClickListener {
 
@@ -51,7 +46,7 @@ public class MainActivity extends BaseActivity implements DrawerMenuRecycleAdapt
     DrawerMenuRecycleAdapter drawerAdapter;
     RecyclerView menuRecyclerView;
 
-    BannerSlider bannerSlider;
+//    BannerSlider bannerSlider;
     TabLayout tabLayout;
     ViewPager viewPager;
 
@@ -64,7 +59,7 @@ public class MainActivity extends BaseActivity implements DrawerMenuRecycleAdapt
 
         generalFunc = new GeneralFunctions(getActContext());
 
-        bannerSlider = (BannerSlider) findViewById(R.id.bannerSlider);
+//        bannerSlider = (BannerSlider) findViewById(R.id.bannerSlider);
         menuImgView = (ImageView) findViewById(R.id.menuImgView);
         logoImgView = (ImageView) findViewById(R.id.logoImgView);
         titleTxt = (MTextView) findViewById(R.id.titleTxt);
@@ -87,10 +82,10 @@ public class MainActivity extends BaseActivity implements DrawerMenuRecycleAdapt
     protected void onResume() {
         super.onResume();
 
-        if (bannerDataSet == false) {
-            bannerSlider.parseCustomAttributes(bannerSlider.attrSet, this);
-            bannerDataSet = true;
-        }
+//        if (bannerDataSet == false) {
+//            bannerSlider.parseCustomAttributes(bannerSlider.attrSet, this);
+//            bannerDataSet = true;
+//        }
     }
 
     public void setLabels() {
@@ -101,7 +96,7 @@ public class MainActivity extends BaseActivity implements DrawerMenuRecycleAdapt
             String member_data = generalFunc.retriveValue(Utils.member_data_KEY);
             topHTxtView.setText("Hi, " + generalFunc.getJsonValue("vName", member_data));
         }
-        setBannerData(null);
+
     }
 
     public void setupViewPager() {
@@ -140,24 +135,24 @@ public class MainActivity extends BaseActivity implements DrawerMenuRecycleAdapt
 
     }
 
-    public void setBannerData(List<Banner> banners1) {
-
-        List<Banner> banners = new ArrayList<>();
-
-        banners.add(new RemoteBanner("https://media2.mensxp.com/media/section/2015/Feb/cricket13663_1424161361.jpg"));
-        banners.add(new RemoteBanner("https://cache.pakistantoday.com.pk/Boxing-Day-test-MCG-security-beefed-up-ahead-of-Mondays-match.jpg"));
-        banners.add(new RemoteBanner("https://images.sftcdn.net/images/t_optimized,f_auto/p/15de3de8-a4f9-11e6-8486-00163ed833e7/1716164724/world-cricket-championship-2-screenshot.png"));
-        banners.add(new RemoteBanner("https://static.sticksports.com/images/sc_pt_holder_20130328.jpg"));
-
-        bannerSlider.setBanners(banners);
-        bannerSlider.setOnBannerClickListener(new OnBannerClickListener() {
-            @Override
-            public void onClick(int position) {
-//                Toast.makeText(MainActivity.this, "Banner with position " + String.valueOf(position) + " clicked!", Toast.LENGTH_SHORT).show();
-            }
-        });
-        bannerSlider.setupTimer();
-    }
+//    public void setBannerData(List<Banner> banners1) {
+//
+//        List<Banner> banners = new ArrayList<>();
+//
+//        banners.add(new RemoteBanner("https://media2.mensxp.com/media/section/2015/Feb/cricket13663_1424161361.jpg"));
+//        banners.add(new RemoteBanner("https://cache.pakistantoday.com.pk/Boxing-Day-test-MCG-security-beefed-up-ahead-of-Mondays-match.jpg"));
+//        banners.add(new RemoteBanner("https://images.sftcdn.net/images/t_optimized,f_auto/p/15de3de8-a4f9-11e6-8486-00163ed833e7/1716164724/world-cricket-championship-2-screenshot.png"));
+//        banners.add(new RemoteBanner("https://static.sticksports.com/images/sc_pt_holder_20130328.jpg"));
+//
+//        bannerSlider.setBanners(banners);
+//        bannerSlider.setOnBannerClickListener(new OnBannerClickListener() {
+//            @Override
+//            public void onClick(int position) {
+////                Toast.makeText(MainActivity.this, "Banner with position " + String.valueOf(position) + " clicked!", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//        bannerSlider.setupTimer();
+//    }
 
     public HashMap<String, String> getMenuItem(String name, String imgRes, String itemType, String itemID) {
         HashMap<String, String> data = new HashMap<>();
@@ -193,6 +188,11 @@ public class MainActivity extends BaseActivity implements DrawerMenuRecycleAdapt
 
             case MENU_FAQ:
                 (new StartActProcess(getActContext())).startAct(HelpActivity.class);
+                break;
+            case MENU_HOW_PLAY:
+                bn.putString("iFaqcategoryId", "2");
+                bn.putString("vTitle", "How to Play");
+                new StartActProcess(getActContext()).startActWithData(QuestionAnswerActivity.class, bn);
                 break;
             case MENU_SUPPORT:
                 (new StartActProcess(getActContext())).startAct(SupportActivity.class);

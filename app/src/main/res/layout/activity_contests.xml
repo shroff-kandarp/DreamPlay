@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <include
@@ -45,13 +45,13 @@
 
                     <com.view.MTextView
                         android:id="@+id/leftTeamNameTxtView"
-                        app:customTypeFace="@string/semiBoldFont"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:gravity="center"
                         android:textColor="@color/appThemeColor_TXT_1"
-                        android:textSize="@dimen/txt_size_16" />
+                        android:textSize="@dimen/txt_size_16"
+                        app:customTypeFace="@string/semiBoldFont" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -66,14 +66,14 @@
 
                     <com.view.MTextView
                         android:id="@+id/infoTxtView"
-                        app:customTypeFace="@string/semiBoldFont"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:gravity="center"
                         android:text="ODD"
                         android:textColor="@color/appThemeColor_TXT_1"
-                        android:textSize="@dimen/txt_size_18" />
+                        android:textSize="@dimen/txt_size_18"
+                        app:customTypeFace="@string/semiBoldFont" />
 
                     <com.view.MTextView
                         android:layout_width="75dp"
@@ -117,13 +117,13 @@
 
                     <com.view.MTextView
                         android:id="@+id/rightTeamNameTxtView"
-                        app:customTypeFace="@string/semiBoldFont"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:gravity="center"
                         android:textColor="@color/appThemeColor_TXT_1"
-                        android:textSize="@dimen/txt_size_16" />
+                        android:textSize="@dimen/txt_size_16"
+                        app:customTypeFace="@string/semiBoldFont" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -135,27 +135,28 @@
                 android:background="#FFFFFF">
 
                 <android.support.v7.widget.CardView
-                    app:cardBackgroundColor="#F5F5F5"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
                     android:layout_marginLeft="-5dp"
-                    android:layout_marginRight="-5dp">
+                    android:layout_marginRight="-5dp"
+                    app:cardBackgroundColor="#F5F5F5">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="#FFFFFF"
                         android:orientation="vertical"
-                        android:padding="10dp">
+                        android:padding="10dp"
+                        android:visibility="gone">
 
                         <com.view.MTextView
-                            app:customTypeFace="@string/semiBoldFont"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Play With Friends"
                             android:textAllCaps="true"
-                            android:textColor="#272727" />
+                            android:textColor="#272727"
+                            app:customTypeFace="@string/semiBoldFont" />
 
                         <LinearLayout
                             android:id="@+id/gotInviteContestArea"
