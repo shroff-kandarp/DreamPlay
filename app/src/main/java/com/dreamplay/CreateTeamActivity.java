@@ -1,11 +1,13 @@
 package com.dreamplay;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -17,6 +19,7 @@ import com.general.files.StartActProcess;
 import com.squareup.picasso.Picasso;
 import com.utils.Utils;
 import com.view.CreateRoundedView;
+import com.view.GenerateAlertBox;
 import com.view.MButton;
 import com.view.MTextView;
 import com.view.MaterialRippleLayout;
@@ -83,6 +86,7 @@ public class CreateTeamActivity extends AppCompatActivity {
     ArrayList<HashMap<String, String>> listBowlerData = new ArrayList<>();
     ArrayList<HashMap<String, String>> listAllRounderData = new ArrayList<>();
     ArrayList<HashMap<String, String>> listOtherData = new ArrayList<>();
+    public String selectedType = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -288,8 +292,8 @@ public class CreateTeamActivity extends AppCompatActivity {
                 mapData.put("ePlayerType", generalFunc.getJsonValue("ePlayerType", obj_temp));
                 mapData.put("vImgName", generalFunc.getJsonValue("vImgName", obj_temp));
                 mapData.put("dAddedDate", generalFunc.getJsonValue("dAddedDate", obj_temp));
-                mapData.put("POINTS", "" + ((int) Utils.randFloat(1, 200)));
-                mapData.put("CREDITS", "" + String.format("%.2f", Utils.randFloat(1, 10)));
+                mapData.put("tPoints", "" + generalFunc.getJsonValue("tPoints", obj_temp));
+                mapData.put("tCredits", "" + generalFunc.getJsonValue("tCredits", obj_temp));
                 mapData.put("TYPE", "" + adapter.TYPE_ITEM);
 
                 listBowlerData.add(mapData);
@@ -313,8 +317,8 @@ public class CreateTeamActivity extends AppCompatActivity {
                 mapData.put("ePlayerType", generalFunc.getJsonValue("ePlayerType", obj_temp));
                 mapData.put("vImgName", generalFunc.getJsonValue("vImgName", obj_temp));
                 mapData.put("dAddedDate", generalFunc.getJsonValue("dAddedDate", obj_temp));
-                mapData.put("POINTS", "" + ((int) Utils.randFloat(1, 200)));
-                mapData.put("CREDITS", "" + String.format("%.2f", Utils.randFloat(1, 10)));
+                mapData.put("tPoints", "" + generalFunc.getJsonValue("tPoints", obj_temp));
+                mapData.put("tCredits", "" + generalFunc.getJsonValue("tCredits", obj_temp));
                 mapData.put("TYPE", "" + adapter.TYPE_ITEM);
 
                 listBastManData.add(mapData);
@@ -338,8 +342,8 @@ public class CreateTeamActivity extends AppCompatActivity {
                 mapData.put("ePlayerType", generalFunc.getJsonValue("ePlayerType", obj_temp));
                 mapData.put("vImgName", generalFunc.getJsonValue("vImgName", obj_temp));
                 mapData.put("dAddedDate", generalFunc.getJsonValue("dAddedDate", obj_temp));
-                mapData.put("POINTS", "" + ((int) Utils.randFloat(1, 200)));
-                mapData.put("CREDITS", "" + String.format("%.2f", Utils.randFloat(1, 10)));
+                mapData.put("tPoints", "" + generalFunc.getJsonValue("tPoints", obj_temp));
+                mapData.put("tCredits", "" + generalFunc.getJsonValue("tCredits", obj_temp));
                 mapData.put("TYPE", "" + adapter.TYPE_ITEM);
 
                 listWicketKeeperData.add(mapData);
@@ -362,8 +366,8 @@ public class CreateTeamActivity extends AppCompatActivity {
                 mapData.put("ePlayerType", generalFunc.getJsonValue("ePlayerType", obj_temp));
                 mapData.put("vImgName", generalFunc.getJsonValue("vImgName", obj_temp));
                 mapData.put("dAddedDate", generalFunc.getJsonValue("dAddedDate", obj_temp));
-                mapData.put("POINTS", "" + ((int) Utils.randFloat(1, 200)));
-                mapData.put("CREDITS", "" + String.format("%.2f", Utils.randFloat(1, 10)));
+                mapData.put("tPoints", "" + generalFunc.getJsonValue("tPoints", obj_temp));
+                mapData.put("tCredits", "" + generalFunc.getJsonValue("tCredits", obj_temp));
                 mapData.put("TYPE", "" + adapter.TYPE_ITEM);
 
                 listOtherData.add(mapData);
@@ -386,8 +390,8 @@ public class CreateTeamActivity extends AppCompatActivity {
                 mapData.put("ePlayerType", generalFunc.getJsonValue("ePlayerType", obj_temp));
                 mapData.put("vImgName", generalFunc.getJsonValue("vImgName", obj_temp));
                 mapData.put("dAddedDate", generalFunc.getJsonValue("dAddedDate", obj_temp));
-                mapData.put("POINTS", "" + ((int) Utils.randFloat(1, 200)));
-                mapData.put("CREDITS", "" + String.format("%.2f", Utils.randFloat(1, 10)));
+                mapData.put("tPoints", "" + generalFunc.getJsonValue("tPoints", obj_temp));
+                mapData.put("tCredits", "" + generalFunc.getJsonValue("tCredits", obj_temp));
                 mapData.put("TYPE", "" + adapter.TYPE_ITEM);
 
                 listAllRounderData.add(mapData);
@@ -412,6 +416,7 @@ public class CreateTeamActivity extends AppCompatActivity {
             } else if (i == nextTxtView.getId()) {
                 checkData();
             } else if (i == wicketKeeperArea.getId()) {
+                selectedType = "Keeper";
                 hintPlayRoleTxtView.setText("Pick 1 Wicket-Keeper");
                 adapter.totalSizeForSelection = 1;
                 adapter.countSelectionTxtView = wicketCountTxtView;
@@ -427,6 +432,7 @@ public class CreateTeamActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
                 setSelectedType("Wicket");
             } else if (i == batsManArea.getId()) {
+                selectedType = "BatsMan";
                 hintPlayRoleTxtView.setText("Pick 5 BatsMan");
                 adapter.totalSizeForSelection = 5;
                 adapter.countSelectionTxtView = batsManCountTxtView;
@@ -441,6 +447,7 @@ public class CreateTeamActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
                 setSelectedType("Batsman");
             } else if (i == allRounderArea.getId()) {
+                selectedType = "AllRounder";
                 hintPlayRoleTxtView.setText("Pick 2 AllRounder");
                 adapter.totalSizeForSelection = 2;
                 adapter.countSelectionTxtView = allRounderCountTxtView;
@@ -455,6 +462,7 @@ public class CreateTeamActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
                 setSelectedType("AllRounder");
             } else if (i == bowlerArea.getId()) {
+                selectedType = "Bowlers";
                 hintPlayRoleTxtView.setText("Pick 3 Bowlers");
                 adapter.totalSizeForSelection = 3;
                 adapter.countSelectionTxtView = bowlerCountTxtView;
@@ -474,6 +482,7 @@ public class CreateTeamActivity extends AppCompatActivity {
             }
         }
     }
+
 
     public void setSelectedType(String eType) {
         if (eType.equalsIgnoreCase("Wicket")) {
@@ -540,8 +549,69 @@ public class CreateTeamActivity extends AppCompatActivity {
         }
         Bundle bn = new Bundle();
         bn.putString("iMatchId", getIntent().getStringExtra("iMatchId"));
+        bn.putString("SELECTED_PLAYER_LIST", TextUtils.join(",", adapter.chosenPlayersList));
         bn.putString("PAGE_TYPE", PAGE_TYPE);
         (new StartActProcess(getActContext())).startActForResult(ChooseCaptainActivity.class, bn, Utils.CHOOSE_CAPTAIN_REQ_CODE);
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == Utils.CHOOSE_CAPTAIN_REQ_CODE && resultCode == RESULT_OK) {
+            saveTeam(data.getStringExtra("CAPTAIN_ID"), data.getStringExtra("VICE_CAPTAIN_ID"));
+        }
+    }
+
+    public void saveTeam(String CAPTAIN_ID, String VICE_CAPTAIN_ID) {
+        String listOfPlayerIds = TextUtils.join(",", adapter.chosenPlayersList);
+
+        Utils.printLog("listOfPlayerIds", "::" + listOfPlayerIds + "::CAPTAIN_ID::" + CAPTAIN_ID + "::VICE_CAPTAIN_ID::" + VICE_CAPTAIN_ID);
+
+        HashMap<String, String> parameters = new HashMap<>();
+        parameters.put("type", "saveContestTeam");
+        parameters.put("iMemberId", generalFunc.getMemberId());
+        parameters.put("iMatchId", getIntent().getStringExtra("iMatchId"));
+        parameters.put("iContestId", getIntent().getStringExtra("iConstestId"));
+        parameters.put("SelectedPlayerList", listOfPlayerIds);
+        parameters.put("CAPTAIN_ID", CAPTAIN_ID);
+        parameters.put("VICE_CAPTAIN_ID", VICE_CAPTAIN_ID);
+
+        ExecuteWebServerUrl exeWebServer = new ExecuteWebServerUrl(parameters);
+        exeWebServer.setLoaderConfig(getActContext(), true, generalFunc);
+        exeWebServer.setDataResponseListener(new ExecuteWebServerUrl.SetDataResponse() {
+            @Override
+            public void setResponse(final String responseString) {
+
+                if (responseString != null && !responseString.equals("")) {
+                    boolean isDataAvail = GeneralFunctions.checkDataAvail(Utils.action_str, responseString);
+
+                    if (isDataAvail) {
+
+                        final GenerateAlertBox generateAlert = new GenerateAlertBox(getActContext());
+                        generateAlert.setCancelable(false);
+                        generateAlert.setBtnClickList(new GenerateAlertBox.HandleAlertBtnClick() {
+                            @Override
+                            public void handleBtnClick(int btn_id) {
+                                (new StartActProcess(getActContext())).setOkResult();
+                                backImgView.performClick();
+                            }
+                        });
+
+                        generateAlert.setContentMessage("", generalFunc.getJsonValue(Utils.message_str, responseString));
+                        generateAlert.setPositiveBtn("OK");
+                        generateAlert.showAlertBox();
+
+
+                    } else {
+                        generalFunc.showGeneralMessage("", generalFunc.getJsonValue(Utils.message_str, responseString));
+                    }
+
+                } else {
+                    generalFunc.showError();
+                }
+            }
+        });
+        exeWebServer.execute();
     }
 }

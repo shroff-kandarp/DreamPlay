@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
+        app:cardBackgroundColor="#F5F5F5">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1">
+
+                    <com.view.MTextView
+                        android:id="@+id/singleEntryTxtView"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="start"
+                        android:layout_weight="0"
+                        android:background="@color/appThemeColor_1"
+                        android:gravity="center"
+                        android:textColor="@color/appThemeColor_TXT_1"
+                        android:textSize="@dimen/txt_size_20"
+                        app:customTypeFace="@string/semiBoldFont" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                    <com.view.MTextView
+                        android:id="@+id/confirmedTxtView"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="right"
+                        android:layout_weight="0"
+                        android:background="@color/appThemeColor_1"
+                        android:gravity="center"
+                        android:textColor="@color/appThemeColor_TXT_1"
+                        android:textSize="@dimen/txt_size_20"
+                        app:customTypeFace="@string/semiBoldFont" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="0"
+                    android:background="@color/appThemeColor_1" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <com.view.MTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="WINNERS"
+                        android:textAllCaps="true"
+                        android:textColor="@color/appThemeColor_1"
+                        android:textSize="@dimen/txt_size_18" />
+
+                    <com.view.MTextView
+                        android:id="@+id/winnersTxtView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="1500"
+                        android:textAllCaps="true"
+                        android:textColor="#272727"
+                        android:textSize="@dimen/txt_size_18" />
+                </LinearLayout>
+
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="0"
+                    android:background="@color/appThemeColor_1" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <com.view.MTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="ENTRY FEES"
+                        android:textAllCaps="true"
+                        android:textColor="@color/appThemeColor_1"
+                        android:textSize="@dimen/txt_size_18" />
+
+                    <com.view.MTextView
+                        android:id="@+id/entryFeesTxtView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="₹400.00"
+                        android:textAllCaps="true"
+                        android:textColor="#272727"
+                        android:textSize="@dimen/txt_size_18" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <com.view.MTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="JOINED"
+                        android:textAllCaps="true"
+                        android:textColor="@color/appThemeColor_1"
+                        android:textSize="@dimen/txt_size_18" />
+
+                    <com.view.MTextView
+                        android:id="@+id/joinedTxtView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="₹400.00"
+                        android:textAllCaps="true"
+                        android:textColor="#272727"
+                        android:textSize="@dimen/txt_size_18" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <com.view.MTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="ENTRY FEES"
+                        android:textAllCaps="true"
+                        android:textColor="@color/appThemeColor_1"
+                        android:textSize="@dimen/txt_size_18" />
+
+                    <com.view.MTextView
+                        android:id="@+id/winningsTxtView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="₹400.00"
+                        android:textAllCaps="true"
+                        android:textColor="#272727"
+                        android:textSize="@dimen/txt_size_18" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/joinArea"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <com.view.MTextView
+                        android:id="@+id/joinTxtView"
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:layout_gravity="right|center_vertical"
+                        android:paddingLeft="5dp"
+                        android:background="@color/appThemeColor_1"
+                        android:paddingRight="5dp"
+                        android:text="JOIN"
+                        android:textAllCaps="true"
+                        android:textColor="@color/appThemeColor_TXT_1"
+                        android:textSize="@dimen/txt_size_18" />
+
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

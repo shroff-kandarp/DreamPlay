@@ -13,7 +13,6 @@ import android.widget.LinearLayout;
 import com.dreamplay.CreateTeamActivity;
 import com.dreamplay.R;
 import com.general.files.GeneralFunctions;
-import com.squareup.picasso.Picasso;
 import com.utils.Utils;
 import com.view.CreateRoundedView;
 import com.view.MTextView;
@@ -93,13 +92,25 @@ public class TeamPlayerListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
             viewHolder.playerNameTxtView.setText(Html.fromHtml(item.get("vPlayerName")));
 
-            viewHolder.pointsTxtView.setText(item.get("POINTS"));
-            viewHolder.creditsTxtView.setText(item.get("CREDITS"));
+            viewHolder.pointsTxtView.setText(item.get("tPoints"));
+            viewHolder.creditsTxtView.setText(item.get("tCredits"));
             if (!item.get("vImgName").equals("")) {
-                Picasso.with(mContext)
-                        .load(item.get("vImgName"))
-                        .placeholder(R.drawable.no_team_img)
-                        .into(viewHolder.playerImgView, null);
+//                Picasso.with(mContext)
+//                        .load(item.get("vImgName"))
+//                        .placeholder(R.drawable.no_team_img)
+//                        .into(viewHolder.playerImgView, null);
+            }
+
+            if (createTeamAct.selectedType.equals("Keeper")) {
+                viewHolder.playerImgView.setImageResource(R.mipmap.keeper_helmat);
+            } else if (createTeamAct.selectedType.equals("BatsMan")) {
+                viewHolder.playerImgView.setImageResource(R.mipmap.cric_batsman);
+            } else if (createTeamAct.selectedType.equals("AllRounder")) {
+                viewHolder.playerImgView.setImageResource(R.mipmap.cric_allrounder);
+            } else if (createTeamAct.selectedType.equals("Bowlers")) {
+                viewHolder.playerImgView.setImageResource(R.mipmap.cric_bowler);
+            } else {
+                viewHolder.playerImgView.setImageResource(R.mipmap.cric_allrounder);
             }
 
             if (chosenPlayersList.contains(item.get("iPlayerId"))) {

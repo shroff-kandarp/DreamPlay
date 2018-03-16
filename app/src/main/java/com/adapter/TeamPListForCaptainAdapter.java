@@ -9,9 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.dreamplay.ChooseCaptainActivity;
 import com.dreamplay.R;
 import com.general.files.GeneralFunctions;
-import com.squareup.picasso.Picasso;
 import com.utils.Utils;
 import com.view.CreateRoundedView;
 import com.view.MTextView;
@@ -36,14 +36,17 @@ public class TeamPListForCaptainAdapter extends RecyclerView.Adapter<RecyclerVie
     FooterViewHolder footerHolder;
     private OnItemClickListener mItemClickListener;
 
-    String selectedCaptainId = "";
-    String selectedViceCaptainId = "";
+    public String selectedCaptainId = "";
+    public String selectedViceCaptainId = "";
+
+    ChooseCaptainActivity chooseCaptainAct;
 
     public TeamPListForCaptainAdapter(Context mContext, ArrayList<HashMap<String, String>> list, GeneralFunctions generalFunc, boolean isFooterEnabled) {
         this.mContext = mContext;
         this.list = list;
         this.generalFunc = generalFunc;
         this.isFooterEnabled = isFooterEnabled;
+        chooseCaptainAct = (ChooseCaptainActivity) mContext;
     }
 
     public void setOnItemClickListener(OnItemClickListener mItemClickListener) {
@@ -84,12 +87,25 @@ public class TeamPListForCaptainAdapter extends RecyclerView.Adapter<RecyclerVie
 
             viewHolder.playerNameTxtView.setText(Html.fromHtml(item.get("vPlayerName")));
 
-            if (!item.get("vImgName").equals("")) {
-                Picasso.with(mContext)
-                        .load(item.get("vImgName"))
-                        .placeholder(R.drawable.no_team_img)
-                        .into(viewHolder.playerImgView, null);
+
+            if (item.get("ePlayerType").equalsIgnoreCase("Wicketkeeper")) {
+                viewHolder.playerImgView.setImageResource(R.mipmap.keeper_helmat);
+            } else if (item.get("ePlayerType").equalsIgnoreCase("Batsman")) {
+                viewHolder.playerImgView.setImageResource(R.mipmap.cric_batsman);
+            } else if (item.get("ePlayerType").equalsIgnoreCase("Allrounder")) {
+                viewHolder.playerImgView.setImageResource(R.mipmap.cric_allrounder);
+            } else if (item.get("ePlayerType").equalsIgnoreCase("Bowler")) {
+                viewHolder.playerImgView.setImageResource(R.mipmap.cric_bowler);
+            } else {
+                viewHolder.playerImgView.setImageResource(R.mipmap.cric_allrounder);
+//                if (!item.get("vImgName").equals("")) {
+//                Picasso.with(mContext)
+//                        .load(item.get("vImgName"))
+//                        .placeholder(R.drawable.no_team_img)
+//                        .into(viewHolder.playerImgView, null);
+//                }
             }
+
 
             if (selectedCaptainId.equalsIgnoreCase(item.get("iPlayerId"))) {
 
@@ -112,9 +128,9 @@ public class TeamPListForCaptainAdapter extends RecyclerView.Adapter<RecyclerVie
                 public void onClick(View view) {
                     if (selectedViceCaptainId.equalsIgnoreCase(item.get("iPlayerId"))) {
                         selectedViceCaptainId = "";
-                    } else if(selectedCaptainId.equals("")){
+                    } else if (selectedCaptainId.equals("")) {
                         selectedViceCaptainId = item.get("iPlayerId");
-                    } else if(!selectedCaptainId.equals("") && !selectedCaptainId.equalsIgnoreCase(item.get("iPlayerId"))){
+                    } else if (!selectedCaptainId.equals("") && !selectedCaptainId.equalsIgnoreCase(item.get("iPlayerId"))) {
                         selectedViceCaptainId = item.get("iPlayerId");
                     }
                     notifyDataSetChanged();
@@ -126,9 +142,9 @@ public class TeamPListForCaptainAdapter extends RecyclerView.Adapter<RecyclerVie
 
                     if (selectedCaptainId.equalsIgnoreCase(item.get("iPlayerId"))) {
                         selectedCaptainId = "";
-                    } else if(selectedViceCaptainId.equals("")){
+                    } else if (selectedViceCaptainId.equals("")) {
                         selectedCaptainId = item.get("iPlayerId");
-                    } else if(!selectedViceCaptainId.equals("") && !selectedViceCaptainId.equalsIgnoreCase(item.get("iPlayerId"))){
+                    } else if (!selectedViceCaptainId.equals("") && !selectedViceCaptainId.equalsIgnoreCase(item.get("iPlayerId"))) {
                         selectedCaptainId = item.get("iPlayerId");
                     }
 

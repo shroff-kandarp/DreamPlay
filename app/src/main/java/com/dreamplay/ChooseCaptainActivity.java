@@ -1,5 +1,6 @@
 package com.dreamplay;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -12,6 +13,7 @@ import android.widget.ProgressBar;
 import com.adapter.TeamPListForCaptainAdapter;
 import com.general.files.ExecuteWebServerUrl;
 import com.general.files.GeneralFunctions;
+import com.general.files.StartActProcess;
 import com.squareup.picasso.Picasso;
 import com.utils.Utils;
 import com.view.MTextView;
@@ -20,7 +22,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 public class ChooseCaptainActivity extends AppCompatActivity {
 
@@ -35,9 +39,6 @@ public class ChooseCaptainActivity extends AppCompatActivity {
     MTextView dateRemainsInfoTxtView;
 
     MTextView saveTeamTextView;
-
-    MTextView countTotalPlayersTxtView;
-    public MTextView countTotalCreditsInfoTxtView;
 
     GeneralFunctions generalFunc;
     View containerView;
@@ -55,6 +56,7 @@ public class ChooseCaptainActivity extends AppCompatActivity {
     TeamPListForCaptainAdapter adapter;
 
     ArrayList<HashMap<String, String>> listOfPlayers = new ArrayList<>();
+    List<String> listOfSelectedPlayers = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,9 +83,13 @@ public class ChooseCaptainActivity extends AppCompatActivity {
         loadingBar = (ProgressBar) findViewById(R.id.loadingBar);
 
         backImgView.setOnClickListener(new setOnClickList());
+        saveTeamTextView.setOnClickListener(new setOnClickList());
         adapter = new TeamPListForCaptainAdapter(getActContext(), listOfPlayers, generalFunc, false);
 
         playerListRecyclerView.setAdapter(adapter);
+
+        String SELECTED_PLAYER_LIST = getIntent().getStringExtra("SELECTED_PLAYER_LIST");
+        listOfSelectedPlayers = Arrays.asList(SELECTED_PLAYER_LIST.split(","));
 
         getMatchData();
 
@@ -161,20 +167,22 @@ public class ChooseCaptainActivity extends AppCompatActivity {
 
                 HashMap<String, String> mapData = new HashMap<>();
                 mapData.put("iPlayerId", generalFunc.getJsonValue("iPlayerId", obj_temp));
-                mapData.put("iMatchId", generalFunc.getJsonValue("iMatchId", obj_temp));
-                mapData.put("vTeamName", generalFunc.getJsonValue("vTeamName", obj_temp));
-                mapData.put("iPid", generalFunc.getJsonValue("iPid", obj_temp));
-                mapData.put("iPid", generalFunc.getJsonValue("iPid", obj_temp));
-                mapData.put("vPlayerName", generalFunc.getJsonValue("vPlayerName", obj_temp));
-                mapData.put("vPlayingRole", generalFunc.getJsonValue("vPlayingRole", obj_temp));
-                mapData.put("ePlayerType", generalFunc.getJsonValue("ePlayerType", obj_temp));
-                mapData.put("vImgName", generalFunc.getJsonValue("vImgName", obj_temp));
-                mapData.put("dAddedDate", generalFunc.getJsonValue("dAddedDate", obj_temp));
-                mapData.put("POINTS", "" + ((int) Utils.randFloat(1, 200)));
-                mapData.put("CREDITS", "" + String.format("%.2f", Utils.randFloat(1, 10)));
-                mapData.put("TYPE", "" + adapter.TYPE_ITEM);
+                if(listOfSelectedPlayers.contains(mapData.get("iPlayerId"))){
+                    mapData.put("iMatchId", generalFunc.getJsonValue("iMatchId", obj_temp));
+                    mapData.put("vTeamName", generalFunc.getJsonValue("vTeamName", obj_temp));
+                    mapData.put("iPid", generalFunc.getJsonValue("iPid", obj_temp));
+                    mapData.put("iPid", generalFunc.getJsonValue("iPid", obj_temp));
+                    mapData.put("vPlayerName", generalFunc.getJsonValue("vPlayerName", obj_temp));
+                    mapData.put("vPlayingRole", generalFunc.getJsonValue("vPlayingRole", obj_temp));
+                    mapData.put("ePlayerType", generalFunc.getJsonValue("ePlayerType", obj_temp));
+                    mapData.put("vImgName", generalFunc.getJsonValue("vImgName", obj_temp));
+                    mapData.put("dAddedDate", generalFunc.getJsonValue("dAddedDate", obj_temp));
+                    mapData.put("tPoints", "" + generalFunc.getJsonValue("tPoints", obj_temp));
+                    mapData.put("tCredits", "" + generalFunc.getJsonValue("tCredits", obj_temp));
+                    mapData.put("TYPE", "" + adapter.TYPE_ITEM);
 
-                listOfPlayers.add(mapData);
+                    listOfPlayers.add(mapData);
+                }
             }
         }
 
@@ -191,20 +199,24 @@ public class ChooseCaptainActivity extends AppCompatActivity {
 
                 HashMap<String, String> mapData = new HashMap<>();
                 mapData.put("iPlayerId", generalFunc.getJsonValue("iPlayerId", obj_temp));
-                mapData.put("iMatchId", generalFunc.getJsonValue("iMatchId", obj_temp));
-                mapData.put("vTeamName", generalFunc.getJsonValue("vTeamName", obj_temp));
-                mapData.put("iPid", generalFunc.getJsonValue("iPid", obj_temp));
-                mapData.put("iPid", generalFunc.getJsonValue("iPid", obj_temp));
-                mapData.put("vPlayerName", generalFunc.getJsonValue("vPlayerName", obj_temp));
-                mapData.put("vPlayingRole", generalFunc.getJsonValue("vPlayingRole", obj_temp));
-                mapData.put("ePlayerType", generalFunc.getJsonValue("ePlayerType", obj_temp));
-                mapData.put("vImgName", generalFunc.getJsonValue("vImgName", obj_temp));
-                mapData.put("dAddedDate", generalFunc.getJsonValue("dAddedDate", obj_temp));
-                mapData.put("POINTS", "" + ((int) Utils.randFloat(1, 200)));
-                mapData.put("CREDITS", "" + String.format("%.2f", Utils.randFloat(1, 10)));
-                mapData.put("TYPE", "" + adapter.TYPE_ITEM);
 
-                listOfPlayers.add(mapData);
+                if(listOfSelectedPlayers.contains(mapData.get("iPlayerId"))){
+                    mapData.put("iMatchId", generalFunc.getJsonValue("iMatchId", obj_temp));
+                    mapData.put("vTeamName", generalFunc.getJsonValue("vTeamName", obj_temp));
+                    mapData.put("iPid", generalFunc.getJsonValue("iPid", obj_temp));
+                    mapData.put("iPid", generalFunc.getJsonValue("iPid", obj_temp));
+                    mapData.put("vPlayerName", generalFunc.getJsonValue("vPlayerName", obj_temp));
+                    mapData.put("vPlayingRole", generalFunc.getJsonValue("vPlayingRole", obj_temp));
+                    mapData.put("ePlayerType", generalFunc.getJsonValue("ePlayerType", obj_temp));
+                    mapData.put("vImgName", generalFunc.getJsonValue("vImgName", obj_temp));
+                    mapData.put("dAddedDate", generalFunc.getJsonValue("dAddedDate", obj_temp));
+                    mapData.put("POINTS", "" + ((int) Utils.randFloat(1, 200)));
+                    mapData.put("CREDITS", "" + String.format("%.2f", Utils.randFloat(1, 10)));
+                    mapData.put("TYPE", "" + adapter.TYPE_ITEM);
+
+                    listOfPlayers.add(mapData);
+                }
+
             }
         }
 
@@ -219,20 +231,23 @@ public class ChooseCaptainActivity extends AppCompatActivity {
 
                 HashMap<String, String> mapData = new HashMap<>();
                 mapData.put("iPlayerId", generalFunc.getJsonValue("iPlayerId", obj_temp));
-                mapData.put("iMatchId", generalFunc.getJsonValue("iMatchId", obj_temp));
-                mapData.put("vTeamName", generalFunc.getJsonValue("vTeamName", obj_temp));
-                mapData.put("iPid", generalFunc.getJsonValue("iPid", obj_temp));
-                mapData.put("iPid", generalFunc.getJsonValue("iPid", obj_temp));
-                mapData.put("vPlayerName", generalFunc.getJsonValue("vPlayerName", obj_temp));
-                mapData.put("vPlayingRole", generalFunc.getJsonValue("vPlayingRole", obj_temp));
-                mapData.put("ePlayerType", generalFunc.getJsonValue("ePlayerType", obj_temp));
-                mapData.put("vImgName", generalFunc.getJsonValue("vImgName", obj_temp));
-                mapData.put("dAddedDate", generalFunc.getJsonValue("dAddedDate", obj_temp));
-                mapData.put("POINTS", "" + ((int) Utils.randFloat(1, 200)));
-                mapData.put("CREDITS", "" + String.format("%.2f", Utils.randFloat(1, 10)));
-                mapData.put("TYPE", "" + adapter.TYPE_ITEM);
+                if(listOfSelectedPlayers.contains(mapData.get("iPlayerId"))){
+                    mapData.put("iMatchId", generalFunc.getJsonValue("iMatchId", obj_temp));
+                    mapData.put("vTeamName", generalFunc.getJsonValue("vTeamName", obj_temp));
+                    mapData.put("iPid", generalFunc.getJsonValue("iPid", obj_temp));
+                    mapData.put("iPid", generalFunc.getJsonValue("iPid", obj_temp));
+                    mapData.put("vPlayerName", generalFunc.getJsonValue("vPlayerName", obj_temp));
+                    mapData.put("vPlayingRole", generalFunc.getJsonValue("vPlayingRole", obj_temp));
+                    mapData.put("ePlayerType", generalFunc.getJsonValue("ePlayerType", obj_temp));
+                    mapData.put("vImgName", generalFunc.getJsonValue("vImgName", obj_temp));
+                    mapData.put("dAddedDate", generalFunc.getJsonValue("dAddedDate", obj_temp));
+                    mapData.put("POINTS", "" + ((int) Utils.randFloat(1, 200)));
+                    mapData.put("CREDITS", "" + String.format("%.2f", Utils.randFloat(1, 10)));
+                    mapData.put("TYPE", "" + adapter.TYPE_ITEM);
 
-                listOfPlayers.add(mapData);
+                    listOfPlayers.add(mapData);
+                }
+
             }
         }
 
@@ -247,20 +262,23 @@ public class ChooseCaptainActivity extends AppCompatActivity {
 
                 HashMap<String, String> mapData = new HashMap<>();
                 mapData.put("iPlayerId", generalFunc.getJsonValue("iPlayerId", obj_temp));
-                mapData.put("iMatchId", generalFunc.getJsonValue("iMatchId", obj_temp));
-                mapData.put("vTeamName", generalFunc.getJsonValue("vTeamName", obj_temp));
-                mapData.put("iPid", generalFunc.getJsonValue("iPid", obj_temp));
-                mapData.put("iPid", generalFunc.getJsonValue("iPid", obj_temp));
-                mapData.put("vPlayerName", generalFunc.getJsonValue("vPlayerName", obj_temp));
-                mapData.put("vPlayingRole", generalFunc.getJsonValue("vPlayingRole", obj_temp));
-                mapData.put("ePlayerType", generalFunc.getJsonValue("ePlayerType", obj_temp));
-                mapData.put("vImgName", generalFunc.getJsonValue("vImgName", obj_temp));
-                mapData.put("dAddedDate", generalFunc.getJsonValue("dAddedDate", obj_temp));
-                mapData.put("POINTS", "" + ((int) Utils.randFloat(1, 200)));
-                mapData.put("CREDITS", "" + String.format("%.2f", Utils.randFloat(1, 10)));
-                mapData.put("TYPE", "" + adapter.TYPE_ITEM);
+                if(listOfSelectedPlayers.contains(mapData.get("iPlayerId"))){
 
-                listOfPlayers.add(mapData);
+                    mapData.put("iMatchId", generalFunc.getJsonValue("iMatchId", obj_temp));
+                    mapData.put("vTeamName", generalFunc.getJsonValue("vTeamName", obj_temp));
+                    mapData.put("iPid", generalFunc.getJsonValue("iPid", obj_temp));
+                    mapData.put("iPid", generalFunc.getJsonValue("iPid", obj_temp));
+                    mapData.put("vPlayerName", generalFunc.getJsonValue("vPlayerName", obj_temp));
+                    mapData.put("vPlayingRole", generalFunc.getJsonValue("vPlayingRole", obj_temp));
+                    mapData.put("ePlayerType", generalFunc.getJsonValue("ePlayerType", obj_temp));
+                    mapData.put("vImgName", generalFunc.getJsonValue("vImgName", obj_temp));
+                    mapData.put("dAddedDate", generalFunc.getJsonValue("dAddedDate", obj_temp));
+                    mapData.put("POINTS", "" + ((int) Utils.randFloat(1, 200)));
+                    mapData.put("CREDITS", "" + String.format("%.2f", Utils.randFloat(1, 10)));
+                    mapData.put("TYPE", "" + adapter.TYPE_ITEM);
+
+                    listOfPlayers.add(mapData);
+                }
             }
         }
 
@@ -364,6 +382,24 @@ public class ChooseCaptainActivity extends AppCompatActivity {
     }
 
     public void checkData() {
+        if (adapter.selectedCaptainId.equalsIgnoreCase("")) {
 
+            GeneralFunctions.showMessage(GeneralFunctions.getCurrentView((Activity) getActContext()), "Please select captain for your team.");
+
+            return;
+        }
+        if (adapter.selectedViceCaptainId.equalsIgnoreCase("")) {
+
+            GeneralFunctions.showMessage(GeneralFunctions.getCurrentView((Activity) getActContext()), "Please select vice captain for your team.");
+
+            return;
+        }
+
+        Bundle bn = new Bundle();
+        bn.putString("CAPTAIN_ID", adapter.selectedCaptainId);
+        bn.putString("VICE_CAPTAIN_ID", adapter.selectedViceCaptainId);
+
+        (new StartActProcess(getActContext())).setOkResult(bn);
+        backImgView.performClick();
     }
 }
