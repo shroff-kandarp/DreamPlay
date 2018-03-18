@@ -76,7 +76,9 @@
         <activity android:name=".CreateTeamActivity" />
         <activity android:name=".ChooseCaptainActivity" />
         <activity android:name=".FantasyPointsActivity" />
-        <activity android:name=".ContestDetailsActivity"></activity>
+        <activity android:name=".ContestDetailsActivity" />
+        <activity android:name=".UserMatchTeamsActivity" />
+        <activity android:name=".JoinedContestActivity"></activity>
     </application>
 
 </manifest>

@@ -255,29 +255,78 @@
                     android:src="@mipmap/ic_contact_left_bound"
                     android:tint="@color/appThemeColor_Dark_1" />
 
-                <com.view.MTextView
-                    android:id="@+id/myTeamsTxtView"
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="47dp"
-                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="1dp"
                     android:layout_weight="1"
                     android:background="@color/appThemeColor_Dark_1"
-                    android:gravity="center"
-                    android:text="My Teams"
-                    android:textColor="@color/appThemeColor_TXT_1"
-                    android:textSize="@dimen/txt_size_18" />
+                    android:orientation="horizontal">
 
-                <com.view.MTextView
-                    android:id="@+id/joinedContectsTxtView"
+                    <com.view.MTextView
+                        android:id="@+id/myTeamsTxtView"
+                        android:layout_width="0dp"
+                        android:layout_height="47dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="5dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="My Teams"
+                        android:textColor="@color/appThemeColor_TXT_1"
+                        android:textSize="@dimen/txt_size_18" />
+
+                    <com.view.MTextView
+                        android:id="@+id/myTeamsCountTxtView"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="0"
+                        android:background="@color/appThemeColor_TXT_1"
+                        android:gravity="center"
+                        android:text="0"
+                        android:textColor="@color/appThemeColor_Dark_1"
+                        android:textSize="@dimen/txt_size_16" />
+                </LinearLayout>
+
+
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="47dp"
-                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="1dp"
                     android:layout_weight="1"
                     android:background="@color/appThemeColor_1"
-                    android:gravity="center"
-                    android:text="Joined Contests"
-                    android:textColor="@color/appThemeColor_TXT_1"
-                    android:textSize="@dimen/txt_size_18" />
+                    android:orientation="horizontal">
+
+
+                    <com.view.MTextView
+                        android:id="@+id/joinedContectsTxtView"
+                        android:layout_width="0dp"
+                        android:layout_height="47dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="5dp"
+                        android:layout_weight="1"
+                        android:background="@color/appThemeColor_1"
+                        android:gravity="center"
+                        android:text="Joined Contests"
+                        android:textColor="@color/appThemeColor_TXT_1"
+                        android:textSize="@dimen/txt_size_18" />
+
+
+                    <com.view.MTextView
+                        android:id="@+id/joinedContestCountTxtView"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="0"
+                        android:background="@color/appThemeColor_TXT_1"
+                        android:gravity="center"
+                        android:text="0"
+                        android:textColor="@color/appThemeColor_Dark_1"
+                        android:textSize="@dimen/txt_size_16" />
+                </LinearLayout>
+
 
                 <ImageView
                     android:layout_width="16dp"

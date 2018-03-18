@@ -41,6 +41,7 @@ public class CreateTeamActivity extends AppCompatActivity {
     MTextView leftTeamNameTxtView;
     MTextView rightTeamNameTxtView;
     MTextView dateRemainsInfoTxtView;
+
     MTextView hintPlayRoleTxtView;
     MTextView batsManCountTxtView;
     MTextView wicketCountTxtView;
@@ -129,6 +130,8 @@ public class CreateTeamActivity extends AppCompatActivity {
         containerView = findViewById(R.id.containerView);
         loadingBar = (ProgressBar) findViewById(R.id.loadingBar);
 
+        PAGE_TYPE = getIntent().getStringExtra("PAGE_TYPE");
+
         btn_type2.setId(Utils.generateViewId());
 
         btn_type2.setOnClickListener(new setOnClickList());
@@ -141,7 +144,6 @@ public class CreateTeamActivity extends AppCompatActivity {
 
 
         new CreateRoundedView(Color.parseColor("#FFFFFF"), Utils.dipToPixels(getActContext(), 30), Utils.dipToPixels(getActContext(), 4), getResources().getColor(R.color.appThemeColor_1), otherImgView);
-
 
         new CreateRoundedView(Color.parseColor("#BBBBBB"), Utils.dipToPixels(getActContext(), 15), Utils.dipToPixels(getActContext(), 0), getResources().getColor(R.color.appThemeColor_1), batsManCountTxtView);
 

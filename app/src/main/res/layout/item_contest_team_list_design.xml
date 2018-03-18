@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="8dp">
+
+    <ImageView
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_gravity="center_vertical"
+        android:src="@mipmap/ic_contest_team" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <com.view.MTextView
+            android:id="@+id/memberNameTxtView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#272727"
+            android:textSize="@dimen/txt_size_16" />
+
+        <com.view.MTextView
+            android:id="@+id/teamCountTxtView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#272727"
+            android:textSize="@dimen/txt_size_14" />
+    </LinearLayout>
+
+
+    <com.view.MTextView
+        android:id="@+id/teamRankTxtView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.35"
+        android:textColor="#272727"
+        android:gravity="right"
+        android:paddingRight="10dp"
+        android:textSize="@dimen/txt_size_14" />
+</LinearLayout>

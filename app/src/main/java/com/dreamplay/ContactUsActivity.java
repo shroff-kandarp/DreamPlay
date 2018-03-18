@@ -37,11 +37,11 @@ public class ContactUsActivity extends BaseActivity {
         generalFunc = new GeneralFunctions(getActContext());
 
         titleTxt = (MTextView) findViewById(R.id.titleTxt);
+        backImgView = (ImageView) findViewById(R.id.backImgView);
         emailTxtView = (MTextView) findViewById(R.id.emailTxtView);
         phoneTxtView = (MTextView) findViewById(R.id.phoneTxtView);
         emailTapTxtView = (MTextView) findViewById(R.id.emailTapTxtView);
         callTapTxtView = (MTextView) findViewById(R.id.callTapTxtView);
-        backImgView = (ImageView) findViewById(R.id.backImgView);
         containerView = findViewById(R.id.containerView);
         loadingBar = (ProgressBar) findViewById(R.id.loadingBar);
 

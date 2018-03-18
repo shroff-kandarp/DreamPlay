@@ -15,6 +15,7 @@ import com.general.files.GeneralFunctions;
 import com.general.files.StartActProcess;
 import com.squareup.picasso.Picasso;
 import com.utils.Utils;
+import com.view.CreateRoundedView;
 import com.view.MTextView;
 
 import org.json.JSONArray;
@@ -35,6 +36,8 @@ public class ContestsActivity extends AppCompatActivity {
     ImageView backImgView;
     ImageView leftImgView;
     ImageView rightTeamImgView;
+    MTextView myTeamsCountTxtView;
+    MTextView joinedContestCountTxtView;
 
     View createContestArea;
 
@@ -70,8 +73,15 @@ public class ContestsActivity extends AppCompatActivity {
         containerView = findViewById(R.id.containerView);
         loadingBar = (ProgressBar) findViewById(R.id.loadingBar);
         contestListRecyclerView = (RecyclerView) findViewById(R.id.contestListRecyclerView);
+        myTeamsCountTxtView = (MTextView) findViewById(R.id.myTeamsCountTxtView);
+        joinedContestCountTxtView = (MTextView) findViewById(R.id.joinedContestCountTxtView);
 
         createContestArea = findViewById(R.id.createContestArea);
+
+
+        new CreateRoundedView(getResources().getColor(R.color.appThemeColor_TXT_1), Utils.dipToPixels(getActContext(), 13), Utils.dipToPixels(getActContext(), 0), getResources().getColor(R.color.appThemeColor_1), myTeamsCountTxtView);
+
+        new CreateRoundedView(getResources().getColor(R.color.appThemeColor_TXT_1), Utils.dipToPixels(getActContext(), 13), Utils.dipToPixels(getActContext(), 0), getResources().getColor(R.color.appThemeColor_1), joinedContestCountTxtView);
 
         adapter = new ContestListRecycleAdapter(getActContext(), list_contest, generalFunc, false);
         contestListRecyclerView.setAdapter(adapter);
@@ -129,7 +139,7 @@ public class ContestsActivity extends AppCompatActivity {
                             setMatchData(obj_matchData);
                         }
                         setContestData(obj_contestData);
-
+                        myTeamsCountTxtView.setText(generalFunc.getJsonValue("MatchTeamCount", responseString));
 
                         containerView.setVisibility(View.VISIBLE);
 
@@ -146,6 +156,7 @@ public class ContestsActivity extends AppCompatActivity {
     }
 
     private void setContestData(JSONArray obj_contestData) {
+        int countOfJoined = 0;
         if (obj_contestData != null) {
 
             for (int i = 0; i < obj_contestData.length(); i++) {
@@ -170,9 +181,16 @@ public class ContestsActivity extends AppCompatActivity {
                 mapData.put("vCategoryImage", generalFunc.getJsonValue("vCategoryImage", obj_tmp));
                 mapData.put("fPriceStartRange", generalFunc.getJsonValue("fPriceStartRange", obj_tmp));
                 mapData.put("fPriceEndRange", generalFunc.getJsonValue("fPriceEndRange", obj_tmp));
-                mapData.put("TYPE",""+ adapter.TYPE_ITEM);
+                mapData.put("eUserJoined", generalFunc.getJsonValue("eUserJoined", obj_tmp));
+                mapData.put("ContestTeamCount", generalFunc.getJsonValue("ContestTeamCount", obj_tmp));
+                mapData.put("TYPE", "" + adapter.TYPE_ITEM);
+
+                if (mapData.get("eUserJoined") != null && mapData.get("eUserJoined").equalsIgnoreCase("yes")) {
+                    countOfJoined = countOfJoined + 1;
+                }
                 list_contest.add(mapData);
             }
+            joinedContestCountTxtView.setText("" + countOfJoined);
             adapter.notifyDataSetChanged();
         } else {
 
@@ -242,18 +260,22 @@ public class ContestsActivity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             Utils.hideKeyboard(ContestsActivity.this);
+            Bundle bn = new Bundle();
             switch (view.getId()) {
                 case R.id.backImgView:
                     ContestsActivity.super.onBackPressed();
                     break;
                 case R.id.myTeamsTxtView:
-                    ContestsActivity.super.onBackPressed();
+                    bn.putString("iMatchId", getIntent().getStringExtra("iMatchId"));
+                    bn.putString("PAGE_TYPE", PAGE_TYPE);
+                    (new StartActProcess(getActContext())).startActWithData(UserMatchTeamsActivity.class, bn);
                     break;
                 case R.id.joinedContectsTxtView:
-                    ContestsActivity.super.onBackPressed();
+                    bn.putString("iMatchId", getIntent().getStringExtra("iMatchId"));
+                    bn.putString("PAGE_TYPE", PAGE_TYPE);
+                    (new StartActProcess(getActContext())).startActWithData(JoinedContestActivity.class, bn);
                     break;
                 case R.id.createContestArea:
-                    Bundle bn = new Bundle();
                     bn.putString("iMatchId", getIntent().getStringExtra("iMatchId"));
                     bn.putString("PAGE_TYPE", PAGE_TYPE);
                     (new StartActProcess(getActContext())).startActWithData(CreateContestActivity.class, bn);

@@ -11,8 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.dreamplay.ContestDetailsActivity;
 import com.dreamplay.ContestsActivity;
 import com.dreamplay.CreateTeamActivity;
+import com.dreamplay.JoinedContestActivity;
 import com.dreamplay.R;
 import com.general.files.GeneralFunctions;
 import com.general.files.StartActProcess;
@@ -39,13 +41,19 @@ public class ContestListRecycleAdapter extends RecyclerView.Adapter<RecyclerView
     FooterViewHolder footerHolder;
     private OnItemClickListener mItemClickListener;
     ContestsActivity contestAct;
+    JoinedContestActivity joinedContestAct;
 
     public ContestListRecycleAdapter(Context mContext, ArrayList<HashMap<String, String>> list, GeneralFunctions generalFunc, boolean isFooterEnabled) {
         this.mContext = mContext;
         this.list = list;
         this.generalFunc = generalFunc;
         this.isFooterEnabled = isFooterEnabled;
-        contestAct = (ContestsActivity) mContext;
+
+        if (mContext instanceof JoinedContestActivity) {
+            joinedContestAct = (JoinedContestActivity) mContext;
+        } else {
+            contestAct = (ContestsActivity) mContext;
+        }
     }
 
     public void setOnItemClickListener(OnItemClickListener mItemClickListener) {
@@ -82,11 +90,17 @@ public class ContestListRecycleAdapter extends RecyclerView.Adapter<RecyclerView
             viewHolder.confirmedTxtView.setText(item.get("eConfirmed").equalsIgnoreCase("Yes") ? "C" : "U");
             viewHolder.singleEntryTxtView.setText(item.get("eMultipleTeamJoin").equalsIgnoreCase("Yes") ? "M" : "S");
 
-            viewHolder.joinedTxtView.setText("0/" + item.get("vContestSize"));
+            viewHolder.joinedTxtView.setText(item.get("ContestTeamCount") + "/" + item.get("vContestSize"));
             viewHolder.winnersTxtView.setText(item.get("tWinners"));
             viewHolder.winningsTxtView.setText("₹" + item.get("vWinningAmount"));
 
             viewHolder.entryFeesTxtView.setText("₹" + item.get("tEntryFees"));
+
+            if (item.get("eUserJoined") != null && item.get("eUserJoined").equalsIgnoreCase("Yes")) {
+                viewHolder.joinTxtView.setText("JOIN+");
+            } else {
+                viewHolder.joinTxtView.setText("JOIN");
+            }
             new CreateRoundedView(mContext.getResources().getColor(R.color.appThemeColor_1), Utils.dipToPixels(mContext, 15), Utils.dipToPixels(mContext, 0), Color.parseColor("#FFFFFF"), viewHolder.joinTxtView);
             new CreateRoundedView(mContext.getResources().getColor(R.color.appThemeColor_1), Utils.dipToPixels(mContext, 20), Utils.dipToPixels(mContext, 0), Color.parseColor("#FFFFFF"), viewHolder.singleEntryTxtView);
             new CreateRoundedView(mContext.getResources().getColor(R.color.appThemeColor_1), Utils.dipToPixels(mContext, 20), Utils.dipToPixels(mContext, 0), Color.parseColor("#FFFFFF"), viewHolder.confirmedTxtView);
@@ -104,8 +118,20 @@ public class ContestListRecycleAdapter extends RecyclerView.Adapter<RecyclerView
                     Bundle bn = new Bundle();
                     bn.putString("iMatchId", item.get("iMatchId"));
                     bn.putString("iConstestId", item.get("iConstestId"));
-                    bn.putString("PAGE_TYPE", contestAct.PAGE_TYPE);
+                    bn.putString("PAGE_TYPE", contestAct == null ? joinedContestAct.PAGE_TYPE : contestAct.PAGE_TYPE);
                     (new StartActProcess(mContext)).startActForResult(CreateTeamActivity.class, bn, Utils.CREATE_TEAM_REQ_CODE);
+                }
+            });
+
+            viewHolder.contentArea.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    Bundle bn = new Bundle();
+                    bn.putString("iMatchId", item.get("iMatchId"));
+                    bn.putString("iConstestId", item.get("iConstestId"));
+                    bn.putString("PAGE_TYPE", contestAct == null ? joinedContestAct.PAGE_TYPE : contestAct.PAGE_TYPE);
+                    (new StartActProcess(mContext)).startActForResult(ContestDetailsActivity.class, bn, Utils.CONTEST_DETAILS_REQ_CODE);
                 }
             });
         } else if (holder instanceof HeaderViewHolder) {
