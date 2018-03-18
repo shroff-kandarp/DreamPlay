@@ -1,6 +1,7 @@
 package com.fragments;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -94,7 +95,7 @@ public class PanCardFragment extends Fragment {
 
         stateBox.setBothText("State", "Select your state");
         panCardNumBox.setBothText("Pan Number", "Enter pan card number");
-
+        btn_type2.setText("Submit");
     }
 
     public void removeInput() {
@@ -135,14 +136,23 @@ public class PanCardFragment extends Fragment {
 
                         if (obj_msg != null) {
                             nameBox.setText(generalFunc.getJsonValue("vName", obj_msg));
-                            dobBox.setText(generalFunc.getJsonValue("dDOB", obj_msg));
 
-                            if (!dobBox.getText().toString().equals("")) {
+                            String tPanDOB = generalFunc.getJsonValue("tPanDOB", obj_msg);
+                            String vPanState = generalFunc.getJsonValue("vPanState", obj_msg);
+                            String vState = generalFunc.getJsonValue("vState", obj_msg);
+
+                            dobBox.setText(tPanDOB.equals("") ? generalFunc.getJsonValue("dDOB", obj_msg) : tPanDOB);
+
+                            if (!dobBox.getText().toString().equals("") || !tPanDOB.equals("")) {
                                 isDOBSelected = true;
                             }
-                            stateBox.setText(generalFunc.getJsonValue("vState", obj_msg));
-
-                            iStateId = generalFunc.getJsonValue("iStateId", obj_msg);
+                            if (!vPanState.equals("")) {
+                                stateBox.setText(vPanState);
+                                iStateId = generalFunc.getJsonValue("iPanStateId", obj_msg);
+                            } else if (!vState.equals("")) {
+                                stateBox.setText(vPanState.equals("") ? generalFunc.getJsonValue("vState", obj_msg) : vPanState);
+                                iStateId = generalFunc.getJsonValue("iStateId", obj_msg);
+                            }
 
                         }
 
@@ -243,5 +253,47 @@ public class PanCardFragment extends Fragment {
 
     public void checkData() {
 
+        if (iStateId.equals("") || isDOBSelected == false || Utils.checkText(nameBox) == false || Utils.checkText(panCardNumBox) == false) {
+
+            GeneralFunctions.showMessage(GeneralFunctions.getCurrentView((Activity) getActContext()), "All information is required.");
+        } else {
+            updatePanCardDetails();
+        }
+    }
+
+    public void updatePanCardDetails() {
+        HashMap<String, String> parameters = new HashMap<>();
+        parameters.put("type", "updatePanCardDetails");
+        parameters.put("iMemberId", generalFunc.getMemberId());
+        parameters.put("vPanCardName", Utils.getText(nameBox));
+        parameters.put("vPanCardNum", Utils.getText(panCardNumBox));
+        parameters.put("tPanDOB", Utils.getText(dobBox));
+        parameters.put("iPanStateId", iStateId);
+
+        ExecuteWebServerUrl exeWebServer = new ExecuteWebServerUrl(parameters);
+        exeWebServer.setLoaderConfig(getActContext(), true, generalFunc);
+        exeWebServer.setDataResponseListener(new ExecuteWebServerUrl.SetDataResponse() {
+            @Override
+            public void setResponse(final String responseString) {
+
+                Utils.printLog("ResponseData", "Data::" + responseString);
+                loadingBar.setVisibility(View.GONE);
+                if (responseString != null && !responseString.equals("")) {
+                    boolean isDataAvail = GeneralFunctions.checkDataAvail(Utils.action_str, responseString);
+
+                    if (isDataAvail) {
+
+                        JSONObject obj_msg = generalFunc.getJsonObject(Utils.message_str, responseString);
+
+                        getUserData();
+                    }
+                    generalFunc.showGeneralMessage("", generalFunc.getJsonValue(Utils.message_str, responseString));
+
+                } else {
+                    generalFunc.showError();
+                }
+            }
+        });
+        exeWebServer.execute();
     }
 }
