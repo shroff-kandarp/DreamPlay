@@ -206,6 +206,9 @@ public class MainActivity extends BaseActivity implements DrawerMenuRecycleAdapt
             case MENU_PROFILE:
                 (new StartActProcess(getActContext())).startAct(MyProfileActivity.class);
                 break;
+            case MENU_VERIFY:
+                (new StartActProcess(getActContext())).startAct(VerifyUserActivity.class);
+                break;
             case MENU_LOGOUT:
                 confirmSignOut();
                 break;

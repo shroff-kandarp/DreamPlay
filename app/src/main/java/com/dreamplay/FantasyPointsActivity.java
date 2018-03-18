@@ -32,7 +32,6 @@ public class FantasyPointsActivity extends AppCompatActivity {
     MTextView noPointsTxtView;
     ErrorView errorView;
     ViewPager viewPager;
-
     TabLayout tabLayout;
 
     public ArrayList<HashMap<String, String>> fantasyPointsCategoryList = new ArrayList<>();

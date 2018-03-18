@@ -173,7 +173,6 @@ public class ContestListRecycleAdapter extends RecyclerView.Adapter<RecyclerView
         } else {
             return list.size();
         }
-
     }
 
     public void addFooterView() {

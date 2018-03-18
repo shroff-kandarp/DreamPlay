@@ -78,7 +78,8 @@
         <activity android:name=".FantasyPointsActivity" />
         <activity android:name=".ContestDetailsActivity" />
         <activity android:name=".UserMatchTeamsActivity" />
-        <activity android:name=".JoinedContestActivity"></activity>
+        <activity android:name=".JoinedContestActivity" />
+        <activity android:name=".VerifyUserActivity"></activity>
     </application>
 
 </manifest>
