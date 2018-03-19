@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="80dp">
+    android:minHeight="80dp"
+    android:layout_height="90dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,16 +26,32 @@
             app:sriv_right_bottom_corner_radius="25dip"
             app:sriv_right_top_corner_radius="25dip" />
 
-        <com.view.MTextView
-            android:id="@+id/playerNameTxtView"
+        <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
             android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:textSize="@dimen/txt_size_18" />
+            android:layout_marginRight="5dp"
+            android:orientation="vertical">
 
+            <com.view.MTextView
+                android:id="@+id/playerNameTxtView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:textSize="@dimen/txt_size_18" />
+
+            <com.view.MTextView
+                android:id="@+id/playerTeamTxtView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:textColor="#919191"
+                android:textSize="@dimen/txt_size_16" />
+
+        </LinearLayout>
 
         <com.view.MTextView
             android:id="@+id/pointsTxtView"
@@ -65,6 +82,6 @@
         android:layout_height="match_parent"
         android:layout_margin="4dp"
         android:alpha="0.54"
-        android:visibility="gone"
-        android:background="@color/appThemeColor_1" />
+        android:background="@color/appThemeColor_1"
+        android:visibility="gone" />
 </RelativeLayout>

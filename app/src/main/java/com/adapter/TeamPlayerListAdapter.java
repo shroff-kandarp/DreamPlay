@@ -92,6 +92,7 @@ public class TeamPlayerListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
             viewHolder.playerNameTxtView.setText(Html.fromHtml(item.get("vPlayerName")));
 
+            viewHolder.playerTeamTxtView.setText(item.get("vTeamName"));
             viewHolder.pointsTxtView.setText(item.get("tPoints"));
             viewHolder.creditsTxtView.setText(item.get("tCredits"));
             if (!item.get("vImgName").equals("")) {
@@ -102,15 +103,20 @@ public class TeamPlayerListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             }
 
             if (createTeamAct.selectedType.equals("Keeper")) {
-                viewHolder.playerImgView.setImageResource(R.mipmap.keeper_helmat);
+//                viewHolder.playerImgView.setImageResource(R.mipmap.keeper_helmat);
+                viewHolder.playerImgView.setImageResource(R.mipmap.ic_wk_hal);
             } else if (createTeamAct.selectedType.equals("BatsMan")) {
-                viewHolder.playerImgView.setImageResource(R.mipmap.cric_batsman);
+//                viewHolder.playerImgView.setImageResource(R.mipmap.cric_batsman);
+                viewHolder.playerImgView.setImageResource(R.mipmap.ic_wk_hal);
             } else if (createTeamAct.selectedType.equals("AllRounder")) {
-                viewHolder.playerImgView.setImageResource(R.mipmap.cric_allrounder);
+//                viewHolder.playerImgView.setImageResource(R.mipmap.cric_allrounder);
+                viewHolder.playerImgView.setImageResource(R.mipmap.ic_wk_hal);
             } else if (createTeamAct.selectedType.equals("Bowlers")) {
-                viewHolder.playerImgView.setImageResource(R.mipmap.cric_bowler);
+//                viewHolder.playerImgView.setImageResource(R.mipmap.cric_bowler);
+                viewHolder.playerImgView.setImageResource(R.mipmap.ic_bowl);
             } else {
-                viewHolder.playerImgView.setImageResource(R.mipmap.cric_allrounder);
+//                viewHolder.playerImgView.setImageResource(R.mipmap.cric_allrounder);
+                viewHolder.playerImgView.setImageResource(R.mipmap.ic_wk_hal);
             }
 
             if (chosenPlayersList.contains(item.get("iPlayerId"))) {
@@ -128,6 +134,7 @@ public class TeamPlayerListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                         totalSelectedPlayers = totalSelectedPlayers - 1;
                         viewHolder.selectionView.setVisibility(View.GONE);
                         createTeamAct.totalAvailCredit = createTeamAct.totalAvailCredit + GeneralFunctions.parseDouble(0.0, viewHolder.creditsTxtView.getText().toString());
+
                     } else {
                         if (totalSizeForSelection > totalSelectedPlayers) {
                             chosenPlayersList.add(item.get("iPlayerId"));
@@ -157,10 +164,12 @@ public class TeamPlayerListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     }
 
                     countTotalPlayersTxtView.setText("PLAYERS " + chosenPlayersList.size() + "/11");
-                    createTeamAct.countTotalCreditsInfoTxtView.setText("CREDITS LEFT " + String.format("%2f", createTeamAct.totalAvailCredit) + "/" + createTeamAct.OrigAvailCredit);
+                    createTeamAct.countTotalCreditsInfoTxtView.setText("CREDITS LEFT " + String.format("%.2f", createTeamAct.totalAvailCredit) + "/" + createTeamAct.OrigAvailCredit);
                     if (mItemClickListener != null) {
                         mItemClickListener.onItemClickList(view, position);
                     }
+
+                    notifyDataSetChanged();
                 }
             });
         } else if (holder instanceof HeaderViewHolder) {
@@ -229,6 +238,7 @@ public class TeamPlayerListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
         public MTextView playerNameTxtView;
         public MTextView pointsTxtView;
+        public MTextView playerTeamTxtView;
         public MTextView creditsTxtView;
         public SelectableRoundedImageView playerImgView;
         public View contentArea;
@@ -239,6 +249,7 @@ public class TeamPlayerListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
             playerNameTxtView = (MTextView) view.findViewById(R.id.playerNameTxtView);
             pointsTxtView = (MTextView) view.findViewById(R.id.pointsTxtView);
+            playerTeamTxtView = (MTextView) view.findViewById(R.id.playerTeamTxtView);
             creditsTxtView = (MTextView) view.findViewById(R.id.creditsTxtView);
             playerImgView = (SelectableRoundedImageView) view.findViewById(R.id.playerImgView);
             selectionView = view.findViewById(R.id.selectionView);

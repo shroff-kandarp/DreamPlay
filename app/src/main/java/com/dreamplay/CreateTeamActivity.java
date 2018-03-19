@@ -197,8 +197,10 @@ public class CreateTeamActivity extends AppCompatActivity {
                         JSONObject obj_msg = generalFunc.getJsonObject(Utils.message_str, responseString);
                         JSONObject obj_matchData = generalFunc.getJsonObject("MatchData", responseString);
                         obj_userData = generalFunc.getJsonObject("MemberData", responseString);
-                        totalAvailCredit = GeneralFunctions.parseDouble(0, generalFunc.getJsonValue("WalletBalance", obj_userData));
-                        OrigAvailCredit = GeneralFunctions.parseDouble(0, generalFunc.getJsonValue("WalletBalance", obj_userData));
+//                        totalAvailCredit = GeneralFunctions.parseDouble(0, generalFunc.getJsonValue("WalletBalance", obj_userData));
+                        totalAvailCredit = 100;
+//                        OrigAvailCredit = GeneralFunctions.parseDouble(0, generalFunc.getJsonValue("WalletBalance", obj_userData));
+                        OrigAvailCredit = 100;
 
                         if (obj_matchData != null) {
                             setMatchData(obj_matchData);
