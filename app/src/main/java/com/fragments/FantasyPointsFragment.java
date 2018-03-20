@@ -21,6 +21,8 @@ import com.utils.Utils;
 import com.view.CreateRoundedView;
 import com.view.MTextView;
 
+import java.util.ArrayList;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -56,18 +58,22 @@ public class FantasyPointsFragment extends Fragment {
         descriptionTxtView.setText(Html.fromHtml(description_str));
 
         new CreateRoundedView(Color.parseColor("#FFFFFF"), Utils.dipToPixels(getActContext(), 2), Utils.dipToPixels(getActContext(), 2), getActContext().getResources().getColor(R.color.appThemeColor_1), table_main);
-        setPoints();
+
+        if (iFantasyPointsCategoryId.equalsIgnoreCase("3")) {
+            setEconomyRatePoints();
+        }else if (iFantasyPointsCategoryId.equalsIgnoreCase("4")) {
+            setStrikeRatePoints();
+        } else {
+
+            setPoints();
+        }
         return view;
     }
 
-    public void setPoints() {
+    public void setPointsHeader(){
         TableRow row0 = new TableRow(getActContext());
         row0.setBackgroundColor(getActContext().getResources().getColor(R.color.appThemeColor_1));
-//        row0.setPadding(Utils.dipToPixels(getActContext(),5),Utils.dipToPixels(getActContext(),5),Utils.dipToPixels(getActContext(),5),Utils.dipToPixels(getActContext(),5));
-
-
-        row0.setPadding(0,0,0,Utils.dipToPixels(getActContext(),5));
-
+        row0.setPadding(0, 0, 0, Utils.dipToPixels(getActContext(), 5));
 
         MTextView tv0 = new MTextView(getActContext());
         tv0.setText("Type of Points");
@@ -90,18 +96,23 @@ public class FantasyPointsFragment extends Fragment {
         }
 
         table_main.addView(row0);
+    }
 
+    public void setPoints() {
+
+        setPointsHeader();
 
         for (int i = 0; i < fantasyPointsAct.pointsTypesList.size(); i++) {
             String iPointTypeId = fantasyPointsAct.pointsTypesList.get(i).get("iPointTypeId");
             TableRow pointsRow = new TableRow(getActContext());
 
-            if(i%2 == 0){
+            ArrayList<MTextView> rowsDataList = new ArrayList<>();
+            if (i % 2 == 0) {
                 pointsRow.setBackgroundColor(getActContext().getResources().getColor(android.R.color.transparent));
-            }else{
+            } else {
                 pointsRow.setBackgroundColor(Color.parseColor("#E8E8E8"));
             }
-            pointsRow.setPadding(0,0,0,Utils.dipToPixels(getActContext(),5));
+            pointsRow.setPadding(0, 0, 0, Utils.dipToPixels(getActContext(), 5));
             MTextView tv_tmp = new MTextView(getActContext());
             tv_tmp.setText(fantasyPointsAct.pointsTypesList.get(i).get("vName").trim());
             tv_tmp.setTextColor(Color.parseColor("#767676"));
@@ -110,6 +121,9 @@ public class FantasyPointsFragment extends Fragment {
             tv_tmp.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
             tv_tmp.setHeight(Utils.dipToPixels(getActContext(), 50));
             pointsRow.addView(tv_tmp);
+            rowsDataList.add(tv_tmp);
+
+            boolean allPointsBlank = true;
 
             for (int j = 0; j < fantasyPointsAct.matchCategoryList.size(); j++) {
                 String iMatchCategoryId = fantasyPointsAct.matchCategoryList.get(j).get("iMatchCategoryId");
@@ -123,6 +137,9 @@ public class FantasyPointsFragment extends Fragment {
 
                     if (iPointTypeId_tmp.equals(iPointTypeId) && iMatchCategoryId_tmp.equals(iMatchCategoryId) && iFantasyPointsCategoryId_tmp.equals(iFantasyPointsCategoryId)) {
 
+                        if (!dPoint_tmp.trim().equals("")) {
+                            allPointsBlank = false;
+                        }
                         MTextView tv_tmp_points = new MTextView(getActContext());
                         tv_tmp_points.setText(dPoint_tmp);
                         tv_tmp_points.setTextColor(Color.parseColor("#767676"));
@@ -131,21 +148,432 @@ public class FantasyPointsFragment extends Fragment {
                         tv_tmp_points.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
                         tv_tmp_points.setHeight(Utils.dipToPixels(getActContext(), 50));
                         pointsRow.addView(tv_tmp_points);
+
+                        rowsDataList.add(tv_tmp_points);
                     }
                 }
             }
+            if (allPointsBlank == false) {
+
+                table_main.addView(pointsRow);
+
+
+                TableLayout.LayoutParams paramsTmpRow = (TableLayout.LayoutParams) pointsRow.getLayoutParams();
+                paramsTmpRow.setMargins(Utils.dipToPixels(getActContext(), 2), 0, Utils.dipToPixels(getActContext(), 2), 0);
+
+                pointsRow.setLayoutParams(paramsTmpRow);
+            }
+
+
+        }
+    }
+
+    public void setStrikeRatePoints(){
+        setPointsHeader();
+
+        for (int i =0;i<3;i++) {
+            TableRow pointsRow = new TableRow(getActContext());
+
+            ArrayList<MTextView> rowsDataList = new ArrayList<>();
+            if (i % 2 == 0) {
+                pointsRow.setBackgroundColor(getActContext().getResources().getColor(android.R.color.transparent));
+            } else {
+                pointsRow.setBackgroundColor(Color.parseColor("#E8E8E8"));
+            }
+            pointsRow.setPadding(0, 0, 0, Utils.dipToPixels(getActContext(), 5));
+            MTextView tv_tmp = new MTextView(getActContext());
+            if(i==0){
+                tv_tmp.setText("Between 60 & 70 runs");
+            }else if(i==1){
+
+                tv_tmp.setText("Between 50 & 59.9 runs");
+            }else if(i==2){
+
+                tv_tmp.setText("Below 50 runs");
+            }
+            tv_tmp.setTextColor(Color.parseColor("#767676"));
+            tv_tmp.setWidth(TableRow.LayoutParams.MATCH_PARENT);
+            tv_tmp.setGravity(Gravity.CENTER);
+            tv_tmp.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+            tv_tmp.setHeight(Utils.dipToPixels(getActContext(), 50));
+            pointsRow.addView(tv_tmp);
+            rowsDataList.add(tv_tmp);
+
+            MTextView tv_tmp_points_t20 = new MTextView(getActContext());
+            if(i==0){
+                tv_tmp_points_t20.setText("-1");
+            }else if(i==1){
+                tv_tmp_points_t20.setText("-2");
+            }else if(i==2){
+                tv_tmp_points_t20.setText("-3");
+            }
+            tv_tmp_points_t20.setTextColor(Color.parseColor("#767676"));
+            tv_tmp_points_t20.setWidth(TableRow.LayoutParams.MATCH_PARENT);
+            tv_tmp_points_t20.setGravity(Gravity.CENTER);
+            tv_tmp_points_t20.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+            tv_tmp_points_t20.setHeight(Utils.dipToPixels(getActContext(), 50));
+            pointsRow.addView(tv_tmp_points_t20);
+
+            rowsDataList.add(tv_tmp_points_t20);
+
+
+            MTextView tv_tmp_points_ODI = new MTextView(getActContext());
+            if(i==0){
+                tv_tmp_points_ODI.setText("--");
+            }else if(i==1){
+                tv_tmp_points_ODI.setText("--");
+            }else if(i==2){
+                tv_tmp_points_ODI.setText("--");
+            }
+            tv_tmp_points_ODI.setTextColor(Color.parseColor("#767676"));
+            tv_tmp_points_ODI.setWidth(TableRow.LayoutParams.MATCH_PARENT);
+            tv_tmp_points_ODI.setGravity(Gravity.CENTER);
+            tv_tmp_points_ODI.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+            tv_tmp_points_ODI.setHeight(Utils.dipToPixels(getActContext(), 50));
+            pointsRow.addView(tv_tmp_points_ODI);
+
+            rowsDataList.add(tv_tmp_points_ODI);
+
+
+
+            MTextView tv_tmp_points_test = new MTextView(getActContext());
+            if(i==0){
+                tv_tmp_points_test.setText("--");
+            }else if(i==1){
+                tv_tmp_points_test.setText("--");
+            }else if(i==2){
+                tv_tmp_points_test.setText("--");
+            }
+            tv_tmp_points_test.setTextColor(Color.parseColor("#767676"));
+            tv_tmp_points_test.setWidth(TableRow.LayoutParams.MATCH_PARENT);
+            tv_tmp_points_test.setGravity(Gravity.CENTER);
+            tv_tmp_points_test.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+            tv_tmp_points_test.setHeight(Utils.dipToPixels(getActContext(), 50));
+            pointsRow.addView(tv_tmp_points_test);
+
+            rowsDataList.add(tv_tmp_points_test);
 
 
             table_main.addView(pointsRow);
 
 
-            TableLayout.LayoutParams paramsTmpRow = (TableLayout.LayoutParams)pointsRow.getLayoutParams();
-            paramsTmpRow.setMargins(Utils.dipToPixels(getActContext(),2),0,Utils.dipToPixels(getActContext(),2),0);
+            TableLayout.LayoutParams paramsTmpRow = (TableLayout.LayoutParams) pointsRow.getLayoutParams();
+            paramsTmpRow.setMargins(Utils.dipToPixels(getActContext(), 2), 0, Utils.dipToPixels(getActContext(), 2), 0);
 
             pointsRow.setLayoutParams(paramsTmpRow);
         }
+
+        for (int i =0;i<3;i++) {
+            TableRow pointsRow = new TableRow(getActContext());
+
+            ArrayList<MTextView> rowsDataList = new ArrayList<>();
+            if (i % 2 == 0) {
+                pointsRow.setBackgroundColor(getActContext().getResources().getColor(android.R.color.transparent));
+            } else {
+                pointsRow.setBackgroundColor(Color.parseColor("#E8E8E8"));
+            }
+            pointsRow.setPadding(0, 0, 0, Utils.dipToPixels(getActContext(), 5));
+            MTextView tv_tmp = new MTextView(getActContext());
+            if(i==0){
+                tv_tmp.setText("Between 50 & 60 runs");
+            }else if(i==1){
+
+                tv_tmp.setText("Between 40 & 49.9 runs");
+            }else if(i==2){
+
+                tv_tmp.setText("Below 40 runs");
+            }
+            tv_tmp.setTextColor(Color.parseColor("#767676"));
+            tv_tmp.setWidth(TableRow.LayoutParams.MATCH_PARENT);
+            tv_tmp.setGravity(Gravity.CENTER);
+            tv_tmp.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+            tv_tmp.setHeight(Utils.dipToPixels(getActContext(), 50));
+            pointsRow.addView(tv_tmp);
+            rowsDataList.add(tv_tmp);
+
+            MTextView tv_tmp_points_t20 = new MTextView(getActContext());
+            if(i==0){
+                tv_tmp_points_t20.setText("--");
+            }else if(i==1){
+                tv_tmp_points_t20.setText("--");
+            }else if(i==2){
+                tv_tmp_points_t20.setText("--");
+            }
+            tv_tmp_points_t20.setTextColor(Color.parseColor("#767676"));
+            tv_tmp_points_t20.setWidth(TableRow.LayoutParams.MATCH_PARENT);
+            tv_tmp_points_t20.setGravity(Gravity.CENTER);
+            tv_tmp_points_t20.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+            tv_tmp_points_t20.setHeight(Utils.dipToPixels(getActContext(), 50));
+            pointsRow.addView(tv_tmp_points_t20);
+
+            rowsDataList.add(tv_tmp_points_t20);
+
+
+
+            MTextView tv_tmp_points_ODI = new MTextView(getActContext());
+            if(i==0){
+                tv_tmp_points_ODI.setText("-1");
+            }else if(i==1){
+                tv_tmp_points_ODI.setText("-2");
+            }else if(i==2){
+                tv_tmp_points_ODI.setText("-3");
+            }
+            tv_tmp_points_ODI.setTextColor(Color.parseColor("#767676"));
+            tv_tmp_points_ODI.setWidth(TableRow.LayoutParams.MATCH_PARENT);
+            tv_tmp_points_ODI.setGravity(Gravity.CENTER);
+            tv_tmp_points_ODI.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+            tv_tmp_points_ODI.setHeight(Utils.dipToPixels(getActContext(), 50));
+            pointsRow.addView(tv_tmp_points_ODI);
+
+            rowsDataList.add(tv_tmp_points_ODI);
+
+
+
+            MTextView tv_tmp_points_test = new MTextView(getActContext());
+            if(i==0){
+                tv_tmp_points_test.setText("--");
+            }else if(i==1){
+                tv_tmp_points_test.setText("--");
+            }else if(i==2){
+                tv_tmp_points_test.setText("--");
+            }
+            tv_tmp_points_test.setTextColor(Color.parseColor("#767676"));
+            tv_tmp_points_test.setWidth(TableRow.LayoutParams.MATCH_PARENT);
+            tv_tmp_points_test.setGravity(Gravity.CENTER);
+            tv_tmp_points_test.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+            tv_tmp_points_test.setHeight(Utils.dipToPixels(getActContext(), 50));
+            pointsRow.addView(tv_tmp_points_test);
+
+            rowsDataList.add(tv_tmp_points_test);
+
+            table_main.addView(pointsRow);
+
+
+            TableLayout.LayoutParams paramsTmpRow = (TableLayout.LayoutParams) pointsRow.getLayoutParams();
+            paramsTmpRow.setMargins(Utils.dipToPixels(getActContext(), 2), 0, Utils.dipToPixels(getActContext(), 2), 0);
+
+            pointsRow.setLayoutParams(paramsTmpRow);
+        }
+
     }
 
+
+    public void setEconomyRatePoints(){
+        setPointsHeader();
+
+        for (int i =0;i<5;i++) {
+            TableRow pointsRow = new TableRow(getActContext());
+
+            ArrayList<MTextView> rowsDataList = new ArrayList<>();
+            if (i % 2 == 0) {
+                pointsRow.setBackgroundColor(getActContext().getResources().getColor(android.R.color.transparent));
+            } else {
+                pointsRow.setBackgroundColor(Color.parseColor("#E8E8E8"));
+            }
+            pointsRow.setPadding(0, 0, 0, Utils.dipToPixels(getActContext(), 5));
+            MTextView tv_tmp = new MTextView(getActContext());
+            if(i==0){
+                tv_tmp.setText("Between 4.99 & 4 runs");
+            }else if(i==1){
+                tv_tmp.setText("Below 4 runs");
+            }else if(i==2){
+                tv_tmp.setText("Between 9 & 10 runs");
+            }else if(i==3){
+                tv_tmp.setText("Between 10.1 & 11 runs");
+            }else if(i==4){
+                tv_tmp.setText("Above 11 runs");
+            }
+            tv_tmp.setTextColor(Color.parseColor("#767676"));
+            tv_tmp.setWidth(TableRow.LayoutParams.MATCH_PARENT);
+            tv_tmp.setGravity(Gravity.CENTER);
+            tv_tmp.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+            tv_tmp.setHeight(Utils.dipToPixels(getActContext(), 50));
+            pointsRow.addView(tv_tmp);
+            rowsDataList.add(tv_tmp);
+
+            MTextView tv_tmp_points_t20 = new MTextView(getActContext());
+            if(i==0){
+                tv_tmp_points_t20.setText("2");
+            }else if(i==1){
+                tv_tmp_points_t20.setText("3");
+            }else if(i==2){
+                tv_tmp_points_t20.setText("-1");
+            }else if(i==3){
+                tv_tmp_points_t20.setText("-2");
+            }else if(i==4){
+                tv_tmp_points_t20.setText("-3");
+            }
+            tv_tmp_points_t20.setTextColor(Color.parseColor("#767676"));
+            tv_tmp_points_t20.setWidth(TableRow.LayoutParams.MATCH_PARENT);
+            tv_tmp_points_t20.setGravity(Gravity.CENTER);
+            tv_tmp_points_t20.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+            tv_tmp_points_t20.setHeight(Utils.dipToPixels(getActContext(), 50));
+            pointsRow.addView(tv_tmp_points_t20);
+
+            rowsDataList.add(tv_tmp_points_t20);
+
+
+            MTextView tv_tmp_points_ODI = new MTextView(getActContext());
+            if(i==0){
+                tv_tmp_points_ODI.setText("--");
+            }else if(i==1){
+                tv_tmp_points_ODI.setText("--");
+            }else if(i==2){
+                tv_tmp_points_ODI.setText("--");
+            }else if(i==3){
+                tv_tmp_points_ODI.setText("--");
+            }else if(i==4){
+                tv_tmp_points_ODI.setText("--");
+            }
+            tv_tmp_points_ODI.setTextColor(Color.parseColor("#767676"));
+            tv_tmp_points_ODI.setWidth(TableRow.LayoutParams.MATCH_PARENT);
+            tv_tmp_points_ODI.setGravity(Gravity.CENTER);
+            tv_tmp_points_ODI.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+            tv_tmp_points_ODI.setHeight(Utils.dipToPixels(getActContext(), 50));
+            pointsRow.addView(tv_tmp_points_ODI);
+
+            rowsDataList.add(tv_tmp_points_ODI);
+
+
+
+            MTextView tv_tmp_points_test = new MTextView(getActContext());
+            if(i==0){
+                tv_tmp_points_test.setText("--");
+            }else if(i==1){
+                tv_tmp_points_test.setText("--");
+            }else if(i==2){
+                tv_tmp_points_test.setText("--");
+            }else if(i==3){
+                tv_tmp_points_test.setText("--");
+            }else if(i==4){
+                tv_tmp_points_test.setText("--");
+            }
+            tv_tmp_points_test.setTextColor(Color.parseColor("#767676"));
+            tv_tmp_points_test.setWidth(TableRow.LayoutParams.MATCH_PARENT);
+            tv_tmp_points_test.setGravity(Gravity.CENTER);
+            tv_tmp_points_test.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+            tv_tmp_points_test.setHeight(Utils.dipToPixels(getActContext(), 50));
+            pointsRow.addView(tv_tmp_points_test);
+
+            rowsDataList.add(tv_tmp_points_test);
+
+
+            table_main.addView(pointsRow);
+
+
+            TableLayout.LayoutParams paramsTmpRow = (TableLayout.LayoutParams) pointsRow.getLayoutParams();
+            paramsTmpRow.setMargins(Utils.dipToPixels(getActContext(), 2), 0, Utils.dipToPixels(getActContext(), 2), 0);
+
+            pointsRow.setLayoutParams(paramsTmpRow);
+        }
+
+        for (int i =0;i<5;i++) {
+            TableRow pointsRow = new TableRow(getActContext());
+
+            ArrayList<MTextView> rowsDataList = new ArrayList<>();
+            if (i % 2 == 0) {
+                pointsRow.setBackgroundColor(getActContext().getResources().getColor(android.R.color.transparent));
+            } else {
+                pointsRow.setBackgroundColor(Color.parseColor("#E8E8E8"));
+            }
+            pointsRow.setPadding(0, 0, 0, Utils.dipToPixels(getActContext(), 5));
+            MTextView tv_tmp = new MTextView(getActContext());
+            if(i==0){
+                tv_tmp.setText("Between 3.49 & 2.5 runs");
+            }else if(i==1){
+                tv_tmp.setText("Below 2.5 runs");
+            }else if(i==2){
+                tv_tmp.setText("Between 7 & 8 runs");
+            }else if(i==3){
+                tv_tmp.setText("Between 8.1 & 9 runs");
+            }else if(i==4){
+                tv_tmp.setText("Above 9 runs");
+            }
+            tv_tmp.setTextColor(Color.parseColor("#767676"));
+            tv_tmp.setWidth(TableRow.LayoutParams.MATCH_PARENT);
+            tv_tmp.setGravity(Gravity.CENTER);
+            tv_tmp.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+            tv_tmp.setHeight(Utils.dipToPixels(getActContext(), 50));
+            pointsRow.addView(tv_tmp);
+            rowsDataList.add(tv_tmp);
+
+            MTextView tv_tmp_points_t20 = new MTextView(getActContext());
+            if(i==0){
+                tv_tmp_points_t20.setText("--");
+            }else if(i==1){
+                tv_tmp_points_t20.setText("--");
+            }else if(i==2){
+                tv_tmp_points_t20.setText("--");
+            }else if(i==3){
+                tv_tmp_points_t20.setText("--");
+            }else if(i==4){
+                tv_tmp_points_t20.setText("--");
+            }
+            tv_tmp_points_t20.setTextColor(Color.parseColor("#767676"));
+            tv_tmp_points_t20.setWidth(TableRow.LayoutParams.MATCH_PARENT);
+            tv_tmp_points_t20.setGravity(Gravity.CENTER);
+            tv_tmp_points_t20.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+            tv_tmp_points_t20.setHeight(Utils.dipToPixels(getActContext(), 50));
+            pointsRow.addView(tv_tmp_points_t20);
+
+            rowsDataList.add(tv_tmp_points_t20);
+
+
+
+            MTextView tv_tmp_points_ODI = new MTextView(getActContext());
+            if(i==0){
+                tv_tmp_points_ODI.setText("2");
+            }else if(i==1){
+                tv_tmp_points_ODI.setText("3");
+            }else if(i==2){
+                tv_tmp_points_ODI.setText("-1");
+            }else if(i==3){
+                tv_tmp_points_ODI.setText("-2");
+            }else if(i==4){
+                tv_tmp_points_ODI.setText("-3");
+            }
+            tv_tmp_points_ODI.setTextColor(Color.parseColor("#767676"));
+            tv_tmp_points_ODI.setWidth(TableRow.LayoutParams.MATCH_PARENT);
+            tv_tmp_points_ODI.setGravity(Gravity.CENTER);
+            tv_tmp_points_ODI.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+            tv_tmp_points_ODI.setHeight(Utils.dipToPixels(getActContext(), 50));
+            pointsRow.addView(tv_tmp_points_ODI);
+
+            rowsDataList.add(tv_tmp_points_ODI);
+
+
+
+            MTextView tv_tmp_points_test = new MTextView(getActContext());
+            if(i==0){
+                tv_tmp_points_test.setText("--");
+            }else if(i==1){
+                tv_tmp_points_test.setText("--");
+            }else if(i==2){
+                tv_tmp_points_test.setText("--");
+            }else if(i==3){
+                tv_tmp_points_test.setText("--");
+            }else if(i==4){
+                tv_tmp_points_test.setText("--");
+            }
+            tv_tmp_points_test.setTextColor(Color.parseColor("#767676"));
+            tv_tmp_points_test.setWidth(TableRow.LayoutParams.MATCH_PARENT);
+            tv_tmp_points_test.setGravity(Gravity.CENTER);
+            tv_tmp_points_test.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+            tv_tmp_points_test.setHeight(Utils.dipToPixels(getActContext(), 50));
+            pointsRow.addView(tv_tmp_points_test);
+
+            rowsDataList.add(tv_tmp_points_test);
+
+            table_main.addView(pointsRow);
+
+
+            TableLayout.LayoutParams paramsTmpRow = (TableLayout.LayoutParams) pointsRow.getLayoutParams();
+            paramsTmpRow.setMargins(Utils.dipToPixels(getActContext(), 2), 0, Utils.dipToPixels(getActContext(), 2), 0);
+
+            pointsRow.setLayoutParams(paramsTmpRow);
+        }
+
+    }
     public Context getActContext() {
         return fantasyPointsAct.getActContext();
     }

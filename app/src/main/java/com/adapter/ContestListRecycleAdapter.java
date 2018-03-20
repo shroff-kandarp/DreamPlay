@@ -123,6 +123,18 @@ public class ContestListRecycleAdapter extends RecyclerView.Adapter<RecyclerView
                 }
             });
 
+            if(contestAct!= null && contestAct.PAGE_TYPE.equalsIgnoreCase("FIXTURES")){
+                viewHolder.joinArea.setVisibility(View.VISIBLE);
+            }else if(contestAct!= null) {
+                viewHolder.joinArea.setVisibility(View.GONE);
+            }
+
+            if(joinedContestAct!= null && joinedContestAct.PAGE_TYPE.equalsIgnoreCase("FIXTURES")){
+                viewHolder.joinArea.setVisibility(View.VISIBLE);
+            }else if(joinedContestAct!= null) {
+                viewHolder.joinArea.setVisibility(View.GONE);
+            }
+
             viewHolder.contentArea.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

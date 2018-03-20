@@ -251,8 +251,11 @@ public class MyProfileActivity extends BaseActivity {
             } else if (i == dobBox.getId()) {
                 chooseDate();
             } else if (i == stateBox.getId()) {
-                if (list_state != null) {
-                    list_state.show();
+                if(iStateId.equals("") || GeneralFunctions.parseInt(0,iStateId) == 0){
+
+                    if (list_state != null) {
+                        list_state.show();
+                    }
                 }
             }else if (i == btn_type2.getId()) {
                 checkData();

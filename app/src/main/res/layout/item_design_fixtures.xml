@@ -47,6 +47,7 @@
                         android:layout_gravity="center_horizontal"
                         android:gravity="center"
                         android:textColor="#5C5C5C"
+                        android:maxWidth="100dp"
                         android:textSize="@dimen/txt_size_16"
                         app:customTypeFace="@string/semiBoldFont" />
                 </LinearLayout>
@@ -131,6 +132,7 @@
                         android:gravity="center"
                         android:textColor="#5C5C5C"
                         android:textSize="@dimen/txt_size_16"
+                        android:maxWidth="100dp"
                         app:customTypeFace="@string/semiBoldFont" />
                 </LinearLayout>
             </LinearLayout>

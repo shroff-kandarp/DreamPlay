@@ -110,6 +110,8 @@ public class FixturesRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
                 }
             });
 
+            String pageType = "";
+
             if (item.get("matchStartDateInMilli") != null && !item.get("matchStartDateInMilli").equals("")) {
                 viewHolder.dateRemainsInfoTxtView.setVisibility(View.VISIBLE);
                 long milliSecRemains = (GeneralFunctions.parseLong(0, item.get("matchStartDateInMilli")));
@@ -128,13 +130,15 @@ public class FixturesRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
                             viewHolder.dateRemainsInfoTxtView.setText("");
                         }
                     }.start();
-
+                    pageType = "FIXTURES";
                 } else {
                     viewHolder.dateRemainsInfoTxtView.setText(PAGE_TYPE.equals("LIVE") ? "In Progress" : "Completed");
+                    pageType = PAGE_TYPE;
                 }
             } else {
                 viewHolder.dateRemainsInfoTxtView.setText(PAGE_TYPE.equals("LIVE") ? "In Progress" : "Completed");
                 viewHolder.dateRemainsInfoTxtView.setVisibility(View.VISIBLE);
+                pageType = PAGE_TYPE;
             }
 
 
@@ -144,12 +148,13 @@ public class FixturesRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
                 viewHolder.seperatorView.setVisibility(View.VISIBLE);
             }
 
+            final String finalPageType = pageType;
             viewHolder.contentArea.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Bundle bn = new Bundle();
                     bn.putString("iMatchId", item.get("iMatchId"));
-                    bn.putString("PAGE_TYPE", PAGE_TYPE);
+                    bn.putString("PAGE_TYPE", finalPageType);
                     (new StartActProcess(mContext)).startActWithData(ContestsActivity.class, bn);
                 }
             });
