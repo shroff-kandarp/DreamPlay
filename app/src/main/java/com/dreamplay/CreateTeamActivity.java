@@ -438,7 +438,7 @@ public class CreateTeamActivity extends AppCompatActivity {
                 setSelectedType("Wicket");
             } else if (i == batsManArea.getId()) {
                 selectedType = "BatsMan";
-                hintPlayRoleTxtView.setText("Pick 5 BatsMan");
+                hintPlayRoleTxtView.setText("Pick 3 to 5 BatsMan");
                 adapter.totalSizeForSelection = 5;
                 adapter.countSelectionTxtView = batsManCountTxtView;
                 adapter.totalSelectedPlayers = 0;
@@ -453,8 +453,8 @@ public class CreateTeamActivity extends AppCompatActivity {
                 setSelectedType("Batsman");
             } else if (i == allRounderArea.getId()) {
                 selectedType = "AllRounder";
-                hintPlayRoleTxtView.setText("Pick 2 AllRounder");
-                adapter.totalSizeForSelection = 2;
+                hintPlayRoleTxtView.setText("Pick 1 to 3 AllRounder");
+                adapter.totalSizeForSelection = 3;
                 adapter.countSelectionTxtView = allRounderCountTxtView;
                 adapter.totalSelectedPlayers = 0;
                 for (int j = 0; j < listAllRounderData.size(); j++) {
@@ -468,8 +468,8 @@ public class CreateTeamActivity extends AppCompatActivity {
                 setSelectedType("AllRounder");
             } else if (i == bowlerArea.getId()) {
                 selectedType = "Bowlers";
-                hintPlayRoleTxtView.setText("Pick 3 Bowlers");
-                adapter.totalSizeForSelection = 3;
+                hintPlayRoleTxtView.setText("Pick 3 to 5 Bowlers");
+                adapter.totalSizeForSelection = 5;
                 adapter.countSelectionTxtView = bowlerCountTxtView;
                 adapter.totalSelectedPlayers = 0;
                 for (int j = 0; j < listBowlerData.size(); j++) {

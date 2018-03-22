@@ -58,7 +58,6 @@ public class TeamPlayerListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         this.mItemClickListener = mItemClickListener;
     }
 
-
     public void setDataList(ArrayList<HashMap<String, String>> list) {
         this.list = list;
     }
@@ -78,6 +77,57 @@ public class TeamPlayerListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             return new ViewHolder(view);
         }
 
+    }
+
+    public boolean isPlayerSelectedAllowedForSelectedTeam(String iPlayerId) {
+        int countOfTeam1 = 0;
+        String team1 = "";
+
+        int countOfTeam2 = 0;
+        String team2 = "";
+        for (int i = 0; i < chosenPlayersList.size(); i++) {
+            String temp_player_id = chosenPlayersList.get(i);
+            for (int j = 0; j < list.size(); j++) {
+
+                if(!temp_player_id.equals(list.get(j).get("iPlayerId"))){
+                    continue;
+                }
+                if(team1.equals("")){
+                    team1 = list.get(j).get("vTeamName");
+                    countOfTeam1 = countOfTeam1 +1;
+                }
+
+                if(!team1.equals("") && team2.equals("") && !list.get(j).get("vTeamName").equals(team1)){
+
+                    team2 = list.get(j).get("vTeamName");
+                    countOfTeam2 = countOfTeam2 +1;
+                }
+                String tempTeamName =  list.get(j).get("vTeamName");
+
+                if(tempTeamName.equals(team1)){
+                    countOfTeam1 = countOfTeam1 +1;
+                }else if(tempTeamName.equals(team2)){
+                    countOfTeam2 = countOfTeam2 +1;
+                }
+            }
+        }
+
+        Utils.printLog("countOfTeam","countOfTeam1::"+countOfTeam1);
+        Utils.printLog("countOfTeam","countOfTeam2::"+countOfTeam2);
+        String selectedPlayerTeamName = "";
+
+        for (int j = 0; j < list.size(); j++) {
+
+           String iPlayerId_tmp =  list.get(j).get("iPlayerId");
+           if(iPlayerId_tmp.equals(iPlayerId)){
+               selectedPlayerTeamName =  list.get(j).get("vTeamName");
+           }
+        }
+        if((countOfTeam1 >= 6 && selectedPlayerTeamName.equals(team1)) || (countOfTeam2 >= 6 && selectedPlayerTeamName.equals(team2) )){
+            return false;
+        }
+
+        return true;
     }
 
     // Replace the contents of a view (invoked by the layout manager)
@@ -130,6 +180,15 @@ public class TeamPlayerListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 @Override
                 public void onClick(View view) {
 
+                    if (chosenPlayersList.size() >= 11) {
+                        GeneralFunctions.showMessage(GeneralFunctions.getCurrentView((Activity) mContext), "More then 11 players selection are not allowed.");
+                        return;
+                    }
+
+//                    if(!isPlayerSelectedAllowedForSelectedTeam(item.get("iPlayerId"))){
+//                        GeneralFunctions.showMessage(GeneralFunctions.getCurrentView((Activity) mContext), "Maximum 7 players are allowed from same team.");
+//                        return;
+//                    }
                     if (chosenPlayersList.contains(item.get("iPlayerId"))) {
                         chosenPlayersList.remove(item.get("iPlayerId"));
                         totalSelectedPlayers = totalSelectedPlayers - 1;
