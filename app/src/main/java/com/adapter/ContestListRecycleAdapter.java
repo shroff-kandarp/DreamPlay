@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,7 +67,7 @@ public class ContestListRecycleAdapter extends RecyclerView.Adapter<RecyclerView
             this.footerView = v;
             return new FooterViewHolder(v);
         } else if (viewType == TYPE_HEADER) {
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_manu_header_design, parent, false);
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_contest_list_header_design, parent, false);
             return new HeaderViewHolder(v);
         } else {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_contest_list_design, parent, false);
@@ -123,15 +122,15 @@ public class ContestListRecycleAdapter extends RecyclerView.Adapter<RecyclerView
                 }
             });
 
-            if(contestAct!= null && contestAct.PAGE_TYPE.equalsIgnoreCase("FIXTURES")){
+            if (contestAct != null && contestAct.PAGE_TYPE.equalsIgnoreCase("FIXTURES")) {
                 viewHolder.joinArea.setVisibility(View.VISIBLE);
-            }else if(contestAct!= null) {
+            } else if (contestAct != null) {
                 viewHolder.joinArea.setVisibility(View.GONE);
             }
 
-            if(joinedContestAct!= null && joinedContestAct.PAGE_TYPE.equalsIgnoreCase("FIXTURES")){
+            if (joinedContestAct != null && joinedContestAct.PAGE_TYPE.equalsIgnoreCase("FIXTURES")) {
                 viewHolder.joinArea.setVisibility(View.VISIBLE);
-            }else if(joinedContestAct!= null) {
+            } else if (joinedContestAct != null) {
                 viewHolder.joinArea.setVisibility(View.GONE);
             }
 
@@ -149,8 +148,14 @@ public class ContestListRecycleAdapter extends RecyclerView.Adapter<RecyclerView
         } else if (holder instanceof HeaderViewHolder) {
             final HashMap<String, String> item = list.get(position);
             HeaderViewHolder headerHolder = (HeaderViewHolder) holder;
-            headerHolder.headerTxtView.setText(Html.fromHtml(item.get("name")));
+//            headerHolder.headerTxtView.setText(Html.fromHtml(item.get("name")));
 //            Utils.printLog("CCN","::"+item.get("name"));
+
+            new CreateRoundedView(mContext.getResources().getColor(R.color.appThemeColor_1), Utils.dipToPixels(mContext, 10), Utils.dipToPixels(mContext, 0), Color.parseColor("#FFFFFF"), headerHolder.singleEntryTxtView);
+            new CreateRoundedView(mContext.getResources().getColor(R.color.appThemeColor_1), Utils.dipToPixels(mContext, 10), Utils.dipToPixels(mContext, 0), Color.parseColor("#FFFFFF"), headerHolder.confirmedTxtView);
+            new CreateRoundedView(mContext.getResources().getColor(R.color.appThemeColor_1), Utils.dipToPixels(mContext, 10), Utils.dipToPixels(mContext, 0), Color.parseColor("#FFFFFF"), headerHolder.unconfirmedTxtView);
+            new CreateRoundedView(mContext.getResources().getColor(R.color.appThemeColor_1), Utils.dipToPixels(mContext, 10), Utils.dipToPixels(mContext, 0), Color.parseColor("#FFFFFF"), headerHolder.multiEntryTxtView);
+
         } else {
             FooterViewHolder footerHolder = (FooterViewHolder) holder;
             this.footerHolder = footerHolder;
@@ -248,12 +253,18 @@ public class ContestListRecycleAdapter extends RecyclerView.Adapter<RecyclerView
     }
 
     class HeaderViewHolder extends RecyclerView.ViewHolder {
-        MTextView headerTxtView;
+        MTextView singleEntryTxtView;
+        MTextView confirmedTxtView;
+        MTextView multiEntryTxtView;
+        MTextView unconfirmedTxtView;
 
         public HeaderViewHolder(View itemView) {
             super(itemView);
 
-            headerTxtView = (MTextView) itemView.findViewById(R.id.headerTxtView);
+            singleEntryTxtView = (MTextView) itemView.findViewById(R.id.singleEntryTxtView);
+            multiEntryTxtView = (MTextView) itemView.findViewById(R.id.multiEntryTxtView);
+            confirmedTxtView = (MTextView) itemView.findViewById(R.id.confirmedTxtView);
+            unconfirmedTxtView = (MTextView) itemView.findViewById(R.id.unconfirmedTxtView);
 
         }
     }

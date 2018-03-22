@@ -1,6 +1,7 @@
 package com.dreamplay;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -24,6 +25,7 @@ public class VerifyUserActivity extends AppCompatActivity {
     ViewPager viewPager;
     TabLayout tabLayout;
 
+    public Uri fileUri;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +44,20 @@ public class VerifyUserActivity extends AppCompatActivity {
 
         buildTab();
     }
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        // Save the user's current state
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putParcelable("file_uri", fileUri);
+    }
 
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        // get the file url
+        fileUri = savedInstanceState.getParcelable("file_uri");
+    }
     public void buildTab() {
         final TabAdapter adapter = new TabAdapter(getSupportFragmentManager());
 

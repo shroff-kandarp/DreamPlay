@@ -4,6 +4,8 @@ package com.fragments;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -15,8 +17,12 @@ import com.dreamplay.R;
 import com.dreamplay.VerifyUserActivity;
 import com.general.files.ExecuteWebServerUrl;
 import com.general.files.GeneralFunctions;
+import com.general.files.ImageFilePath;
+import com.general.files.ImageSourceDialog;
 import com.general.files.SetOnTouchList;
+import com.general.files.UploadImage;
 import com.utils.Utils;
+import com.view.GenerateAlertBox;
 import com.view.MButton;
 import com.view.MTextView;
 import com.view.MaterialRippleLayout;
@@ -30,10 +36,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 
+import static android.app.Activity.RESULT_CANCELED;
+
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PanCardFragment extends Fragment {
+public class PanCardFragment extends Fragment implements UploadImage.SetResponseListener {
 
 
     View view;
@@ -54,9 +62,13 @@ public class PanCardFragment extends Fragment {
     MTextView noDataTxt;
 
     MButton btn_type2;
+    MButton uploadPanImageBtn;
 
     GeneralFunctions generalFunc;
     VerifyUserActivity verifyUsrAct;
+    boolean isAllInfoEditable = true;
+
+    boolean isImageUploadEnable = true;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -76,11 +88,14 @@ public class PanCardFragment extends Fragment {
         containerView = view.findViewById(R.id.containerView);
 
         btn_type2 = ((MaterialRippleLayout) view.findViewById(R.id.btn_type2)).getChildView();
+        uploadPanImageBtn = ((MaterialRippleLayout) view.findViewById(R.id.uploadPanImageBtn)).getChildView();
 
         btn_type2.setId(Utils.generateViewId());
+        uploadPanImageBtn.setId(Utils.generateViewId());
 
         dobBox.setOnClickListener(new setOnClickList());
         btn_type2.setOnClickListener(new setOnClickList());
+        uploadPanImageBtn.setOnClickListener(new setOnClickList());
         setLabels();
         removeInput();
 
@@ -96,6 +111,7 @@ public class PanCardFragment extends Fragment {
         stateBox.setBothText("State", "Select your state");
         panCardNumBox.setBothText("Pan Number", "Enter pan card number");
         btn_type2.setText("Submit");
+        uploadPanImageBtn.setText("Upload Pan Card's Image");
     }
 
     public void removeInput() {
@@ -135,12 +151,21 @@ public class PanCardFragment extends Fragment {
                         JSONObject obj_msg = generalFunc.getJsonObject(Utils.message_str, responseString);
 
                         if (obj_msg != null) {
-                            nameBox.setText(generalFunc.getJsonValue("vName", obj_msg));
 
+                            String vPanCardName = generalFunc.getJsonValue("vPanCardName", obj_msg);
                             String tPanDOB = generalFunc.getJsonValue("tPanDOB", obj_msg);
                             String vPanState = generalFunc.getJsonValue("vPanState", obj_msg);
                             String vState = generalFunc.getJsonValue("vState", obj_msg);
+                            String vPanCardNum = generalFunc.getJsonValue("vPanCardNum", obj_msg);
+                            String vPanImage = generalFunc.getJsonValue("vPanImage", obj_msg);
 
+                            if (vPanCardName.equals("")) {
+                                nameBox.setText(generalFunc.getJsonValue("vName", obj_msg));
+                            } else {
+
+                                nameBox.setText(vPanCardName);
+                            }
+                            panCardNumBox.setText(vPanCardNum);
                             dobBox.setText(tPanDOB.equals("") ? generalFunc.getJsonValue("dDOB", obj_msg) : tPanDOB);
 
                             if (!dobBox.getText().toString().equals("") || !tPanDOB.equals("")) {
@@ -154,6 +179,23 @@ public class PanCardFragment extends Fragment {
                                 iStateId = generalFunc.getJsonValue("iStateId", obj_msg);
                             }
 
+                            if (!tPanDOB.equals("") && !vPanState.equals("") && !vState.equals("") && !vPanCardNum.equals("") && !vPanCardName.equals("")) {
+                                stateBox.setOnClickListener(null);
+                                dobBox.setOnClickListener(null);
+                                nameBox.setEnabled(false);
+                                panCardNumBox.setEnabled(false);
+
+                                isAllInfoEditable = false;
+
+                                nameBox.getLabelFocusAnimator().start();
+                                panCardNumBox.getLabelFocusAnimator().start();
+                                dobBox.getLabelFocusAnimator().start();
+                                stateBox.getLabelFocusAnimator().start();
+                            }
+
+                            if (!vPanImage.equals("")) {
+                                isImageUploadEnable = false;
+                            }
                         }
 
                         buildStateList(generalFunc.getJsonArray("StateList", obj_msg));
@@ -210,6 +252,14 @@ public class PanCardFragment extends Fragment {
         return verifyUsrAct.getActContext();
     }
 
+    @Override
+    public void onFileUploadResponse(String responseString, String type) {
+
+        generalFunc.showGeneralMessage("", generalFunc.getJsonValue(Utils.message_str, responseString));
+
+        getUserData();
+    }
+
     public class setOnClickList implements View.OnClickListener {
 
         @Override
@@ -222,9 +272,38 @@ public class PanCardFragment extends Fragment {
                     list_state.show();
                 }
             } else if (i == btn_type2.getId()) {
+                if (isAllInfoEditable == false) {
+                    generalFunc.showGeneralMessage("", "You can't edit information once its added.");
+                    return;
+                }
                 checkData();
+            } else if (i == uploadPanImageBtn.getId()) {
+                if (isImageUploadEnable == false) {
+                    generalFunc.showGeneralMessage("", "You can't upload image once its added.");
+                    return;
+                }
+                addNewImage();
             }
         }
+    }
+
+    public void addNewImage() {
+        if (generalFunc.isCameraStoragePermissionGranted()) {
+
+            ImageSourceDialog dialog = new ImageSourceDialog(getActContext(), verifyUsrAct.fileUri, getCurrentFragment());
+            dialog.setFileUriListener(new ImageSourceDialog.FileURICreateListener() {
+                @Override
+                public void onFileUriCreate(Uri fileUri) {
+                    verifyUsrAct.fileUri = fileUri;
+                }
+            });
+            dialog.run();
+        }
+    }
+
+
+    public Fragment getCurrentFragment() {
+        return this;
     }
 
     public void chooseDate() {
@@ -257,7 +336,24 @@ public class PanCardFragment extends Fragment {
 
             GeneralFunctions.showMessage(GeneralFunctions.getCurrentView((Activity) getActContext()), "All information is required.");
         } else {
-            updatePanCardDetails();
+
+            final GenerateAlertBox generateAlert = new GenerateAlertBox(getActContext());
+            generateAlert.setCancelable(false);
+            generateAlert.setBtnClickList(new GenerateAlertBox.HandleAlertBtnClick() {
+                @Override
+                public void handleBtnClick(int btn_id) {
+                    if (btn_id == 1) {
+                        updatePanCardDetails();
+                    } else if (btn_id == 0) {
+                        generateAlert.closeAlertBox();
+                    }
+                }
+            });
+
+            generateAlert.setContentMessage("Confirm", "Please make sure you have added correct information. Once its added, you will not be able to change information. Are you sure, you want to add entered details?");
+            generateAlert.setPositiveBtn("YES");
+            generateAlert.setNegativeBtn("NO");
+            generateAlert.showAlertBox();
         }
     }
 
@@ -295,5 +391,109 @@ public class PanCardFragment extends Fragment {
             }
         });
         exeWebServer.execute();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        Utils.printLog("Image", "Selected::");
+
+        if (requestCode == ImageSourceDialog.CAMERA_CAPTURE_IMAGE_REQUEST_CODE) {
+            boolean isStoragePermissionAvail = generalFunc.isStoragePermissionGranted();
+            if (resultCode == verifyUsrAct.RESULT_OK) {
+                // successfully captured the image
+                // display it in image view
+
+                final ArrayList<String[]> paramsList = new ArrayList<>();
+                paramsList.add(Utils.generateImageParams("iMemberId", generalFunc.getMemberId()));
+                paramsList.add(Utils.generateImageParams("type", "addPanCardImage"));
+
+                final String selPath = new ImageFilePath().getPath(getActContext(), verifyUsrAct.fileUri);
+
+                if (Utils.isValidImageResolution(selPath) == true && isStoragePermissionAvail) {
+//                    new UploadImage(getActContext(), selPath, Utils.TempProfileImageName, paramsList,imgSelectType).execute();
+
+                    final GenerateAlertBox generateAlert = new GenerateAlertBox(getActContext());
+                    generateAlert.setCancelable(false);
+                    generateAlert.setBtnClickList(new GenerateAlertBox.HandleAlertBtnClick() {
+                        @Override
+                        public void handleBtnClick(int btn_id) {
+                            if (btn_id == 1) {
+
+                                UploadImage uploadImg = new UploadImage(getActContext(), selPath, Utils.TempProfileImageName, paramsList, "");
+                                uploadImg.setLoadingMessage("Uploading your pan card's image...");
+                                uploadImg.setResponseListener(PanCardFragment.this);
+                                uploadImg.execute();
+                            } else if (btn_id == 0) {
+                                generateAlert.closeAlertBox();
+                            }
+                        }
+                    });
+
+                    generateAlert.setContentMessage("Confirm", "Please make sure you have selected correct image. Once its added, you will not be able to change. Are you sure, you want to upload selected image?");
+                    generateAlert.setPositiveBtn("YES");
+                    generateAlert.setNegativeBtn("NO");
+                    generateAlert.showAlertBox();
+
+                } else {
+                    generalFunc.showGeneralMessage("", "Please select image which has minimum is 256 * 256 resolution.");
+                }
+
+
+            } else if (resultCode == RESULT_CANCELED) {
+
+            } else {
+                generalFunc.showGeneralMessage("", "Failed to capture image. Please try again.");
+            }
+        }
+        if (requestCode == ImageSourceDialog.SELECT_PICTURE) {
+            if (resultCode == verifyUsrAct.RESULT_OK) {
+                boolean isStoragePermissionAvail = generalFunc.isStoragePermissionGranted();
+
+
+                final ArrayList<String[]> paramsList = new ArrayList<>();
+                paramsList.add(Utils.generateImageParams("iMemberId", generalFunc.getMemberId()));
+
+                paramsList.add(Utils.generateImageParams("type", "addPanCardImage"));
+
+                Uri selectedImageUri = data.getData();
+
+
+                final String selectedImagePath = new ImageFilePath().getPath(getActContext(), selectedImageUri);
+
+
+                if (Utils.isValidImageResolution(selectedImagePath) == true && isStoragePermissionAvail) {
+
+                    final GenerateAlertBox generateAlert = new GenerateAlertBox(getActContext());
+                    generateAlert.setCancelable(false);
+                    generateAlert.setBtnClickList(new GenerateAlertBox.HandleAlertBtnClick() {
+                        @Override
+                        public void handleBtnClick(int btn_id) {
+                            if (btn_id == 1) {
+
+
+                                UploadImage uploadImg = new UploadImage(getActContext(), selectedImagePath, Utils.TempProfileImageName, paramsList, "");
+                                uploadImg.setLoadingMessage("Uploading your pan card's image...");
+                                uploadImg.setResponseListener(PanCardFragment.this);
+                                uploadImg.execute();
+                            } else if (btn_id == 0) {
+                                generateAlert.closeAlertBox();
+                            }
+                        }
+                    });
+
+                    generateAlert.setContentMessage("Confirm", "Please make sure you have selected correct image. Once its added, you will not be able to change. Are you sure, you want to upload selected image?");
+                    generateAlert.setPositiveBtn("YES");
+                    generateAlert.setNegativeBtn("NO");
+                    generateAlert.showAlertBox();
+
+                } else {
+                    generalFunc.showGeneralMessage("", "Please select image which has minimum is 256 * 256 resolution.");
+                }
+
+            }
+        }
+
     }
 }

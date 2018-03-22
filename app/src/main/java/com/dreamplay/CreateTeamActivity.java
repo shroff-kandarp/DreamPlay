@@ -150,6 +150,7 @@ public class CreateTeamActivity extends AppCompatActivity {
         new CreateRoundedView(Color.parseColor("#BBBBBB"), Utils.dipToPixels(getActContext(), 15), Utils.dipToPixels(getActContext(), 0), getResources().getColor(R.color.appThemeColor_1), wicketCountTxtView);
         new CreateRoundedView(Color.parseColor("#BBBBBB"), Utils.dipToPixels(getActContext(), 15), Utils.dipToPixels(getActContext(), 0), getResources().getColor(R.color.appThemeColor_1), allRounderCountTxtView);
         new CreateRoundedView(Color.parseColor("#BBBBBB"), Utils.dipToPixels(getActContext(), 15), Utils.dipToPixels(getActContext(), 0), getResources().getColor(R.color.appThemeColor_1), bowlerCountTxtView);
+        new CreateRoundedView(getResources().getColor(R.color.appThemeColor_TXT_1), Utils.dipToPixels(getActContext(), 8), Utils.dipToPixels(getActContext(), 0), getResources().getColor(R.color.appThemeColor_1), nextTxtView);
 
         adapter = new TeamPlayerListAdapter(getActContext(), listWicketKeeperData, generalFunc, false);
 
@@ -206,7 +207,7 @@ public class CreateTeamActivity extends AppCompatActivity {
                             setMatchData(obj_matchData);
                         }
 
-                        countTotalCreditsInfoTxtView.setText("CREDITS LEFT " + totalAvailCredit + "/" + totalAvailCredit);
+                        countTotalCreditsInfoTxtView.setText("CREDITS LEFT " + (int) totalAvailCredit + "/" + (int) totalAvailCredit);
                         buildPlayerList(generalFunc.getJsonObject("PlayersOfMatch", responseString));
                         wicketKeeperArea.performClick();
                         containerView.setVisibility(View.VISIBLE);

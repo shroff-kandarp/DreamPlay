@@ -119,6 +119,7 @@ public class TeamPlayerListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 viewHolder.playerImgView.setImageResource(R.mipmap.ic_wk_hal);
             }
 
+            new CreateRoundedView(mContext.getResources().getColor(R.color.appThemeColor_1), Utils.dipToPixels(mContext, 8), Utils.dipToPixels(mContext, 2), Color.parseColor("#051e28"), viewHolder.selectionView);
             if (chosenPlayersList.contains(item.get("iPlayerId"))) {
                 viewHolder.selectionView.setVisibility(View.VISIBLE);
             } else {
@@ -164,7 +165,7 @@ public class TeamPlayerListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     }
 
                     countTotalPlayersTxtView.setText("PLAYERS " + chosenPlayersList.size() + "/11");
-                    createTeamAct.countTotalCreditsInfoTxtView.setText("CREDITS LEFT " + String.format("%.2f", createTeamAct.totalAvailCredit) + "/" + createTeamAct.OrigAvailCredit);
+                    createTeamAct.countTotalCreditsInfoTxtView.setText("CREDITS LEFT " + String.format("%.2f", createTeamAct.totalAvailCredit) + "/" + (int) createTeamAct.OrigAvailCredit);
                     if (mItemClickListener != null) {
                         mItemClickListener.onItemClickList(view, position);
                     }

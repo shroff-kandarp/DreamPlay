@@ -159,6 +159,9 @@ public class ContestsActivity extends AppCompatActivity {
         int countOfJoined = 0;
         if (obj_contestData != null) {
 
+            HashMap<String, String> headerMap = new HashMap<>();
+            headerMap.put("TYPE", "" + adapter.TYPE_HEADER);
+            list_contest.add(headerMap);
             for (int i = 0; i < obj_contestData.length(); i++) {
                 JSONObject obj_tmp = generalFunc.getJsonObject(obj_contestData, i);
                 HashMap<String, String> mapData = new HashMap<>();

@@ -88,7 +88,7 @@ import java.util.HashMap;
                 viewHolder.playerNameTxtView.setText(Html.fromHtml(item.get("vPlayerName")));
 
 
-                if (item.get("ePlayerType").equalsIgnoreCase("Wicketkeeper")) {
+                /*if (item.get("ePlayerType").equalsIgnoreCase("Wicketkeeper")) {
                     viewHolder.playerImgView.setImageResource(R.mipmap.keeper_helmat);
                 } else if (item.get("ePlayerType").equalsIgnoreCase("Batsman")) {
                     viewHolder.playerImgView.setImageResource(R.mipmap.cric_batsman);
@@ -104,9 +104,19 @@ import java.util.HashMap;
     //                        .placeholder(R.drawable.no_team_img)
     //                        .into(viewHolder.playerImgView, null);
     //                }
+                }*/
+
+                if (item.get("ePlayerType").equalsIgnoreCase("Wicketkeeper")) {
+                    viewHolder.playerImgView.setImageResource(R.mipmap.ic_wk_hal);
+                } else if (item.get("ePlayerType").equalsIgnoreCase("Batsman")) {
+                    viewHolder.playerImgView.setImageResource(R.mipmap.ic_wk_hal);
+                } else if (item.get("ePlayerType").equalsIgnoreCase("Allrounder")) {
+                    viewHolder.playerImgView.setImageResource(R.mipmap.ic_wk_hal);
+                } else if (item.get("ePlayerType").equalsIgnoreCase("Bowler")) {
+                    viewHolder.playerImgView.setImageResource(R.mipmap.ic_bowl);
+                } else {
+                    viewHolder.playerImgView.setImageResource(R.mipmap.ic_wk_hal);
                 }
-
-
                 if (selectedCaptainId.equalsIgnoreCase(item.get("iPlayerId"))) {
 
                     new CreateRoundedView(Color.parseColor("#FDE7BD"), Utils.dipToPixels(mContext, 27), Utils.dipToPixels(mContext, 2), Color.parseColor("#FDE7BD"), viewHolder.captainTxtView);

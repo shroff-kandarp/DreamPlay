@@ -113,7 +113,7 @@ public class MainActivity extends BaseActivity implements DrawerMenuRecycleAdapt
     public void buildMenu() {
         menuDataList.clear();
         menuDataList.add(getMenuItem("My Profile", "" + R.mipmap.ic_menu_profile, "" + DrawerMenuRecycleAdapter.TYPE_ITEM, MENU_PROFILE));
-        menuDataList.add(getMenuItem("My Account", "" + R.mipmap.ic_menu_account, "" + DrawerMenuRecycleAdapter.TYPE_ITEM, MENU_ACC));
+//        menuDataList.add(getMenuItem("My Account", "" + R.mipmap.ic_menu_account, "" + DrawerMenuRecycleAdapter.TYPE_ITEM, MENU_ACC));
         menuDataList.add(getMenuItem("Invite Friends", "" + R.mipmap.ic_menu_invite, "" + DrawerMenuRecycleAdapter.TYPE_ITEM, MENU_INVITE_FRIENDS));
         menuDataList.add(getMenuItem("FAQ's", "" + R.mipmap.ic_menu_help_center, "" + DrawerMenuRecycleAdapter.TYPE_ITEM, MENU_FAQ));
         menuDataList.add(getMenuItem("Support", "" + R.mipmap.ic_menu_support, "" + DrawerMenuRecycleAdapter.TYPE_ITEM, MENU_SUPPORT));

@@ -40,6 +40,7 @@
                         android:layout_weight="0"
                         android:background="@color/appThemeColor_1"
                         android:gravity="center"
+                        android:text="S"
                         android:textColor="@color/appThemeColor_TXT_1"
                         android:textSize="@dimen/txt_size_20"
                         app:customTypeFace="@string/semiBoldFont" />
@@ -179,7 +180,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="ENTRY FEES"
+                        android:text="TOTAL WINNINGS"
                         android:textAllCaps="true"
                         android:textColor="@color/appThemeColor_1"
                         android:textSize="@dimen/txt_size_18" />
