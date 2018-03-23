@@ -63,6 +63,7 @@ public class MyProfileActivity extends BaseActivity {
     ArrayList<String> items_txt_state = new ArrayList<String>();
     ArrayList<String> items_state_ids = new ArrayList<String>();
 
+    boolean isAllInformationDisabled = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -135,6 +136,7 @@ public class MyProfileActivity extends BaseActivity {
         dobBox.setOnClickListener(new setOnClickList());
     }
 
+
     public void getUserData() {
         containerView.setVisibility(View.GONE);
         btn_type2.setVisibility(View.GONE);
@@ -160,8 +162,25 @@ public class MyProfileActivity extends BaseActivity {
                         JSONObject obj_msg = generalFunc.getJsonObject(Utils.message_str, responseString);
 
                         if (obj_msg != null) {
+
+                            String vName = generalFunc.getJsonValue("vName", obj_msg);
+                            String dDOB = generalFunc.getJsonValue("dDOB", obj_msg);
+                            String vEmail = generalFunc.getJsonValue("vEmail", obj_msg);
+                            String vMobile = generalFunc.getJsonValue("vMobile", obj_msg);
+                            String vCity = generalFunc.getJsonValue("vCity", obj_msg);
+                            String tAddress = generalFunc.getJsonValue("tAddress", obj_msg);
+                            String eProfileEditEnabled = generalFunc.getJsonValue("eProfileEditEnabled", obj_msg);
+                            String vCountry = generalFunc.getJsonValue("vCountry", obj_msg);
+                            String vState = generalFunc.getJsonValue("vState", obj_msg);
+
                             nameBox.setText(generalFunc.getJsonValue("vName", obj_msg));
+                            if(!vName.equals("")&& !eProfileEditEnabled.equalsIgnoreCase("Yes")){
+                                nameBox.setEnabled(false);
+                            }
                             dobBox.setText(generalFunc.getJsonValue("dDOB", obj_msg));
+                            if(!dDOB.equals("")&& !eProfileEditEnabled.equalsIgnoreCase("Yes")){
+                                dobBox.setEnabled(false);
+                            }
 
                             if (!generalFunc.getJsonValue("eGender", obj_msg).equals("")) {
                                 if (generalFunc.getJsonValue("eGender", obj_msg).equals("Male")) {
@@ -169,24 +188,58 @@ public class MyProfileActivity extends BaseActivity {
                                 } else {
                                     feMaleRadioBtn.setChecked(true);
                                 }
+
+                                if(!eProfileEditEnabled.equalsIgnoreCase("Yes")){
+                                    maleRadioBtn.setEnabled(false);
+                                    feMaleRadioBtn.setEnabled(false);
+                                }
                             }
 
-                            emailBox.setText(generalFunc.getJsonValue("vEmail", obj_msg));
-                            mobileBox.setText(generalFunc.getJsonValue("vMobile", obj_msg));
-                            cityBox.setText(generalFunc.getJsonValue("vCity", obj_msg));
-                            addressBox.setText(generalFunc.getJsonValue("tAddress", obj_msg));
-
-                            if (generalFunc.getJsonValue("eMobileVerified", obj_msg).equalsIgnoreCase("Yes")) {
-                                mobileBox.setEnabled(false);
-                            }
-                            if (generalFunc.getJsonValue("eEmailVerified", obj_msg).equalsIgnoreCase("Yes")) {
+                            emailBox.setText(vEmail);
+                            if(!vEmail.equals("") && !eProfileEditEnabled.equalsIgnoreCase("Yes")){
                                 emailBox.setEnabled(false);
                             }
 
-                            countryBox.setText(generalFunc.getJsonValue("vCountry", obj_msg));
-                            stateBox.setText(generalFunc.getJsonValue("vState", obj_msg));
+                            mobileBox.setText(vMobile);
+                            if(!vMobile.equals("")&& !eProfileEditEnabled.equalsIgnoreCase("Yes")){
+                                mobileBox.setEnabled(false);
+                            }
+
+                            cityBox.setText(vCity);
+                            if(!vCity.equals("")&& !eProfileEditEnabled.equalsIgnoreCase("Yes")){
+                                cityBox.setEnabled(false);
+                            }
+
+                            addressBox.setText(tAddress);
+                            if(!tAddress.equals("")&& !eProfileEditEnabled.equalsIgnoreCase("Yes")){
+                                addressBox.setEnabled(false);
+                            }
+
+//                            if (generalFunc.getJsonValue("eMobileVerified", obj_msg).equalsIgnoreCase("Yes")) {
+//                                mobileBox.setEnabled(false);
+//                            }
+//
+//                            if (generalFunc.getJsonValue("eEmailVerified", obj_msg).equalsIgnoreCase("Yes")) {
+//                                emailBox.setEnabled(false);
+//                            }
+
+                            countryBox.setText(vCountry);
+                            if(!vCountry.equals("")&& !eProfileEditEnabled.equalsIgnoreCase("Yes")){
+                                countryBox.setEnabled(false);
+                            }
+
+                            stateBox.setText(vState);
+                            if(!vState.equals("")&& !eProfileEditEnabled.equalsIgnoreCase("Yes")){
+                                stateBox.setEnabled(false);
+                            }
+
                             iStateId = generalFunc.getJsonValue("iStateId", obj_msg);
+
                             iCountryId = generalFunc.getJsonValue("iCountryId", obj_msg);
+
+                            if(nameBox.isEnabled() ==false && dobBox.isEnabled() ==false && maleRadioBtn.isEnabled() ==false && feMaleRadioBtn.isEnabled() ==false && emailBox.isEnabled() ==false && mobileBox.isEnabled() ==false && cityBox.isEnabled() ==false && addressBox.isEnabled() ==false && countryBox.isEnabled() ==false && stateBox.isEnabled() ==false){
+                                isAllInformationDisabled = true;
+                            }
                         }
 
                         buildStateList(generalFunc.getJsonArray("StateList", obj_msg));
@@ -258,6 +311,10 @@ public class MyProfileActivity extends BaseActivity {
                     }
                 }
             }else if (i == btn_type2.getId()) {
+                if(isAllInformationDisabled){
+                    generalFunc.showGeneralMessage("","Profile editing has been disabled.");
+                    return;
+                }
                 checkData();
             }
         }

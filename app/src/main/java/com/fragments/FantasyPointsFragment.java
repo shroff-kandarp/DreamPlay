@@ -104,7 +104,9 @@ public class FantasyPointsFragment extends Fragment {
 
         for (int i = 0; i < fantasyPointsAct.pointsTypesList.size(); i++) {
             String iPointTypeId = fantasyPointsAct.pointsTypesList.get(i).get("iPointTypeId");
-            TableRow pointsRow = new TableRow(getActContext());
+//            TableRow pointsRow = new TableRow(getActContext());
+            TableRow pointsRow = (TableRow)LayoutInflater.from(getActContext()).inflate(
+                    R.layout.fatasy_table_row, null);
 
             ArrayList<MTextView> rowsDataList = new ArrayList<>();
             if (i % 2 == 0) {
@@ -115,13 +117,18 @@ public class FantasyPointsFragment extends Fragment {
             String pointTypeName = fantasyPointsAct.pointsTypesList.get(i).get("vName").trim();
             String pointType = fantasyPointsAct.pointsTypesList.get(i).get("eType").trim();
             pointsRow.setPadding(0, 0, 0, Utils.dipToPixels(getActContext(), 5));
-            MTextView tv_tmp = new MTextView(getActContext());
+//            MTextView tv_tmp = new MTextView(getActContext());
+
+            MTextView tv_tmp = (MTextView)LayoutInflater.from(getActContext()).inflate(
+                    R.layout.fatasy_txtview_item, null);
+
+
             tv_tmp.setText(pointTypeName);
             tv_tmp.setTextColor(Color.parseColor("#767676"));
-            tv_tmp.setWidth(TableRow.LayoutParams.MATCH_PARENT);
-            tv_tmp.setGravity(Gravity.CENTER);
-            tv_tmp.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-            tv_tmp.setHeight(Utils.dipToPixels(getActContext(), 50));
+//            tv_tmp.setWidth(TableRow.LayoutParams.MATCH_PARENT);
+//            tv_tmp.setGravity(Gravity.CENTER);
+//            tv_tmp.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+//            tv_tmp.setHeight(Utils.dipToPixels(getActContext(), 50));
             pointsRow.addView(tv_tmp);
             rowsDataList.add(tv_tmp);
 
@@ -143,13 +150,15 @@ public class FantasyPointsFragment extends Fragment {
                         if (!dPoint_tmp.trim().equals("")) {
                             allPointsBlank = false;
                         }
-                        MTextView tv_tmp_points = new MTextView(getActContext());
+                        MTextView tv_tmp_points = (MTextView)LayoutInflater.from(getActContext()).inflate(
+                                R.layout.fatasy_txtview_item, null);
+//                        MTextView tv_tmp_points = new MTextView(getActContext());
                         tv_tmp_points.setText(eType_tmp.equals("Minus") ? "-" + dPoint_tmp : (pointType.equals("Bowled") ? "+" + dPoint_tmp : dPoint_tmp));
                         tv_tmp_points.setTextColor(Color.parseColor("#767676"));
-                        tv_tmp_points.setWidth(TableRow.LayoutParams.MATCH_PARENT);
-                        tv_tmp_points.setGravity(Gravity.CENTER);
-                        tv_tmp_points.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-                        tv_tmp_points.setHeight(Utils.dipToPixels(getActContext(), 50));
+//                        tv_tmp_points.setWidth(TableRow.LayoutParams.MATCH_PARENT);
+//                        tv_tmp_points.setGravity(Gravity.CENTER);
+//                        tv_tmp_points.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+//                        tv_tmp_points.setHeight(Utils.dipToPixels(getActContext(), 50));
                         pointsRow.addView(tv_tmp_points);
 
                         rowsDataList.add(tv_tmp_points);
@@ -184,7 +193,9 @@ public class FantasyPointsFragment extends Fragment {
                 pointsRow.setBackgroundColor(Color.parseColor("#E8E8E8"));
             }
             pointsRow.setPadding(0, 0, 0, Utils.dipToPixels(getActContext(), 5));
-            MTextView tv_tmp = new MTextView(getActContext());
+//            MTextView tv_tmp = new MTextView(getActContext());
+            MTextView tv_tmp = (MTextView)LayoutInflater.from(getActContext()).inflate(
+                    R.layout.fatasy_txtview_item, null);
             if (i == 0) {
                 tv_tmp.setText("Between 60 & 70 runs");
             } else if (i == 1) {
@@ -195,14 +206,12 @@ public class FantasyPointsFragment extends Fragment {
                 tv_tmp.setText("Below 50 runs");
             }
             tv_tmp.setTextColor(Color.parseColor("#767676"));
-            tv_tmp.setWidth(TableRow.LayoutParams.MATCH_PARENT);
-            tv_tmp.setGravity(Gravity.CENTER);
-            tv_tmp.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-            tv_tmp.setHeight(Utils.dipToPixels(getActContext(), 50));
             pointsRow.addView(tv_tmp);
             rowsDataList.add(tv_tmp);
 
-            MTextView tv_tmp_points_t20 = new MTextView(getActContext());
+            MTextView tv_tmp_points_t20 = (MTextView)LayoutInflater.from(getActContext()).inflate(
+                    R.layout.fatasy_txtview_item, null);
+//            MTextView tv_tmp_points_t20 = new MTextView(getActContext());
             if (i == 0) {
                 tv_tmp_points_t20.setText("-1");
             } else if (i == 1) {
@@ -211,16 +220,14 @@ public class FantasyPointsFragment extends Fragment {
                 tv_tmp_points_t20.setText("-3");
             }
             tv_tmp_points_t20.setTextColor(Color.parseColor("#767676"));
-            tv_tmp_points_t20.setWidth(TableRow.LayoutParams.MATCH_PARENT);
-            tv_tmp_points_t20.setGravity(Gravity.CENTER);
-            tv_tmp_points_t20.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-            tv_tmp_points_t20.setHeight(Utils.dipToPixels(getActContext(), 50));
             pointsRow.addView(tv_tmp_points_t20);
 
             rowsDataList.add(tv_tmp_points_t20);
 
 
-            MTextView tv_tmp_points_ODI = new MTextView(getActContext());
+            MTextView tv_tmp_points_ODI = (MTextView)LayoutInflater.from(getActContext()).inflate(
+                    R.layout.fatasy_txtview_item, null);
+//            MTextView tv_tmp_points_ODI = new MTextView(getActContext());
             if (i == 0) {
                 tv_tmp_points_ODI.setText("--");
             } else if (i == 1) {
@@ -229,16 +236,14 @@ public class FantasyPointsFragment extends Fragment {
                 tv_tmp_points_ODI.setText("--");
             }
             tv_tmp_points_ODI.setTextColor(Color.parseColor("#767676"));
-            tv_tmp_points_ODI.setWidth(TableRow.LayoutParams.MATCH_PARENT);
-            tv_tmp_points_ODI.setGravity(Gravity.CENTER);
-            tv_tmp_points_ODI.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-            tv_tmp_points_ODI.setHeight(Utils.dipToPixels(getActContext(), 50));
             pointsRow.addView(tv_tmp_points_ODI);
 
             rowsDataList.add(tv_tmp_points_ODI);
 
 
-            MTextView tv_tmp_points_test = new MTextView(getActContext());
+            MTextView tv_tmp_points_test = (MTextView)LayoutInflater.from(getActContext()).inflate(
+                    R.layout.fatasy_txtview_item, null);
+//            MTextView tv_tmp_points_test = new MTextView(getActContext());
             if (i == 0) {
                 tv_tmp_points_test.setText("--");
             } else if (i == 1) {
@@ -247,10 +252,6 @@ public class FantasyPointsFragment extends Fragment {
                 tv_tmp_points_test.setText("--");
             }
             tv_tmp_points_test.setTextColor(Color.parseColor("#767676"));
-            tv_tmp_points_test.setWidth(TableRow.LayoutParams.MATCH_PARENT);
-            tv_tmp_points_test.setGravity(Gravity.CENTER);
-            tv_tmp_points_test.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-            tv_tmp_points_test.setHeight(Utils.dipToPixels(getActContext(), 50));
             pointsRow.addView(tv_tmp_points_test);
 
             rowsDataList.add(tv_tmp_points_test);
@@ -275,7 +276,10 @@ public class FantasyPointsFragment extends Fragment {
                 pointsRow.setBackgroundColor(Color.parseColor("#E8E8E8"));
             }
             pointsRow.setPadding(0, 0, 0, Utils.dipToPixels(getActContext(), 5));
-            MTextView tv_tmp = new MTextView(getActContext());
+//            MTextView tv_tmp = new MTextView(getActContext());
+
+            MTextView tv_tmp = (MTextView)LayoutInflater.from(getActContext()).inflate(
+                    R.layout.fatasy_txtview_item, null);
             if (i == 0) {
                 tv_tmp.setText("Between 50 & 60 runs");
             } else if (i == 1) {
@@ -286,14 +290,11 @@ public class FantasyPointsFragment extends Fragment {
                 tv_tmp.setText("Below 40 runs");
             }
             tv_tmp.setTextColor(Color.parseColor("#767676"));
-            tv_tmp.setWidth(TableRow.LayoutParams.MATCH_PARENT);
-            tv_tmp.setGravity(Gravity.CENTER);
-            tv_tmp.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-            tv_tmp.setHeight(Utils.dipToPixels(getActContext(), 50));
             pointsRow.addView(tv_tmp);
             rowsDataList.add(tv_tmp);
 
-            MTextView tv_tmp_points_t20 = new MTextView(getActContext());
+            MTextView tv_tmp_points_t20 = (MTextView)LayoutInflater.from(getActContext()).inflate(
+                    R.layout.fatasy_txtview_item, null);
             if (i == 0) {
                 tv_tmp_points_t20.setText("--");
             } else if (i == 1) {
@@ -302,16 +303,14 @@ public class FantasyPointsFragment extends Fragment {
                 tv_tmp_points_t20.setText("--");
             }
             tv_tmp_points_t20.setTextColor(Color.parseColor("#767676"));
-            tv_tmp_points_t20.setWidth(TableRow.LayoutParams.MATCH_PARENT);
-            tv_tmp_points_t20.setGravity(Gravity.CENTER);
-            tv_tmp_points_t20.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-            tv_tmp_points_t20.setHeight(Utils.dipToPixels(getActContext(), 50));
             pointsRow.addView(tv_tmp_points_t20);
 
             rowsDataList.add(tv_tmp_points_t20);
 
 
-            MTextView tv_tmp_points_ODI = new MTextView(getActContext());
+            MTextView tv_tmp_points_ODI = (MTextView)LayoutInflater.from(getActContext()).inflate(
+                    R.layout.fatasy_txtview_item, null);
+//            MTextView tv_tmp_points_ODI = new MTextView(getActContext());
             if (i == 0) {
                 tv_tmp_points_ODI.setText("-1");
             } else if (i == 1) {
@@ -320,16 +319,14 @@ public class FantasyPointsFragment extends Fragment {
                 tv_tmp_points_ODI.setText("-3");
             }
             tv_tmp_points_ODI.setTextColor(Color.parseColor("#767676"));
-            tv_tmp_points_ODI.setWidth(TableRow.LayoutParams.MATCH_PARENT);
-            tv_tmp_points_ODI.setGravity(Gravity.CENTER);
-            tv_tmp_points_ODI.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-            tv_tmp_points_ODI.setHeight(Utils.dipToPixels(getActContext(), 50));
             pointsRow.addView(tv_tmp_points_ODI);
 
             rowsDataList.add(tv_tmp_points_ODI);
 
 
-            MTextView tv_tmp_points_test = new MTextView(getActContext());
+            MTextView tv_tmp_points_test = (MTextView)LayoutInflater.from(getActContext()).inflate(
+                    R.layout.fatasy_txtview_item, null);
+//            MTextView tv_tmp_points_test = new MTextView(getActContext());
             if (i == 0) {
                 tv_tmp_points_test.setText("--");
             } else if (i == 1) {
@@ -338,10 +335,6 @@ public class FantasyPointsFragment extends Fragment {
                 tv_tmp_points_test.setText("--");
             }
             tv_tmp_points_test.setTextColor(Color.parseColor("#767676"));
-            tv_tmp_points_test.setWidth(TableRow.LayoutParams.MATCH_PARENT);
-            tv_tmp_points_test.setGravity(Gravity.CENTER);
-            tv_tmp_points_test.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-            tv_tmp_points_test.setHeight(Utils.dipToPixels(getActContext(), 50));
             pointsRow.addView(tv_tmp_points_test);
 
             rowsDataList.add(tv_tmp_points_test);
@@ -371,7 +364,9 @@ public class FantasyPointsFragment extends Fragment {
                 pointsRow.setBackgroundColor(Color.parseColor("#E8E8E8"));
             }
             pointsRow.setPadding(0, 0, 0, Utils.dipToPixels(getActContext(), 5));
-            MTextView tv_tmp = new MTextView(getActContext());
+//            MTextView tv_tmp = new MTextView(getActContext());
+            MTextView tv_tmp = (MTextView)LayoutInflater.from(getActContext()).inflate(
+                    R.layout.fatasy_txtview_item, null);
             if (i == 0) {
                 tv_tmp.setText("Between 4.99 & 4 runs");
             } else if (i == 1) {
@@ -384,14 +379,12 @@ public class FantasyPointsFragment extends Fragment {
                 tv_tmp.setText("Above 11 runs");
             }
             tv_tmp.setTextColor(Color.parseColor("#767676"));
-            tv_tmp.setWidth(TableRow.LayoutParams.MATCH_PARENT);
-            tv_tmp.setGravity(Gravity.CENTER);
-            tv_tmp.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-            tv_tmp.setHeight(Utils.dipToPixels(getActContext(), 50));
             pointsRow.addView(tv_tmp);
             rowsDataList.add(tv_tmp);
 
-            MTextView tv_tmp_points_t20 = new MTextView(getActContext());
+            MTextView tv_tmp_points_t20 = (MTextView)LayoutInflater.from(getActContext()).inflate(
+                    R.layout.fatasy_txtview_item, null);
+//            MTextView tv_tmp_points_t20 = new MTextView(getActContext());
             if (i == 0) {
                 tv_tmp_points_t20.setText("2");
             } else if (i == 1) {
@@ -404,16 +397,14 @@ public class FantasyPointsFragment extends Fragment {
                 tv_tmp_points_t20.setText("-3");
             }
             tv_tmp_points_t20.setTextColor(Color.parseColor("#767676"));
-            tv_tmp_points_t20.setWidth(TableRow.LayoutParams.MATCH_PARENT);
-            tv_tmp_points_t20.setGravity(Gravity.CENTER);
-            tv_tmp_points_t20.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-            tv_tmp_points_t20.setHeight(Utils.dipToPixels(getActContext(), 50));
             pointsRow.addView(tv_tmp_points_t20);
 
             rowsDataList.add(tv_tmp_points_t20);
 
 
-            MTextView tv_tmp_points_ODI = new MTextView(getActContext());
+            MTextView tv_tmp_points_ODI = (MTextView)LayoutInflater.from(getActContext()).inflate(
+                    R.layout.fatasy_txtview_item, null);
+//            MTextView tv_tmp_points_ODI = new MTextView(getActContext());
             if (i == 0) {
                 tv_tmp_points_ODI.setText("--");
             } else if (i == 1) {
@@ -426,16 +417,15 @@ public class FantasyPointsFragment extends Fragment {
                 tv_tmp_points_ODI.setText("--");
             }
             tv_tmp_points_ODI.setTextColor(Color.parseColor("#767676"));
-            tv_tmp_points_ODI.setWidth(TableRow.LayoutParams.MATCH_PARENT);
-            tv_tmp_points_ODI.setGravity(Gravity.CENTER);
-            tv_tmp_points_ODI.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-            tv_tmp_points_ODI.setHeight(Utils.dipToPixels(getActContext(), 50));
             pointsRow.addView(tv_tmp_points_ODI);
 
             rowsDataList.add(tv_tmp_points_ODI);
 
 
-            MTextView tv_tmp_points_test = new MTextView(getActContext());
+
+            MTextView tv_tmp_points_test = (MTextView)LayoutInflater.from(getActContext()).inflate(
+                    R.layout.fatasy_txtview_item, null);
+//            MTextView tv_tmp_points_test = new MTextView(getActContext());
             if (i == 0) {
                 tv_tmp_points_test.setText("--");
             } else if (i == 1) {
@@ -448,10 +438,6 @@ public class FantasyPointsFragment extends Fragment {
                 tv_tmp_points_test.setText("--");
             }
             tv_tmp_points_test.setTextColor(Color.parseColor("#767676"));
-            tv_tmp_points_test.setWidth(TableRow.LayoutParams.MATCH_PARENT);
-            tv_tmp_points_test.setGravity(Gravity.CENTER);
-            tv_tmp_points_test.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-            tv_tmp_points_test.setHeight(Utils.dipToPixels(getActContext(), 50));
             pointsRow.addView(tv_tmp_points_test);
 
             rowsDataList.add(tv_tmp_points_test);
@@ -476,7 +462,10 @@ public class FantasyPointsFragment extends Fragment {
                 pointsRow.setBackgroundColor(Color.parseColor("#E8E8E8"));
             }
             pointsRow.setPadding(0, 0, 0, Utils.dipToPixels(getActContext(), 5));
-            MTextView tv_tmp = new MTextView(getActContext());
+//            MTextView tv_tmp = new MTextView(getActContext());
+
+            MTextView tv_tmp = (MTextView)LayoutInflater.from(getActContext()).inflate(
+                    R.layout.fatasy_txtview_item, null);
             if (i == 0) {
                 tv_tmp.setText("Between 3.49 & 2.5 runs");
             } else if (i == 1) {
@@ -489,14 +478,12 @@ public class FantasyPointsFragment extends Fragment {
                 tv_tmp.setText("Above 9 runs");
             }
             tv_tmp.setTextColor(Color.parseColor("#767676"));
-            tv_tmp.setWidth(TableRow.LayoutParams.MATCH_PARENT);
-            tv_tmp.setGravity(Gravity.CENTER);
-            tv_tmp.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-            tv_tmp.setHeight(Utils.dipToPixels(getActContext(), 50));
             pointsRow.addView(tv_tmp);
             rowsDataList.add(tv_tmp);
 
-            MTextView tv_tmp_points_t20 = new MTextView(getActContext());
+            MTextView tv_tmp_points_t20 = (MTextView)LayoutInflater.from(getActContext()).inflate(
+                    R.layout.fatasy_txtview_item, null);
+//            MTextView tv_tmp_points_t20 = new MTextView(getActContext());
             if (i == 0) {
                 tv_tmp_points_t20.setText("--");
             } else if (i == 1) {
@@ -509,16 +496,14 @@ public class FantasyPointsFragment extends Fragment {
                 tv_tmp_points_t20.setText("--");
             }
             tv_tmp_points_t20.setTextColor(Color.parseColor("#767676"));
-            tv_tmp_points_t20.setWidth(TableRow.LayoutParams.MATCH_PARENT);
-            tv_tmp_points_t20.setGravity(Gravity.CENTER);
-            tv_tmp_points_t20.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-            tv_tmp_points_t20.setHeight(Utils.dipToPixels(getActContext(), 50));
             pointsRow.addView(tv_tmp_points_t20);
 
             rowsDataList.add(tv_tmp_points_t20);
 
 
-            MTextView tv_tmp_points_ODI = new MTextView(getActContext());
+            MTextView tv_tmp_points_ODI = (MTextView)LayoutInflater.from(getActContext()).inflate(
+                    R.layout.fatasy_txtview_item, null);
+//            MTextView tv_tmp_points_ODI = new MTextView(getActContext());
             if (i == 0) {
                 tv_tmp_points_ODI.setText("2");
             } else if (i == 1) {
@@ -531,16 +516,14 @@ public class FantasyPointsFragment extends Fragment {
                 tv_tmp_points_ODI.setText("-3");
             }
             tv_tmp_points_ODI.setTextColor(Color.parseColor("#767676"));
-            tv_tmp_points_ODI.setWidth(TableRow.LayoutParams.MATCH_PARENT);
-            tv_tmp_points_ODI.setGravity(Gravity.CENTER);
-            tv_tmp_points_ODI.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-            tv_tmp_points_ODI.setHeight(Utils.dipToPixels(getActContext(), 50));
             pointsRow.addView(tv_tmp_points_ODI);
 
             rowsDataList.add(tv_tmp_points_ODI);
 
 
-            MTextView tv_tmp_points_test = new MTextView(getActContext());
+            MTextView tv_tmp_points_test = (MTextView)LayoutInflater.from(getActContext()).inflate(
+                    R.layout.fatasy_txtview_item, null);
+//            MTextView tv_tmp_points_test = new MTextView(getActContext());
             if (i == 0) {
                 tv_tmp_points_test.setText("--");
             } else if (i == 1) {
@@ -553,10 +536,6 @@ public class FantasyPointsFragment extends Fragment {
                 tv_tmp_points_test.setText("--");
             }
             tv_tmp_points_test.setTextColor(Color.parseColor("#767676"));
-            tv_tmp_points_test.setWidth(TableRow.LayoutParams.MATCH_PARENT);
-            tv_tmp_points_test.setGravity(Gravity.CENTER);
-            tv_tmp_points_test.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-            tv_tmp_points_test.setHeight(Utils.dipToPixels(getActContext(), 50));
             pointsRow.addView(tv_tmp_points_test);
 
             rowsDataList.add(tv_tmp_points_test);
