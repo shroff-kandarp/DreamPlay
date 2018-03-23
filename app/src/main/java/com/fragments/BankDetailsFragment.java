@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.dreamplay.R;
@@ -17,7 +18,9 @@ import com.general.files.ExecuteWebServerUrl;
 import com.general.files.GeneralFunctions;
 import com.general.files.ImageFilePath;
 import com.general.files.ImageSourceDialog;
+import com.general.files.StartActProcess;
 import com.general.files.UploadImage;
+import com.squareup.picasso.Picasso;
 import com.utils.Utils;
 import com.view.GenerateAlertBox;
 import com.view.MButton;
@@ -44,6 +47,9 @@ public class BankDetailsFragment extends Fragment implements UploadImage.SetResp
     MaterialEditText accountNumBox;
     MaterialEditText reAccountNumBox;
     MaterialEditText ifscCodeBox;
+    MaterialEditText aadharNumBox;
+
+    ImageView passBookImgView;
 
     ProgressBar loadingBar;
 
@@ -73,6 +79,8 @@ public class BankDetailsFragment extends Fragment implements UploadImage.SetResp
         reAccountNumBox = (MaterialEditText) view.findViewById(R.id.reAccountNumBox);
         ifscCodeBox = (MaterialEditText) view.findViewById(R.id.ifscCodeBox);
         loadingBar = (ProgressBar) view.findViewById(R.id.loadingBar);
+        aadharNumBox = (MaterialEditText) view.findViewById(R.id.aadharNumBox);
+        passBookImgView = (ImageView) view.findViewById(R.id.passBookImgView);
 
         containerView = view.findViewById(R.id.containerView);
 
@@ -99,6 +107,7 @@ public class BankDetailsFragment extends Fragment implements UploadImage.SetResp
         accountNumBox.setBothText("Account Number", "Enter your account number");
         reAccountNumBox.setBothText("Account Number (Re entered)", "Re Enter your account number");
         ifscCodeBox.setBothText("IFSC Code", "Enter your ifsc code");
+        aadharNumBox.setBothText("Aadhar Card Num.", "Enter your aadhar card number");
         btn_type2.setText("Submit");
         uploadPassbookImageBtn.setText("Upload Passbook's image");
     }
@@ -136,7 +145,8 @@ public class BankDetailsFragment extends Fragment implements UploadImage.SetResp
                             String vBankBranchName = generalFunc.getJsonValue("vBankBranchName", obj_msg);
                             String vMemberNameOnBank = generalFunc.getJsonValue("vMemberNameOnBank", obj_msg);
                             String vAccountNumber = generalFunc.getJsonValue("vAccountNumber", obj_msg);
-                            String vPassbookImage = generalFunc.getJsonValue("vPassbookImage", obj_msg);
+                            String vAadharNum = generalFunc.getJsonValue("vAadharNum", obj_msg);
+                            final String vPassbookImage = generalFunc.getJsonValue("vPassbookImage", obj_msg);
 
                             if(!vBankName.equals("") &&!vIFSCCode.equals("") &&!vMemberNameOnBank.equals("") &&!vAccountNumber.equals("")){
                                 isAllInfoEditable = false;
@@ -144,17 +154,20 @@ public class BankDetailsFragment extends Fragment implements UploadImage.SetResp
                                 ifscCodeBox.setEnabled(false);
                                 accNameBox.setEnabled(false);
                                 accountNumBox.setEnabled(false);
+                                aadharNumBox.setEnabled(false);
 
                                 bankNameBox.getLabelFocusAnimator().start();
                                 ifscCodeBox.getLabelFocusAnimator().start();
                                 accNameBox.getLabelFocusAnimator().start();
                                 accountNumBox.getLabelFocusAnimator().start();
+                                aadharNumBox.getLabelFocusAnimator().start();
                             }
                             bankNameBox.setText(vBankName);
                             ifscCodeBox.setText(vIFSCCode);
                             bankBranchBox.setText(vBankBranchName);
                             accNameBox.setText(vMemberNameOnBank);
                             accountNumBox.setText(vAccountNumber);
+                            aadharNumBox.setText(vAadharNum);
 
                             if (!vAccountNumber.equals("")) {
                                 reAccountNumBox.setVisibility(View.GONE);
@@ -163,6 +176,23 @@ public class BankDetailsFragment extends Fragment implements UploadImage.SetResp
 
                             if (!vPassbookImage.equals("")) {
                                 isImageUploadEnable = false;
+                            }
+
+                            if (!vPassbookImage.equals("")) {
+                                isImageUploadEnable = false;
+
+                                Picasso.with(getActContext())
+                                        .load(vPassbookImage)
+                                        .into(passBookImgView, null);
+
+                                passBookImgView.setVisibility(View.VISIBLE);
+
+                                passBookImgView.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        (new StartActProcess(getActContext())).openURL(vPassbookImage);
+                                    }
+                                });
                             }
                         }
 
@@ -234,10 +264,11 @@ public class BankDetailsFragment extends Fragment implements UploadImage.SetResp
         boolean isBankNameEntered = Utils.checkText(bankNameBox) ? true : Utils.setErrorFields(bankNameBox, "Required");
 
         boolean isAccNameEntered = Utils.checkText(accNameBox) ? true : Utils.setErrorFields(accNameBox, "Required");
+        boolean isAadharEntered = Utils.checkText(aadharNumBox) ? true : Utils.setErrorFields(aadharNumBox, "Required");
         boolean isAccNumEntered = Utils.checkText(accountNumBox) ? true : Utils.setErrorFields(accountNumBox, "Required");
         boolean isReAccNumEntered = Utils.checkText(reAccountNumBox) ? (Utils.getText(accountNumBox).trim().equals(Utils.getText(reAccountNumBox).trim()) ? true : Utils.setErrorFields(reAccountNumBox, "Invalid account number")) : Utils.setErrorFields(reAccountNumBox, "Required");
 
-        if (isIFSCEntered == false || isBankNameEntered == false || isAccNameEntered == false || isAccNumEntered == false || isReAccNumEntered == false) {
+        if (isIFSCEntered == false || isBankNameEntered == false || isAadharEntered == false || isAccNameEntered == false || isAccNumEntered == false || isReAccNumEntered == false) {
 
             GeneralFunctions.showMessage(GeneralFunctions.getCurrentView((Activity) getActContext()), "All information is required.");
         } else {
@@ -272,6 +303,7 @@ public class BankDetailsFragment extends Fragment implements UploadImage.SetResp
         parameters.put("vBankBranchName", Utils.getText(bankBranchBox));
         parameters.put("vIFSCCode", Utils.getText(ifscCodeBox));
         parameters.put("vBankName", Utils.getText(bankNameBox));
+        parameters.put("vAadharNum", Utils.getText(aadharNumBox));
 
         ExecuteWebServerUrl exeWebServer = new ExecuteWebServerUrl(parameters);
         exeWebServer.setLoaderConfig(getActContext(), true, generalFunc);

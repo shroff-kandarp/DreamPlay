@@ -26,6 +26,15 @@
                     android:src="@mipmap/ic_pan_bank"
                     android:tint="@color/appThemeColor_1" />
 
+                <ImageView
+                    android:id="@+id/panCardImgView"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:background="#f4f4f4"
+                    android:visibility="gone" />
+
                 <include
                     android:id="@+id/nameBox"
                     layout="@layout/editbox_form_design"

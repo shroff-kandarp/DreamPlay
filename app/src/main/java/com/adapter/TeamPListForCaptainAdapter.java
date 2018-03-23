@@ -99,10 +99,10 @@ import java.util.HashMap;
                 } else {
                     viewHolder.playerImgView.setImageResource(R.mipmap.cric_allrounder);
     //                if (!item.get("vImgName").equals("")) {
-    //                Picasso.with(mContext)
-    //                        .load(item.get("vImgName"))
-    //                        .placeholder(R.drawable.no_team_img)
-    //                        .into(viewHolder.playerImgView, null);
+//                    Picasso.with(mContext)
+//                            .load(item.get("vImgName"))
+//                            .placeholder(R.drawable.no_team_img)
+//                            .into(viewHolder.playerImgView, null);
     //                }
                 }*/
 

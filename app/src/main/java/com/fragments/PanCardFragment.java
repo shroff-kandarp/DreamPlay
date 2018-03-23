@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.dreamplay.R;
@@ -20,7 +21,9 @@ import com.general.files.GeneralFunctions;
 import com.general.files.ImageFilePath;
 import com.general.files.ImageSourceDialog;
 import com.general.files.SetOnTouchList;
+import com.general.files.StartActProcess;
 import com.general.files.UploadImage;
+import com.squareup.picasso.Picasso;
 import com.utils.Utils;
 import com.view.GenerateAlertBox;
 import com.view.MButton;
@@ -61,6 +64,8 @@ public class PanCardFragment extends Fragment implements UploadImage.SetResponse
 
     MTextView noDataTxt;
 
+    ImageView panCardImgView;
+
     MButton btn_type2;
     MButton uploadPanImageBtn;
 
@@ -84,6 +89,7 @@ public class PanCardFragment extends Fragment implements UploadImage.SetResponse
         stateBox = (MaterialEditText) view.findViewById(R.id.stateBox);
         panCardNumBox = (MaterialEditText) view.findViewById(R.id.panCardNumBox);
         loadingBar = (ProgressBar) view.findViewById(R.id.loadingBar);
+        panCardImgView = (ImageView) view.findViewById(R.id.panCardImgView);
 
         containerView = view.findViewById(R.id.containerView);
 
@@ -157,7 +163,7 @@ public class PanCardFragment extends Fragment implements UploadImage.SetResponse
                             String vPanState = generalFunc.getJsonValue("vPanState", obj_msg);
                             String vState = generalFunc.getJsonValue("vState", obj_msg);
                             String vPanCardNum = generalFunc.getJsonValue("vPanCardNum", obj_msg);
-                            String vPanImage = generalFunc.getJsonValue("vPanImage", obj_msg);
+                            final String vPanImage = generalFunc.getJsonValue("vPanImage", obj_msg);
 
                             if (vPanCardName.equals("")) {
                                 nameBox.setText(generalFunc.getJsonValue("vName", obj_msg));
@@ -195,6 +201,19 @@ public class PanCardFragment extends Fragment implements UploadImage.SetResponse
 
                             if (!vPanImage.equals("")) {
                                 isImageUploadEnable = false;
+
+                                Picasso.with(getActContext())
+                                        .load(vPanImage)
+                                        .into(panCardImgView, null);
+
+                                panCardImgView.setVisibility(View.VISIBLE);
+
+                                panCardImgView.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        (new StartActProcess(getActContext())).openURL(vPanImage);
+                                    }
+                                });
                             }
                         }
 
