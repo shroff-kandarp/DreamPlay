@@ -7,8 +7,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android
-    .permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android     .permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
 
@@ -79,7 +78,8 @@
         <activity android:name=".ContestDetailsActivity" />
         <activity android:name=".UserMatchTeamsActivity" />
         <activity android:name=".JoinedContestActivity" />
-        <activity android:name=".VerifyUserActivity"></activity>
+        <activity android:name=".VerifyUserActivity" />
+        <activity android:name=".ForgetPassActivity"></activity>
     </application>
 
 </manifest>

@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ImageView;
@@ -41,6 +43,7 @@ public class RegisterActivity extends BaseActivity {
     MaterialEditText mobileBox;
     MaterialEditText passwordBox;
     MButton btn_type2;
+    ImageView showPassImgView;
 
     View facebookArea;
     View googleArea;
@@ -48,6 +51,8 @@ public class RegisterActivity extends BaseActivity {
     CallbackManager mCallbackManager;
 
     LoginWithGoogle loginWithGoogle;
+
+    boolean isPasswordBoxSet = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +72,7 @@ public class RegisterActivity extends BaseActivity {
         mobileBox = (MaterialEditText) findViewById(R.id.mobileBox);
         passwordBox = (MaterialEditText) findViewById(R.id.passwordBox);
         btn_type2 = ((MaterialRippleLayout) findViewById(R.id.btn_type2)).getChildView();
+        showPassImgView = (ImageView) findViewById(R.id.showPassImgView);
 
         inviteArea = findViewById(R.id.inviteArea);
         facebookArea = findViewById(R.id.facebookArea);
@@ -79,6 +85,7 @@ public class RegisterActivity extends BaseActivity {
         googleArea.setOnClickListener(new setOnClickList());
         facebookArea.setOnClickListener(new setOnClickList());
         btn_type2.setOnClickListener(new setOnClickList());
+        showPassImgView.setOnClickListener(new setOnClickList());
         goToSignInTxtView.setOnClickListener(new setOnClickList());
 
         btn_type2.setAlpha((float) 0.85);
@@ -116,6 +123,27 @@ public class RegisterActivity extends BaseActivity {
         emailBox.setHelperTextAlwaysShown(true);
         passwordBox.setHelperText("Minimum " + Utils.minPasswordLength + " characters long");
         passwordBox.setHelperTextAlwaysShown(true);
+
+        passwordBox.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if(charSequence.length() > 0){
+                    showPassImgView.setVisibility(View.VISIBLE);
+                }else{
+                    showPassImgView.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
 
     public Context getActContext() {
@@ -206,6 +234,15 @@ public class RegisterActivity extends BaseActivity {
                 new LoginWithFacebook(getActContext(), mCallbackManager);
             } else if (view.getId() == googleArea.getId()) {
                 loginWithGoogle = new LoginWithGoogle(getActContext());
+            } else if (view.getId() == showPassImgView.getId()) {
+
+                if (!isPasswordBoxSet) {
+                    isPasswordBoxSet = true;
+                    passwordBox.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                } else {
+                    isPasswordBoxSet = false;
+                    passwordBox.setInputType(InputType.TYPE_CLASS_TEXT);
+                }
             } else if (view.getId() == goToSignInTxtView.getId()) {
                 if (getIntent().getStringExtra("isFromSignIn") != null) {
                     backImgView.performClick();

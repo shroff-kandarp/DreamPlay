@@ -173,10 +173,21 @@
                     <include
                         android:id="@+id/passwordBox"
                         layout="@layout/editbox_form_design"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="15dp"
-                        android:layout_marginStart="5dp" />
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="1" />
+
+                    <ImageView
+                        android:id="@+id/showPassImgView"
+                        android:layout_width="25dp"
+                        android:visibility="gone"
+                        android:layout_height="25dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="10dp"
+                        android:layout_weight="0"
+                        android:src="@mipmap/ic_eye_sym" />
 
                 </LinearLayout>
 

@@ -33,6 +33,7 @@ public class SignInActivity extends BaseActivity {
     public GeneralFunctions generalFunc;
     MTextView titleTxt;
     MTextView goToregisterTxtView;
+    MTextView forgetPassTxtView;
     ImageView backImgView;
     CircleImageView hImgView;
     MaterialEditText emailBox;
@@ -61,6 +62,7 @@ public class SignInActivity extends BaseActivity {
         hImgView = (CircleImageView) findViewById(R.id.hImgView);
         emailBox = (MaterialEditText) findViewById(R.id.emailBox);
         passBox = (MaterialEditText) findViewById(R.id.passBox);
+        forgetPassTxtView = (MTextView) findViewById(R.id.forgetPassTxtView);
         btn_type2 = ((MaterialRippleLayout) findViewById(R.id.btn_type2)).getChildView();
         facebookArea = findViewById(R.id.facebookArea);
         googleArea = findViewById(R.id.googleArea);
@@ -69,6 +71,7 @@ public class SignInActivity extends BaseActivity {
         btn_type2.setOnClickListener(new setOnClickList());
         facebookArea.setOnClickListener(new setOnClickList());
         googleArea.setOnClickListener(new setOnClickList());
+        forgetPassTxtView.setOnClickListener(new setOnClickList());
         backImgView.setOnClickListener(new setOnClickList());
         goToregisterTxtView.setOnClickListener(new setOnClickList());
         titleTxt.setText("SignIn");
@@ -112,6 +115,8 @@ public class SignInActivity extends BaseActivity {
                 new LoginWithFacebook(getActContext(), mCallbackManager);
             } else if (view.getId() == googleArea.getId()) {
                 loginWithGoogle = new LoginWithGoogle(getActContext());
+            } else if (view.getId() == forgetPassTxtView.getId()) {
+                (new StartActProcess(getActContext())).startAct(ForgetPassActivity.class);
             } else if (view.getId() == goToregisterTxtView.getId()) {
                 if (getIntent().getStringExtra("isFromRegister") != null) {
                     backImgView.performClick();
