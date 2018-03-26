@@ -25,6 +25,7 @@ import com.general.files.StartActProcess;
 import com.general.files.UploadImage;
 import com.squareup.picasso.Picasso;
 import com.utils.Utils;
+import com.view.CreateRoundedView;
 import com.view.GenerateAlertBox;
 import com.view.MButton;
 import com.view.MTextView;
@@ -64,6 +65,10 @@ public class PanCardFragment extends Fragment implements UploadImage.SetResponse
 
     MTextView noDataTxt;
 
+
+    View photoUploadArea;
+    View imgAdd;
+
     ImageView panCardImgView;
 
     MButton btn_type2;
@@ -90,7 +95,8 @@ public class PanCardFragment extends Fragment implements UploadImage.SetResponse
         panCardNumBox = (MaterialEditText) view.findViewById(R.id.panCardNumBox);
         loadingBar = (ProgressBar) view.findViewById(R.id.loadingBar);
         panCardImgView = (ImageView) view.findViewById(R.id.panCardImgView);
-
+        imgAdd = view.findViewById(R.id.imgAdd);
+        photoUploadArea = view.findViewById(R.id.photoUploadArea);
         containerView = view.findViewById(R.id.containerView);
 
         btn_type2 = ((MaterialRippleLayout) view.findViewById(R.id.btn_type2)).getChildView();
@@ -99,9 +105,13 @@ public class PanCardFragment extends Fragment implements UploadImage.SetResponse
         btn_type2.setId(Utils.generateViewId());
         uploadPanImageBtn.setId(Utils.generateViewId());
 
+        photoUploadArea.setOnClickListener(new setOnClickList());
         dobBox.setOnClickListener(new setOnClickList());
         btn_type2.setOnClickListener(new setOnClickList());
         uploadPanImageBtn.setOnClickListener(new setOnClickList());
+
+        new CreateRoundedView(getActContext().getResources().getColor(R.color.appThemeColor_1), Utils.dipToPixels(getActContext(), 25), 0, getActContext().getResources().getColor(R.color.appThemeColor_1), imgAdd);
+
         setLabels();
         removeInput();
 
@@ -206,6 +216,7 @@ public class PanCardFragment extends Fragment implements UploadImage.SetResponse
                                         .load(vPanImage)
                                         .into(panCardImgView, null);
 
+                                photoUploadArea.setVisibility(View.GONE);
                                 panCardImgView.setVisibility(View.VISIBLE);
 
                                 panCardImgView.setOnClickListener(new View.OnClickListener() {
@@ -302,6 +313,12 @@ public class PanCardFragment extends Fragment implements UploadImage.SetResponse
                     return;
                 }
                 addNewImage();
+            } else if (i == photoUploadArea.getId()) {
+                if (isImageUploadEnable == false) {
+                    generalFunc.showGeneralMessage("", "You can't upload image once its added.");
+                    return;
+                }
+                addNewImage();
             }
         }
     }
@@ -351,7 +368,9 @@ public class PanCardFragment extends Fragment implements UploadImage.SetResponse
 
     public void checkData() {
 
-        if (iStateId.equals("") || isDOBSelected == false || Utils.checkText(nameBox) == false || Utils.checkText(panCardNumBox) == false) {
+        boolean isPanCardNumEntered = Utils.checkText(panCardNumBox) ? (Utils.getText(panCardNumBox).toString().length() != 8 ? Utils.setErrorFields(panCardNumBox, "Pan card number must be 8 character long.") : true) : Utils.setErrorFields(panCardNumBox, "Required");
+
+        if (iStateId.equals("") || isDOBSelected == false || Utils.checkText(nameBox) == false || isPanCardNumEntered == false) {
 
             GeneralFunctions.showMessage(GeneralFunctions.getCurrentView((Activity) getActContext()), "All information is required.");
         } else {

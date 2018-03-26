@@ -215,13 +215,17 @@ public class MyProfileActivity extends BaseActivity {
                                 addressBox.setEnabled(false);
                             }
 
-//                            if (generalFunc.getJsonValue("eMobileVerified", obj_msg).equalsIgnoreCase("Yes")) {
-//                                mobileBox.setEnabled(false);
-//                            }
-//
-//                            if (generalFunc.getJsonValue("eEmailVerified", obj_msg).equalsIgnoreCase("Yes")) {
-//                                emailBox.setEnabled(false);
-//                            }
+                            if (generalFunc.getJsonValue("eMobileVerified", obj_msg).equalsIgnoreCase("Yes")) {
+                                mobileBox.setEnabled(false);
+                            }else{
+                                mobileBox.setEnabled(true);
+                            }
+
+                            if (generalFunc.getJsonValue("eEmailVerified", obj_msg).equalsIgnoreCase("Yes")) {
+                                emailBox.setEnabled(false);
+                            }else{
+                                emailBox.setEnabled(true);
+                            }
 
                             countryBox.setText(vCountry);
                             if(!vCountry.equals("")&& !eProfileEditEnabled.equalsIgnoreCase("Yes")){
@@ -326,7 +330,7 @@ public class MyProfileActivity extends BaseActivity {
         boolean emailEntered = Utils.checkText(emailBox) ?
                 (generalFunc.isEmailValid(Utils.getText(emailBox)) ? true : Utils.setErrorFields(emailBox, "Invalid email"))
                 : Utils.setErrorFields(emailBox, "Required");
-        boolean mobileEntered = Utils.checkText(mobileBox) ? true : Utils.setErrorFields(mobileBox, "Required");
+        boolean mobileEntered = Utils.checkText(mobileBox) ? (Utils.getText(mobileBox).toString().length() != 10 ? Utils.setErrorFields(mobileBox, "Mobile must should be 10 digits long.") : true) : Utils.setErrorFields(mobileBox, "Required");
 //        boolean countryEntered = isCountrySelected ? true : false;
 //        if (countryEntered == false) {
 //            Utils.setErrorFields(countryBox, "Required");

@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.adapter.TabAdapter;
+import com.fragments.AaadharFragment;
 import com.fragments.BankDetailsFragment;
 import com.fragments.PanCardFragment;
 import com.fragments.VerifyMobileEmailFragment;
@@ -64,9 +65,11 @@ public class VerifyUserActivity extends AppCompatActivity {
         VerifyMobileEmailFragment verifyFrag = new VerifyMobileEmailFragment();
         PanCardFragment panCardFrag = new PanCardFragment();
         BankDetailsFragment bankDetailsFrag = new BankDetailsFragment();
+        AaadharFragment aadharFrag = new AaadharFragment();
         adapter.addFrag(verifyFrag, "MOBILE & EMAIL");
         adapter.addFrag(panCardFrag, "PAN");
         adapter.addFrag(bankDetailsFrag, "BANK");
+        adapter.addFrag(aadharFrag, "AADHAR CARD");
         viewPager.setAdapter(adapter);
 
         tabLayout.setupWithViewPager(viewPager);

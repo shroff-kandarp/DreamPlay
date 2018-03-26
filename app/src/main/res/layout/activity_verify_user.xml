@@ -19,7 +19,7 @@
         app:tabGravity="fill"
         app:tabIndicatorColor="@color/appThemeColor_Dark_1"
         app:tabMinWidth="125dp"
-        app:tabMode="fixed"
+        app:tabMode="scrollable"
         app:tabSelectedTextColor="@color/appThemeColor_Dark_1"
         app:tabTextColor="@color/appThemeColor_1" />
 

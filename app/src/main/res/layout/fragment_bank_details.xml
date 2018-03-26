@@ -19,12 +19,44 @@
                 android:orientation="vertical"
                 android:padding="15dp">
 
-                <ImageView
-                    android:layout_width="85dp"
-                    android:layout_height="85dp"
-                    android:layout_gravity="center_horizontal"
-                    android:src="@mipmap/ic_pan_bank"
-                    android:tint="@color/appThemeColor_1" />
+                <LinearLayout
+                    android:id="@+id/photoUploadArea"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="125dp"
+                            android:layout_height="125dp"
+                            android:layout_centerHorizontal="true"
+                            android:src="@mipmap/cam" />
+
+                        <ImageView
+                            android:id="@+id/imgAdd"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="46dp"
+                            android:padding="8dp"
+                            android:src="@mipmap/ic_plus_1"
+                            android:tint="@color/appThemeColor_TXT_1" />
+                    </RelativeLayout>
+
+                    <com.view.MTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="-10dp"
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:text="Click to upload passbook's photo*"
+                        android:textColor="#272727"
+                        android:textSize="@dimen/txt_size_16" />
+                </LinearLayout>
 
 
                 <ImageView
@@ -36,6 +68,16 @@
                     android:background="#f4f4f4"
                     android:visibility="gone" />
 
+
+                <include
+                    android:id="@+id/ifscCodeBox"
+                    layout="@layout/editbox_form_design"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp" />
+
                 <include
                     android:id="@+id/bankNameBox"
                     layout="@layout/editbox_form_design"
@@ -44,6 +86,16 @@
                     android:layout_marginEnd="5dp"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="10dp" />
+
+
+                <include
+                    android:id="@+id/accNameBox"
+                    layout="@layout/editbox_form_design"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp" />
 
                 <include
                     android:id="@+id/bankBranchBox"
@@ -61,14 +113,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="5dp" />
-                <include
-                    android:id="@+id/accNameBox"
-                    layout="@layout/editbox_form_design"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="5dp"
+                    android:visibility="gone"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="5dp" />
 
@@ -83,15 +128,6 @@
 
                 <include
                     android:id="@+id/reAccountNumBox"
-                    layout="@layout/editbox_form_design"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="5dp" />
-
-                <include
-                    android:id="@+id/ifscCodeBox"
                     layout="@layout/editbox_form_design"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -140,5 +176,6 @@
         android:layout_height="@dimen/all_btn_height"
         android:layout_gravity="bottom"
         android:layout_marginTop="15dp"
-        android:layout_weight="0" />
+        android:layout_weight="0"
+        android:visibility="gone" />
 </LinearLayout>

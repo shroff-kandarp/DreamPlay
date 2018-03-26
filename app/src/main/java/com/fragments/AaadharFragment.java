@@ -1,7 +1,9 @@
 package com.fragments;
 
+
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,6 +20,7 @@ import com.general.files.ExecuteWebServerUrl;
 import com.general.files.GeneralFunctions;
 import com.general.files.ImageFilePath;
 import com.general.files.ImageSourceDialog;
+import com.general.files.SetOnTouchList;
 import com.general.files.StartActProcess;
 import com.general.files.UploadImage;
 import com.squareup.picasso.Picasso;
@@ -29,6 +32,7 @@ import com.view.MTextView;
 import com.view.MaterialRippleLayout;
 import com.view.editBox.MaterialEditText;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -36,92 +40,89 @@ import java.util.HashMap;
 
 import static android.app.Activity.RESULT_CANCELED;
 
-public class BankDetailsFragment extends Fragment implements UploadImage.SetResponseListener {
-
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class AaadharFragment extends Fragment implements UploadImage.SetResponseListener {
 
     View view;
 
     View containerView;
-    MaterialEditText bankNameBox;
-    MaterialEditText bankBranchBox;
-    MaterialEditText accNameBox;
-    MaterialEditText accountNumBox;
-    MaterialEditText reAccountNumBox;
-    MaterialEditText ifscCodeBox;
-    MaterialEditText aadharNumBox;
-
-    View photoUploadArea;
-    View imgAdd;
-
-    ImageView passBookImgView;
+    MaterialEditText aadharCardNumBox;
+    MaterialEditText cityBox;
+    MaterialEditText stateBox;
+    String iStateId = "";
+    android.support.v7.app.AlertDialog list_state;
+    ArrayList<String> items_txt_state = new ArrayList<String>();
+    ArrayList<String> items_state_ids = new ArrayList<String>();
 
     ProgressBar loadingBar;
 
     MTextView noDataTxt;
 
-    MButton uploadPassbookImageBtn;
+
+    View photoUploadArea;
+    View imgAdd;
+
+    ImageView aadharCardImgView;
+
     MButton btn_type2;
 
     GeneralFunctions generalFunc;
     VerifyUserActivity verifyUsrAct;
-
     boolean isAllInfoEditable = true;
-    boolean isImageUploadEnable = true;
 
+    boolean isImageUploadEnable = true;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_bank_details, container, false);
+        view = inflater.inflate(R.layout.fragment_aaadhar, container, false);
 
         verifyUsrAct = (VerifyUserActivity) getActivity();
         generalFunc = verifyUsrAct.generalFunc;
         noDataTxt = (MTextView) view.findViewById(R.id.noDataTxt);
-        bankNameBox = (MaterialEditText) view.findViewById(R.id.bankNameBox);
-        bankBranchBox = (MaterialEditText) view.findViewById(R.id.bankBranchBox);
-        accNameBox = (MaterialEditText) view.findViewById(R.id.accNameBox);
-        accountNumBox = (MaterialEditText) view.findViewById(R.id.accountNumBox);
-        reAccountNumBox = (MaterialEditText) view.findViewById(R.id.reAccountNumBox);
-        ifscCodeBox = (MaterialEditText) view.findViewById(R.id.ifscCodeBox);
+        aadharCardNumBox = (MaterialEditText) view.findViewById(R.id.aadharCardNumBox);
+        stateBox = (MaterialEditText) view.findViewById(R.id.stateBox);
+        cityBox = (MaterialEditText) view.findViewById(R.id.cityBox);
         loadingBar = (ProgressBar) view.findViewById(R.id.loadingBar);
-        aadharNumBox = (MaterialEditText) view.findViewById(R.id.aadharNumBox);
-        passBookImgView = (ImageView) view.findViewById(R.id.passBookImgView);
+        aadharCardImgView = (ImageView) view.findViewById(R.id.aadharCardImgView);
         imgAdd = view.findViewById(R.id.imgAdd);
         photoUploadArea = view.findViewById(R.id.photoUploadArea);
-
         containerView = view.findViewById(R.id.containerView);
 
         btn_type2 = ((MaterialRippleLayout) view.findViewById(R.id.btn_type2)).getChildView();
-        uploadPassbookImageBtn = ((MaterialRippleLayout) view.findViewById(R.id.uploadPassbookImageBtn)).getChildView();
 
         btn_type2.setId(Utils.generateViewId());
-        uploadPassbookImageBtn.setId(Utils.generateViewId());
 
         photoUploadArea.setOnClickListener(new setOnClickList());
         btn_type2.setOnClickListener(new setOnClickList());
-        uploadPassbookImageBtn.setOnClickListener(new setOnClickList());
 
         new CreateRoundedView(getActContext().getResources().getColor(R.color.appThemeColor_1), Utils.dipToPixels(getActContext(), 25), 0, getActContext().getResources().getColor(R.color.appThemeColor_1), imgAdd);
+
         setLabels();
+        removeInput();
 
         getUserData();
+
         return view;
     }
-
-
     public void setLabels() {
 
-        bankNameBox.setBothText("Bank Name", "Enter your bank name");
-        bankBranchBox.setBothText("Bank branch", "Enter bank branch name");
-        accNameBox.setBothText("Account Name", "Enter your account name");
-        accountNumBox.setBothText("Account Number", "Enter your account number");
-        reAccountNumBox.setBothText("Confirm Account Number", "Re Enter your account number");
-        ifscCodeBox.setBothText("IFSC Code", "Enter your ifsc code");
-        aadharNumBox.setBothText("Aadhar Card Num.", "Enter your aadhar card number");
+        aadharCardNumBox.setBothText("Aadhar Card", "Enter aadhar card number");
+
+        stateBox.setBothText("State", "Select your state");
+        cityBox.setBothText("City", "Enter city");
         btn_type2.setText("Submit");
-        uploadPassbookImageBtn.setText("Upload Passbook's image");
     }
 
+    public void removeInput() {
+
+        Utils.removeInput(stateBox);
+        stateBox.setOnTouchListener(new SetOnTouchList());
+        stateBox.setOnClickListener(new setOnClickList());
+
+    }
 
     public void getUserData() {
         containerView.setVisibility(View.GONE);
@@ -150,63 +151,57 @@ public class BankDetailsFragment extends Fragment implements UploadImage.SetResp
 
                         if (obj_msg != null) {
 
-                            String vBankName = generalFunc.getJsonValue("vBankName", obj_msg);
-                            String vIFSCCode = generalFunc.getJsonValue("vIFSCCode", obj_msg);
-                            String vBankBranchName = generalFunc.getJsonValue("vBankBranchName", obj_msg);
-                            String vMemberNameOnBank = generalFunc.getJsonValue("vMemberNameOnBank", obj_msg);
-                            String vAccountNumber = generalFunc.getJsonValue("vAccountNumber", obj_msg);
-                            String vAadharNum = generalFunc.getJsonValue("vAadharNum", obj_msg);
-                            final String vPassbookImage = generalFunc.getJsonValue("vPassbookImage", obj_msg);
+                            String tPanDOB = generalFunc.getJsonValue("tPanDOB", obj_msg);
+                            String vAadharState = generalFunc.getJsonValue("vAadharState", obj_msg);
+                            String vState = generalFunc.getJsonValue("vState", obj_msg);
+                            final String vAadharImage = generalFunc.getJsonValue("vAadharImage", obj_msg);
+                            final String vAadharNum = generalFunc.getJsonValue("vAadharNum", obj_msg);
+                            final String vAadharCity = generalFunc.getJsonValue("vAadharCity", obj_msg);
 
-                            if (!vBankName.equals("") && !vIFSCCode.equals("") && !vMemberNameOnBank.equals("") && !vAccountNumber.equals("")) {
+
+                            aadharCardNumBox.setText(vAadharNum);
+                            cityBox.setText(vAadharCity);
+
+                            if (!vAadharState.equals("")) {
+                                stateBox.setText(vAadharState);
+                                iStateId = generalFunc.getJsonValue("iPanStateId", obj_msg);
+                            } else if (!vState.equals("")) {
+                                stateBox.setText(vAadharState.equals("") ? generalFunc.getJsonValue("vState", obj_msg) : vAadharState);
+                                iStateId = generalFunc.getJsonValue("iStateId", obj_msg);
+                            }
+
+                            if (!tPanDOB.equals("") && !vAadharCity.equals("") && !vState.equals("") && !vAadharNum.equals("")) {
+                                stateBox.setOnClickListener(null);
+                                cityBox.setEnabled(false);
+                                aadharCardNumBox.setEnabled(false);
+
                                 isAllInfoEditable = false;
-                                bankNameBox.setEnabled(false);
-                                ifscCodeBox.setEnabled(false);
-                                accNameBox.setEnabled(false);
-                                accountNumBox.setEnabled(false);
-                                aadharNumBox.setEnabled(false);
 
-                                bankNameBox.getLabelFocusAnimator().start();
-                                ifscCodeBox.getLabelFocusAnimator().start();
-                                accNameBox.getLabelFocusAnimator().start();
-                                accountNumBox.getLabelFocusAnimator().start();
-                                aadharNumBox.getLabelFocusAnimator().start();
-                            }
-                            bankNameBox.setText(vBankName);
-                            ifscCodeBox.setText(vIFSCCode);
-                            bankBranchBox.setText(vBankBranchName);
-                            accNameBox.setText(vMemberNameOnBank);
-                            accountNumBox.setText(vAccountNumber);
-                            aadharNumBox.setText(vAadharNum);
-
-                            if (!vAccountNumber.equals("")) {
-                                reAccountNumBox.setVisibility(View.GONE);
+                                aadharCardNumBox.getLabelFocusAnimator().start();
+                                cityBox.getLabelFocusAnimator().start();
+                                stateBox.getLabelFocusAnimator().start();
                             }
 
-
-                            if (!vPassbookImage.equals("")) {
-                                isImageUploadEnable = false;
-                            }
-
-                            if (!vPassbookImage.equals("")) {
+                            if (!vAadharImage.equals("")) {
                                 isImageUploadEnable = false;
 
                                 Picasso.with(getActContext())
-                                        .load(vPassbookImage)
-                                        .into(passBookImgView, null);
+                                        .load(vAadharImage)
+                                        .into(aadharCardImgView, null);
 
                                 photoUploadArea.setVisibility(View.GONE);
-                                passBookImgView.setVisibility(View.VISIBLE);
+                                aadharCardImgView.setVisibility(View.VISIBLE);
 
-                                passBookImgView.setOnClickListener(new View.OnClickListener() {
+                                aadharCardImgView.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        (new StartActProcess(getActContext())).openURL(vPassbookImage);
+                                        (new StartActProcess(getActContext())).openURL(vAadharImage);
                                     }
                                 });
                             }
                         }
 
+                        buildStateList(generalFunc.getJsonArray("StateList", obj_msg));
                         containerView.setVisibility(View.VISIBLE);
                         btn_type2.setVisibility(View.VISIBLE);
 
@@ -224,9 +219,48 @@ public class BankDetailsFragment extends Fragment implements UploadImage.SetResp
         exeWebServer.execute();
     }
 
+    public void buildStateList(JSONArray stateListArr) {
+
+        for (int i = 0; i < stateListArr.length(); i++) {
+            JSONObject obj_temp = generalFunc.getJsonObject(stateListArr, i);
+
+            items_txt_state.add(generalFunc.getJsonValue("vState", obj_temp.toString()));
+            items_state_ids.add(generalFunc.getJsonValue("iStateId", obj_temp.toString()));
+        }
+
+        CharSequence[] cs_currency_txt = items_txt_state.toArray(new CharSequence[items_txt_state.size()]);
+
+        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(getActContext());
+        builder.setTitle("Select State");
+
+        builder.setItems(cs_currency_txt, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int item) {
+                // Do something with the selection
+
+                if (list_state != null) {
+                    list_state.dismiss();
+                }
+
+                iStateId = items_state_ids.get(item);
+                stateBox.setText(items_txt_state.get(item));
+
+            }
+        });
+
+        list_state = builder.create();
+
+    }
 
     public Context getActContext() {
         return verifyUsrAct.getActContext();
+    }
+
+    @Override
+    public void onFileUploadResponse(String responseString, String type) {
+
+        generalFunc.showGeneralMessage("", generalFunc.getJsonValue(Utils.message_str, responseString));
+
+        getUserData();
     }
 
     public class setOnClickList implements View.OnClickListener {
@@ -234,18 +268,16 @@ public class BankDetailsFragment extends Fragment implements UploadImage.SetResp
         @Override
         public void onClick(View view) {
             int i = view.getId();
-            if (i == btn_type2.getId()) {
+             if (i == stateBox.getId()) {
+                if (list_state != null) {
+                    list_state.show();
+                }
+            } else if (i == btn_type2.getId()) {
                 if (isAllInfoEditable == false) {
                     generalFunc.showGeneralMessage("", "You can't edit information once its added.");
                     return;
                 }
                 checkData();
-            } else if (i == uploadPassbookImageBtn.getId()) {
-                if (isImageUploadEnable == false) {
-                    generalFunc.showGeneralMessage("", "You can't upload image once its added.");
-                    return;
-                }
-                addNewImage();
             } else if (i == photoUploadArea.getId()) {
                 if (isImageUploadEnable == false) {
                     generalFunc.showGeneralMessage("", "You can't upload image once its added.");
@@ -275,22 +307,15 @@ public class BankDetailsFragment extends Fragment implements UploadImage.SetResp
         return this;
     }
 
+
     public void checkData() {
-//|| Utils.checkText(bankBranchBox) == false
 
-        boolean isIFSCEntered = Utils.checkText(ifscCodeBox) ? true : Utils.setErrorFields(ifscCodeBox, "Required");
-        boolean isBankNameEntered = Utils.checkText(bankNameBox) ? true : Utils.setErrorFields(bankNameBox, "Required");
+        boolean isAadharCardNumEntered = Utils.checkText(aadharCardNumBox) ? (Utils.getText(aadharCardNumBox).toString().length() != 12 ? Utils.setErrorFields(aadharCardNumBox, "Aadhar card number must be 12 character long.") : true) : Utils.setErrorFields(aadharCardNumBox, "Required");
 
-        boolean isAccNameEntered = Utils.checkText(accNameBox) ? true : Utils.setErrorFields(accNameBox, "Required");
-//        boolean isAadharEntered = Utils.checkText(aadharNumBox) ? true : Utils.setErrorFields(aadharNumBox, "Required");
-        boolean isAccNumEntered = Utils.checkText(accountNumBox) ? (Utils.getText(accountNumBox).toString().length() != 10 ? Utils.setErrorFields(accountNumBox, "Account number must be 10 digits long") : true) : Utils.setErrorFields(accountNumBox, "Required");
-        boolean isReAccNumEntered = Utils.checkText(reAccountNumBox) ? (Utils.getText(accountNumBox).trim().equals(Utils.getText(reAccountNumBox).trim()) ? true : Utils.setErrorFields(reAccountNumBox, "Invalid account number")) : Utils.setErrorFields(reAccountNumBox, "Required");
-
-        if (isIFSCEntered == false || isBankNameEntered == false /*|| isAadharEntered == false*/ || isAccNameEntered == false || isAccNumEntered == false || isReAccNumEntered == false) {
+        if (iStateId.equals("")  || Utils.checkText(cityBox) == false || isAadharCardNumEntered == false) {
 
             GeneralFunctions.showMessage(GeneralFunctions.getCurrentView((Activity) getActContext()), "All information is required.");
         } else {
-//            updateBankDetails();
 
             final GenerateAlertBox generateAlert = new GenerateAlertBox(getActContext());
             generateAlert.setCancelable(false);
@@ -298,7 +323,7 @@ public class BankDetailsFragment extends Fragment implements UploadImage.SetResp
                 @Override
                 public void handleBtnClick(int btn_id) {
                     if (btn_id == 1) {
-                        updateBankDetails();
+                        updatePanCardDetails();
                     } else if (btn_id == 0) {
                         generateAlert.closeAlertBox();
                     }
@@ -312,16 +337,13 @@ public class BankDetailsFragment extends Fragment implements UploadImage.SetResp
         }
     }
 
-    public void updateBankDetails() {
+    public void updatePanCardDetails() {
         HashMap<String, String> parameters = new HashMap<>();
-        parameters.put("type", "updateBankDetails");
+        parameters.put("type", "updateAadharDetails");
         parameters.put("iMemberId", generalFunc.getMemberId());
-        parameters.put("vMemberNameOnBank", Utils.getText(accNameBox));
-        parameters.put("vAccountNumber", Utils.getText(accountNumBox));
-        parameters.put("vBankBranchName", Utils.getText(bankBranchBox));
-        parameters.put("vIFSCCode", Utils.getText(ifscCodeBox));
-        parameters.put("vBankName", Utils.getText(bankNameBox));
-//        parameters.put("vAadharNum", Utils.getText(aadharNumBox));
+        parameters.put("vAadharNum", Utils.getText(aadharCardNumBox));
+        parameters.put("vAadharCity", Utils.getText(cityBox));
+        parameters.put("iAadharStateId", iStateId);
 
         ExecuteWebServerUrl exeWebServer = new ExecuteWebServerUrl(parameters);
         exeWebServer.setLoaderConfig(getActContext(), true, generalFunc);
@@ -364,7 +386,7 @@ public class BankDetailsFragment extends Fragment implements UploadImage.SetResp
 
                 final ArrayList<String[]> paramsList = new ArrayList<>();
                 paramsList.add(Utils.generateImageParams("iMemberId", generalFunc.getMemberId()));
-                paramsList.add(Utils.generateImageParams("type", "addPassbookImage"));
+                paramsList.add(Utils.generateImageParams("type", "addAadharCardImage"));
 
                 final String selPath = new ImageFilePath().getPath(getActContext(), verifyUsrAct.fileUri);
 
@@ -379,8 +401,8 @@ public class BankDetailsFragment extends Fragment implements UploadImage.SetResp
                             if (btn_id == 1) {
 
                                 UploadImage uploadImg = new UploadImage(getActContext(), selPath, Utils.TempProfileImageName, paramsList, "");
-                                uploadImg.setLoadingMessage("Uploading your passbook image...");
-                                uploadImg.setResponseListener(BankDetailsFragment.this);
+                                uploadImg.setLoadingMessage("Uploading your aadhar card's image...");
+                                uploadImg.setResponseListener(AaadharFragment.this);
                                 uploadImg.execute();
                             } else if (btn_id == 0) {
                                 generateAlert.closeAlertBox();
@@ -412,7 +434,7 @@ public class BankDetailsFragment extends Fragment implements UploadImage.SetResp
                 final ArrayList<String[]> paramsList = new ArrayList<>();
                 paramsList.add(Utils.generateImageParams("iMemberId", generalFunc.getMemberId()));
 
-                paramsList.add(Utils.generateImageParams("type", "addPassbookImage"));
+                paramsList.add(Utils.generateImageParams("type", "addPanCardImage"));
 
                 Uri selectedImageUri = data.getData();
 
@@ -431,8 +453,8 @@ public class BankDetailsFragment extends Fragment implements UploadImage.SetResp
 
 
                                 UploadImage uploadImg = new UploadImage(getActContext(), selectedImagePath, Utils.TempProfileImageName, paramsList, "");
-                                uploadImg.setLoadingMessage("Uploading your passbook image...");
-                                uploadImg.setResponseListener(BankDetailsFragment.this);
+                                uploadImg.setLoadingMessage("Uploading your aadhar card's image...");
+                                uploadImg.setResponseListener(AaadharFragment.this);
                                 uploadImg.execute();
                             } else if (btn_id == 0) {
                                 generateAlert.closeAlertBox();
@@ -452,13 +474,5 @@ public class BankDetailsFragment extends Fragment implements UploadImage.SetResp
             }
         }
 
-    }
-
-    @Override
-    public void onFileUploadResponse(String responseString, String type) {
-
-        generalFunc.showGeneralMessage("", generalFunc.getJsonValue(Utils.message_str, responseString));
-
-        getUserData();
     }
 }

@@ -127,7 +127,7 @@ public class RegisterActivity extends BaseActivity {
         boolean emailEntered = Utils.checkText(emailBox) ?
                 (generalFunc.isEmailValid(Utils.getText(emailBox)) ? true : Utils.setErrorFields(emailBox, "Invalid email"))
                 : Utils.setErrorFields(emailBox, "Required");
-        boolean mobileEntered = Utils.checkText(mobileBox) ? true : Utils.setErrorFields(mobileBox, "Required");
+        boolean mobileEntered = Utils.checkText(mobileBox) ? (Utils.getText(mobileBox).toString().length() != 10 ? Utils.setErrorFields(mobileBox, "Mobile must should be 10 digits long.") : true) : Utils.setErrorFields(mobileBox, "Required");
 
         boolean passwordEntered = Utils.checkText(passwordBox) ?
                 (Utils.getText(passwordBox).contains(" ") ? Utils.setErrorFields(passwordBox, "Password should not contain whitespace.")
