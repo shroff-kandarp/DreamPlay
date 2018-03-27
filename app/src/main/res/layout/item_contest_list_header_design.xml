@@ -26,40 +26,10 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <com.view.MTextView
-                        android:id="@+id/singleEntryTxtView"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_gravity="start"
-                        android:background="@color/appThemeColor_1"
-                        android:gravity="center"
-                        android:text="S"
-                        android:textColor="@color/appThemeColor_TXT_1"
-                        android:textSize="@dimen/txt_size_16"
-                        app:customTypeFace="@string/semiBoldFont" />
-
-                    <com.view.MTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="start|center_vertical"
-                        android:layout_marginLeft="5dp"
-                        android:text="Single Entry"
-                        android:textColor="@color/appThemeColor_1"
-                        android:textSize="@dimen/txt_size_14"
-                        app:customTypeFace="@string/semiBoldFont" />
-                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="2dp"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:orientation="horizontal">
@@ -119,6 +89,36 @@
                         app:customTypeFace="@string/semiBoldFont" />
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="2dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <com.view.MTextView
+                        android:id="@+id/singleEntryTxtView"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="start"
+                        android:background="@color/appThemeColor_1"
+                        android:gravity="center"
+                        android:text="S"
+                        android:textColor="@color/appThemeColor_TXT_1"
+                        android:textSize="@dimen/txt_size_16"
+                        app:customTypeFace="@string/semiBoldFont" />
+
+                    <com.view.MTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start|center_vertical"
+                        android:layout_marginLeft="5dp"
+                        android:text="Single Entry"
+                        android:textColor="@color/appThemeColor_1"
+                        android:textSize="@dimen/txt_size_14"
+                        app:customTypeFace="@string/semiBoldFont" />
+                </LinearLayout>
 
             </LinearLayout>
 

@@ -116,7 +116,7 @@
                 android:padding="10dp"
                 android:text="Forget Password?"
                 android:textColor="@color/appThemeColor_1"
-                android:textSize="@dimen/txt_size_14" />
+                android:textSize="@dimen/txt_size_16" />
         </LinearLayout>
 
     </android.support.v7.widget.CardView>
