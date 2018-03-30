@@ -144,52 +144,60 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="0"
+                    android:gravity="start"
                     android:orientation="vertical">
 
                     <com.view.MTextView
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="JOINED"
+                        android:layout_gravity="center_horizontal"
                         android:textAllCaps="true"
                         android:textColor="@color/appThemeColor_1"
                         android:textSize="@dimen/txt_size_18" />
 
                     <com.view.MTextView
                         android:id="@+id/joinedTxtView"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="₹400.00"
                         android:textAllCaps="true"
+                        android:layout_gravity="center_horizontal"
                         android:textColor="#272727"
                         android:textSize="@dimen/txt_size_18" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
+                    android:layout_weight="0"
+                    android:gravity="start"
+                    android:layout_marginLeft="10dp"
                     android:orientation="vertical">
 
                     <com.view.MTextView
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="TOTAL WINNINGS"
+                        android:layout_gravity="center_horizontal"
                         android:textAllCaps="true"
                         android:textColor="@color/appThemeColor_1"
                         android:textSize="@dimen/txt_size_18" />
 
                     <com.view.MTextView
                         android:id="@+id/winningsTxtView"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
+                        android:layout_gravity="center_horizontal"
                         android:text="₹400.00"
                         android:textAllCaps="true"
                         android:textColor="#272727"

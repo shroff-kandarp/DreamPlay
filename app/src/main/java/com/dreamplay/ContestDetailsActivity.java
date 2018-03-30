@@ -80,6 +80,8 @@ public class ContestDetailsActivity extends AppCompatActivity {
         teamVTxtView = (MTextView) findViewById(R.id.teamVTxtView);
         dataRecyclerView = (RecyclerView) findViewById(R.id.dataRecyclerView);
 
+        PAGE_TYPE = getIntent().getStringExtra("PAGE_TYPE");
+
         containerView = findViewById(R.id.containerView);
         loadingBar = (ProgressBar) findViewById(R.id.loadingBar);
 

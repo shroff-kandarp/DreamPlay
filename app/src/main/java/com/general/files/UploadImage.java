@@ -56,10 +56,10 @@ public class UploadImage /*extends AsyncTask<String, String, String>*/ {
 
         }
 
-//        String filePath = generalFunc.decodeFile(selectedImagePath, Utils.ImageUpload_DESIREDWIDTH, Utils.ImageUpload_DESIREDHEIGHT, temp_File_Name);
+        String filePath = generalFunc.decodeFile(selectedImagePath, Utils.ImageUpload_DESIREDWIDTH, Utils.ImageUpload_DESIREDHEIGHT, temp_File_Name);
 
 
-        File file = new File(selectedImagePath);
+        File file = new File(filePath);
 
 
         MultipartBody.Part filePart = MultipartBody.Part.createFormData("vImage", temp_File_Name, RequestBody.create(MediaType.parse("multipart/form-data"), file));
