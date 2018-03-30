@@ -75,7 +75,7 @@ public class LoginWithFacebook implements FacebookCallback<LoginResult> {
 
                         } else {
 
-                            Utils.printLog("FaceBookData",":::"+me.toString());
+                            Utils.printLog("FaceBookData", ":::" + me.toString());
 
                             String email_str = generalFunc.getJsonValue("email", me.toString());
                             String name_str = generalFunc.getJsonValue("name", me.toString());
@@ -106,7 +106,7 @@ public class LoginWithFacebook implements FacebookCallback<LoginResult> {
     public void registerUser(String name, String mobile, String countryCode, String countryId, String password, String email, String id) {
         HashMap<String, String> parameters = new HashMap<>();
         parameters.put("type", "registerUser");
-        parameters.put("vName", name);
+        parameters.put("vName", name.replace(" ", ""));
         parameters.put("vMobile", mobile);
         parameters.put("vCountry", countryCode);
         parameters.put("iCountryId", countryId);

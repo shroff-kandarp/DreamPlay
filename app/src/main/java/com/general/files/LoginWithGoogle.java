@@ -80,7 +80,7 @@ public class LoginWithGoogle implements GoogleApiClient.OnConnectionFailedListen
     public void registerUser(String name, String mobile, String countryCode, String countryId, String password, String email, String id) {
         HashMap<String, String> parameters = new HashMap<>();
         parameters.put("type", "registerUser");
-        parameters.put("vName", name);
+        parameters.put("vName", name.replace(" ",""));
         parameters.put("vMobile", mobile);
         parameters.put("vCountry", countryCode);
         parameters.put("iCountryId", countryId);
