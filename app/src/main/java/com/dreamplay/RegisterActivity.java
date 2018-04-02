@@ -212,6 +212,8 @@ public class RegisterActivity extends BaseActivity {
         HashMap<String, String> parameters = new HashMap<>();
         parameters.put("type", "checkUserName");
         parameters.put("userName", name);
+        parameters.put("vEmail", email);
+        parameters.put("vMobile", mobile);
 
         ExecuteWebServerUrl exeWebServer = new ExecuteWebServerUrl(parameters);
         exeWebServer.setLoaderConfig(getActContext(), true, generalFunc);
