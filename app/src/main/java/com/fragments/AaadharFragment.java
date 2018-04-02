@@ -387,6 +387,7 @@ public class AaadharFragment extends Fragment implements UploadImage.SetResponse
                 final ArrayList<String[]> paramsList = new ArrayList<>();
                 paramsList.add(Utils.generateImageParams("iMemberId", generalFunc.getMemberId()));
                 paramsList.add(Utils.generateImageParams("type", "addAadharCardImage"));
+//                paramsList.add(Utils.generateImageParams("type", "addAadharCardBackImage"));
 
                 final String selPath = new ImageFilePath().getPath(getActContext(), verifyUsrAct.fileUri);
 
