@@ -215,6 +215,7 @@ public class RegisterActivity extends BaseActivity {
         parameters.put("vEmail", email);
         parameters.put("vMobile", mobile);
 
+
         ExecuteWebServerUrl exeWebServer = new ExecuteWebServerUrl(parameters);
         exeWebServer.setLoaderConfig(getActContext(), true, generalFunc);
         exeWebServer.setIsDeviceTokenGenerate(false, "vDeviceToken");
