@@ -5,7 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -46,6 +48,9 @@ public class SignInActivity extends BaseActivity {
     View googleArea;
 
 
+    boolean isPasswordBoxSet = true;
+
+    ImageView showPassImgView;
     CallbackManager mCallbackManager;
 
     LoginWithGoogle loginWithGoogle;
@@ -63,6 +68,7 @@ public class SignInActivity extends BaseActivity {
         emailBox = (MaterialEditText) findViewById(R.id.emailBox);
         passBox = (MaterialEditText) findViewById(R.id.passBox);
         forgetPassTxtView = (MTextView) findViewById(R.id.forgetPassTxtView);
+        showPassImgView = (ImageView) findViewById(R.id.showPassImgView);
         btn_type2 = ((MaterialRippleLayout) findViewById(R.id.btn_type2)).getChildView();
         facebookArea = findViewById(R.id.facebookArea);
         googleArea = findViewById(R.id.googleArea);
@@ -73,6 +79,7 @@ public class SignInActivity extends BaseActivity {
         googleArea.setOnClickListener(new setOnClickList());
         forgetPassTxtView.setOnClickListener(new setOnClickList());
         backImgView.setOnClickListener(new setOnClickList());
+        showPassImgView.setOnClickListener(new setOnClickList());
         goToregisterTxtView.setOnClickListener(new setOnClickList());
         titleTxt.setText("SignIn");
         btn_type2.setAlpha((float) 0.85);
@@ -84,6 +91,26 @@ public class SignInActivity extends BaseActivity {
         new CreateRoundedView(getResources().getColor(R.color.appThemeColor_2), Utils.dipToPixels(getActContext(), 8), Utils.dipToPixels(getActContext(), 1), getResources().getColor(R.color.appThemeColor_2), btn_type2);
 
 
+        passBox.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (charSequence.length() > 0) {
+                    showPassImgView.setVisibility(View.VISIBLE);
+                } else {
+                    showPassImgView.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
 
     public void setData() {
@@ -123,6 +150,15 @@ public class SignInActivity extends BaseActivity {
                 } else {
                     bn.putString("isFromSignIn", "Yes");
                     (new StartActProcess(getActContext())).startActWithData(RegisterActivity.class, bn);
+                }
+            } else if (view.getId() == showPassImgView.getId()) {
+
+                if (!isPasswordBoxSet) {
+                    isPasswordBoxSet = true;
+                    passBox.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                } else {
+                    isPasswordBoxSet = false;
+                    passBox.setInputType(InputType.TYPE_CLASS_TEXT);
                 }
             }
         }

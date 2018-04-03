@@ -71,6 +71,7 @@ public class RegisterActivity extends BaseActivity {
 
     MButton mobileVerifyBtn;
     MButton mobileVerifyCancelBtn;
+    MButton mobileResendBtn;
 
     String mVerificationId;
     PhoneAuthProvider.ForceResendingToken mResendToken;
@@ -99,6 +100,7 @@ public class RegisterActivity extends BaseActivity {
         btn_type2 = ((MaterialRippleLayout) findViewById(R.id.btn_type2)).getChildView();
         mobileVerifyBtn = ((MaterialRippleLayout) findViewById(R.id.mobileVerifyBtn)).getChildView();
         mobileVerifyCancelBtn = ((MaterialRippleLayout) findViewById(R.id.mobileVerifyCancelBtn)).getChildView();
+        mobileResendBtn = ((MaterialRippleLayout) findViewById(R.id.mobileResendBtn)).getChildView();
         showPassImgView = (ImageView) findViewById(R.id.showPassImgView);
 
         inviteArea = findViewById(R.id.inviteArea);
@@ -109,6 +111,7 @@ public class RegisterActivity extends BaseActivity {
 
         btn_type2.setId(Utils.generateViewId());
         mobileVerifyBtn.setId(Utils.generateViewId());
+        mobileResendBtn.setId(Utils.generateViewId());
         mobileVerifyCancelBtn.setId(Utils.generateViewId());
         mCallbackManager = CallbackManager.Factory.create();
 
@@ -119,6 +122,7 @@ public class RegisterActivity extends BaseActivity {
         showPassImgView.setOnClickListener(new setOnClickList());
         goToSignInTxtView.setOnClickListener(new setOnClickList());
         mobileVerifyBtn.setOnClickListener(new setOnClickList());
+        mobileResendBtn.setOnClickListener(new setOnClickList());
         mobileVerifyCancelBtn.setOnClickListener(new setOnClickList());
 
         btn_type2.setAlpha((float) 0.85);
@@ -143,6 +147,7 @@ public class RegisterActivity extends BaseActivity {
         btn_type2.setText("Register");
         mobileVerifyBtn.setText("Confirm");
         mobileVerifyCancelBtn.setText("Cancel");
+        mobileResendBtn.setText("Resend Verification Sms");
         emailBox.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS | InputType.TYPE_CLASS_TEXT);
         mobileBox.setInputType(InputType.TYPE_CLASS_NUMBER);
         mobileCodeBox.setInputType(InputType.TYPE_CLASS_NUMBER);
@@ -337,6 +342,9 @@ public class RegisterActivity extends BaseActivity {
 
             } else if (view.getId() == mobileVerifyCancelBtn.getId()) {
                 otpEnterArea.setVisibility(View.GONE);
+            } else if (view.getId() == mobileResendBtn.getId()) {
+
+                verifyMobileNum();
             }
         }
     }

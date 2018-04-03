@@ -62,9 +62,12 @@ public class AaadharFragment extends Fragment implements UploadImage.SetResponse
 
 
     View photoUploadArea;
+    View photoUploadAreaBack;
     View imgAdd;
+    View imgAddBack;
 
     ImageView aadharCardImgView;
+    ImageView aadharCardBackImgView;
 
     MButton btn_type2;
 
@@ -73,6 +76,9 @@ public class AaadharFragment extends Fragment implements UploadImage.SetResponse
     boolean isAllInfoEditable = true;
 
     boolean isImageUploadEnable = true;
+    boolean isBackImageUploadEnable = true;
+    boolean isBackSidePressed = false;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -87,18 +93,23 @@ public class AaadharFragment extends Fragment implements UploadImage.SetResponse
         cityBox = (MaterialEditText) view.findViewById(R.id.cityBox);
         loadingBar = (ProgressBar) view.findViewById(R.id.loadingBar);
         aadharCardImgView = (ImageView) view.findViewById(R.id.aadharCardImgView);
+        aadharCardBackImgView = (ImageView) view.findViewById(R.id.aadharCardBackImgView);
+        imgAddBack = view.findViewById(R.id.imgAddBack);
         imgAdd = view.findViewById(R.id.imgAdd);
         photoUploadArea = view.findViewById(R.id.photoUploadArea);
+        photoUploadAreaBack = view.findViewById(R.id.photoUploadAreaBack);
         containerView = view.findViewById(R.id.containerView);
 
         btn_type2 = ((MaterialRippleLayout) view.findViewById(R.id.btn_type2)).getChildView();
 
         btn_type2.setId(Utils.generateViewId());
 
+        photoUploadAreaBack.setOnClickListener(new setOnClickList());
         photoUploadArea.setOnClickListener(new setOnClickList());
         btn_type2.setOnClickListener(new setOnClickList());
 
         new CreateRoundedView(getActContext().getResources().getColor(R.color.appThemeColor_1), Utils.dipToPixels(getActContext(), 25), 0, getActContext().getResources().getColor(R.color.appThemeColor_1), imgAdd);
+        new CreateRoundedView(getActContext().getResources().getColor(R.color.appThemeColor_1), Utils.dipToPixels(getActContext(), 25), 0, getActContext().getResources().getColor(R.color.appThemeColor_1), imgAddBack);
 
         setLabels();
         removeInput();
@@ -107,6 +118,7 @@ public class AaadharFragment extends Fragment implements UploadImage.SetResponse
 
         return view;
     }
+
     public void setLabels() {
 
         aadharCardNumBox.setBothText("Aadhar Card", "Enter aadhar card number");
@@ -155,6 +167,7 @@ public class AaadharFragment extends Fragment implements UploadImage.SetResponse
                             String vAadharState = generalFunc.getJsonValue("vAadharState", obj_msg);
                             String vState = generalFunc.getJsonValue("vState", obj_msg);
                             final String vAadharImage = generalFunc.getJsonValue("vAadharImage", obj_msg);
+                            final String vAadharImage1 = generalFunc.getJsonValue("vAadharImage1", obj_msg);
                             final String vAadharNum = generalFunc.getJsonValue("vAadharNum", obj_msg);
                             final String vAadharCity = generalFunc.getJsonValue("vAadharCity", obj_msg);
 
@@ -196,6 +209,23 @@ public class AaadharFragment extends Fragment implements UploadImage.SetResponse
                                     @Override
                                     public void onClick(View view) {
                                         (new StartActProcess(getActContext())).openURL(vAadharImage);
+                                    }
+                                });
+                            }
+                            if (!vAadharImage1.equals("")) {
+                                isBackImageUploadEnable = false;
+
+                                Picasso.with(getActContext())
+                                        .load(vAadharImage1)
+                                        .into(aadharCardBackImgView, null);
+
+                                photoUploadAreaBack.setVisibility(View.GONE);
+                                aadharCardBackImgView.setVisibility(View.VISIBLE);
+
+                                aadharCardBackImgView.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        (new StartActProcess(getActContext())).openURL(vAadharImage1);
                                     }
                                 });
                             }
@@ -268,7 +298,7 @@ public class AaadharFragment extends Fragment implements UploadImage.SetResponse
         @Override
         public void onClick(View view) {
             int i = view.getId();
-             if (i == stateBox.getId()) {
+            if (i == stateBox.getId()) {
                 if (list_state != null) {
                     list_state.show();
                 }
@@ -283,6 +313,14 @@ public class AaadharFragment extends Fragment implements UploadImage.SetResponse
                     generalFunc.showGeneralMessage("", "You can't upload image once its added.");
                     return;
                 }
+                isBackSidePressed = false;
+                addNewImage();
+            } else if (i == photoUploadAreaBack.getId()) {
+                if (isBackImageUploadEnable == false) {
+                    generalFunc.showGeneralMessage("", "You can't upload image once its added.");
+                    return;
+                }
+                isBackSidePressed = true;
                 addNewImage();
             }
         }
@@ -312,7 +350,7 @@ public class AaadharFragment extends Fragment implements UploadImage.SetResponse
 
         boolean isAadharCardNumEntered = Utils.checkText(aadharCardNumBox) ? (Utils.getText(aadharCardNumBox).toString().length() != 12 ? Utils.setErrorFields(aadharCardNumBox, "Aadhar card number must be 12 character long.") : true) : Utils.setErrorFields(aadharCardNumBox, "Required");
 
-        if (iStateId.equals("")  || Utils.checkText(cityBox) == false || isAadharCardNumEntered == false) {
+        if (iStateId.equals("") || Utils.checkText(cityBox) == false || isAadharCardNumEntered == false) {
 
             GeneralFunctions.showMessage(GeneralFunctions.getCurrentView((Activity) getActContext()), "All information is required.");
         } else {
@@ -386,8 +424,8 @@ public class AaadharFragment extends Fragment implements UploadImage.SetResponse
 
                 final ArrayList<String[]> paramsList = new ArrayList<>();
                 paramsList.add(Utils.generateImageParams("iMemberId", generalFunc.getMemberId()));
-                paramsList.add(Utils.generateImageParams("type", "addAadharCardImage"));
-//                paramsList.add(Utils.generateImageParams("type", "addAadharCardBackImage"));
+                paramsList.add(Utils.generateImageParams("type", isBackSidePressed == false ? "addAadharCardImage" : "addAadharCardBackImage"));
+//                paramsList.add(Utils.generateImageParams("type", ""));
 
                 final String selPath = new ImageFilePath().getPath(getActContext(), verifyUsrAct.fileUri);
 
@@ -435,7 +473,7 @@ public class AaadharFragment extends Fragment implements UploadImage.SetResponse
                 final ArrayList<String[]> paramsList = new ArrayList<>();
                 paramsList.add(Utils.generateImageParams("iMemberId", generalFunc.getMemberId()));
 
-                paramsList.add(Utils.generateImageParams("type", "addPanCardImage"));
+                paramsList.add(Utils.generateImageParams("type", isBackSidePressed == false ? "addAadharCardImage" : "addAadharCardBackImage"));
 
                 Uri selectedImageUri = data.getData();
 

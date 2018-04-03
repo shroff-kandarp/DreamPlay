@@ -475,6 +475,15 @@
                     android:layout_height="@dimen/all_btn_height"
                     android:layout_weight="1" />
             </LinearLayout>
+
+
+            <include
+                android:id="@+id/mobileResendBtn"
+                android:layout_marginTop="10dp"
+                layout="@layout/btn_type_2"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/all_btn_height"
+                android:layout_weight="1" />
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>
