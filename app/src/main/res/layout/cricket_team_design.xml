@@ -1,0 +1,538 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FFFFFF"
+    android:orientation="vertical"
+    android:paddingBottom="15dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/appThemeColor_1">
+
+        <com.view.MTextView
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:layout_alignParentRight="true"
+            android:background="@color/appThemeColor_1"
+            android:gravity="center"
+            android:paddingBottom="5dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="5dp"
+            android:text="Close"
+            android:textColor="@color/appThemeColor_TXT_1"
+            android:textSize="@dimen/txt_size_18" />
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="450dp"
+        android:background="#FFFFFF"
+        android:layout_marginTop="10dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:background="#FFFFFF"
+            android:layout_height="450dp">
+
+
+            <ImageView
+                android:layout_width="450dp"
+                android:layout_height="450dp"
+                android:layout_centerHorizontal="true"
+                android:foregroundGravity="bottom"
+                android:padding="5dp"
+                android:scaleType="fitXY"
+                android:src="@mipmap/cricket_ground_final" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="25dp"
+                android:orientation="vertical">
+
+                <!--<com.view.MTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="WICKET-KEEPER"
+                    android:textAllCaps="true"
+                    android:textColor="#FFFFFF"
+                    android:textSize="@dimen/txt_size_14" />-->
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <com.view.MTextView
+                        android:id="@+id/wicketKeeperCreditTxtView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="8.7 CR"
+                        android:textAllCaps="true"
+                        android:textColor="#FFFFFF"
+                        android:textSize="@dimen/txt_size_12" />
+
+                    <ImageView
+                        android:id="@+id/wicketKeeperImgView"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="-5dp"
+                        android:src="@mipmap/wicket_keeper" />
+
+                    <com.view.MTextView
+                        android:id="@+id/wicketKeeperTxtView"
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="-8dp"
+                        android:background="#3C4CB2"
+                        android:gravity="center"
+                        android:lines="1"
+                        android:padding="2dp"
+                        android:text="Name Raj"
+                        android:textColor="#FFFFFF"
+                        android:textSize="@dimen/txt_size_12" />
+                </LinearLayout>
+
+                <!--<com.view.MTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="BatsMan"
+                    android:layout_marginTop="30dp"
+                    android:textAllCaps="true"
+                    android:textColor="#272727"
+                    android:textSize="@dimen/txt_size_14" />-->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <com.view.MTextView
+                            android:id="@+id/payer1CreditTxtView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="8.7 CR"
+                            android:textAllCaps="true"
+                            android:textColor="#FFFFFF"
+                            android:textSize="@dimen/txt_size_12" />
+
+                        <ImageView
+                            android:id="@+id/player1ImgView"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="-5dp"
+                            android:src="@mipmap/wicket_keeper" />
+
+                        <com.view.MTextView
+                            android:id="@+id/player1TxtView"
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="-8dp"
+                            android:background="#3C4CB2"
+                            android:gravity="center"
+                            android:lines="1"
+                            android:padding="2dp"
+                            android:text="Name Raj"
+                            android:textColor="#FFFFFF"
+                            android:textSize="@dimen/txt_size_12" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <com.view.MTextView
+                            android:id="@+id/payer2CreditTxtView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="8.7 CR"
+                            android:textAllCaps="true"
+                            android:textColor="#FFFFFF"
+                            android:textSize="@dimen/txt_size_12" />
+
+                        <ImageView
+                            android:id="@+id/player2ImgView"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="-5dp"
+                            android:src="@mipmap/wicket_keeper" />
+
+                        <com.view.MTextView
+                            android:id="@+id/player2TxtView"
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="-8dp"
+                            android:background="#3C4CB2"
+                            android:gravity="center"
+                            android:lines="1"
+                            android:padding="2dp"
+                            android:text="Name Raj"
+                            android:textColor="#FFFFFF"
+                            android:textSize="@dimen/txt_size_12" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <com.view.MTextView
+                            android:id="@+id/payer3CreditTxtView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="8.7 CR"
+                            android:textAllCaps="true"
+                            android:textColor="#FFFFFF"
+                            android:textSize="@dimen/txt_size_12" />
+
+                        <ImageView
+                            android:id="@+id/player3ImgView"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="-5dp"
+                            android:src="@mipmap/wicket_keeper" />
+
+                        <com.view.MTextView
+                            android:id="@+id/player3TxtView"
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="-8dp"
+                            android:background="#3C4CB2"
+                            android:gravity="center"
+                            android:lines="1"
+                            android:padding="2dp"
+                            android:text="Name Raj"
+                            android:textColor="#FFFFFF"
+                            android:textSize="@dimen/txt_size_12" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <com.view.MTextView
+                            android:id="@+id/payer4CreditTxtView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="8.7 CR"
+                            android:textAllCaps="true"
+                            android:textColor="#FFFFFF"
+                            android:textSize="@dimen/txt_size_12" />
+
+                        <ImageView
+                            android:id="@+id/player4ImgView"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="-5dp"
+                            android:src="@mipmap/wicket_keeper" />
+
+                        <com.view.MTextView
+                            android:id="@+id/player4TxtView"
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="-8dp"
+                            android:background="#3C4CB2"
+                            android:gravity="center"
+                            android:lines="1"
+                            android:padding="2dp"
+                            android:text="Name Raj"
+                            android:textColor="#FFFFFF"
+                            android:textSize="@dimen/txt_size_12" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <com.view.MTextView
+                            android:id="@+id/payer5CreditTxtView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="8.7 CR"
+                            android:textAllCaps="true"
+                            android:textColor="#FFFFFF"
+                            android:textSize="@dimen/txt_size_12" />
+
+                        <ImageView
+                            android:id="@+id/player5ImgView"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="-5dp"
+                            android:src="@mipmap/wicket_keeper" />
+
+                        <com.view.MTextView
+                            android:id="@+id/player5TxtView"
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="-8dp"
+                            android:background="#3C4CB2"
+                            android:gravity="center"
+                            android:lines="1"
+                            android:padding="2dp"
+                            android:text="Name Raj"
+                            android:textColor="#FFFFFF"
+                            android:textSize="@dimen/txt_size_12" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <com.view.MTextView
+                            android:id="@+id/payer6CreditTxtView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="8.7 CR"
+                            android:textAllCaps="true"
+                            android:textColor="#FFFFFF"
+                            android:textSize="@dimen/txt_size_12" />
+
+                        <ImageView
+                            android:id="@+id/player6ImgView"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="-5dp"
+                            android:src="@mipmap/wicket_keeper" />
+
+                        <com.view.MTextView
+                            android:id="@+id/player6TxtView"
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="-8dp"
+                            android:background="#3C4CB2"
+                            android:gravity="center"
+                            android:lines="1"
+                            android:padding="2dp"
+                            android:text="Name Raj"
+                            android:textColor="#FFFFFF"
+                            android:textSize="@dimen/txt_size_12" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <com.view.MTextView
+                            android:id="@+id/payer7CreditTxtView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="8.7 CR"
+                            android:textAllCaps="true"
+                            android:textColor="#FFFFFF"
+                            android:textSize="@dimen/txt_size_12" />
+
+                        <ImageView
+                            android:id="@+id/player7ImgView"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="-5dp"
+                            android:src="@mipmap/wicket_keeper" />
+
+                        <com.view.MTextView
+                            android:id="@+id/player7TxtView"
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="-8dp"
+                            android:background="#3C4CB2"
+                            android:gravity="center"
+                            android:lines="1"
+                            android:padding="2dp"
+                            android:text="Name Raj"
+                            android:textColor="#FFFFFF"
+                            android:textSize="@dimen/txt_size_12" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <com.view.MTextView
+                            android:id="@+id/payer8CreditTxtView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="8.7 CR"
+                            android:textAllCaps="true"
+                            android:textColor="#FFFFFF"
+                            android:textSize="@dimen/txt_size_12" />
+
+                        <ImageView
+                            android:id="@+id/player8ImgView"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="-5dp"
+                            android:src="@mipmap/wicket_keeper" />
+
+                        <com.view.MTextView
+                            android:id="@+id/player8TxtView"
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="-8dp"
+                            android:background="#3C4CB2"
+                            android:gravity="center"
+                            android:lines="1"
+                            android:padding="2dp"
+                            android:text="Name Raj"
+                            android:textColor="#FFFFFF"
+                            android:textSize="@dimen/txt_size_12" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <com.view.MTextView
+                            android:id="@+id/payer9CreditTxtView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="8.7 CR"
+                            android:textAllCaps="true"
+                            android:textColor="#FFFFFF"
+                            android:textSize="@dimen/txt_size_12" />
+
+                        <ImageView
+                            android:id="@+id/player9ImgView"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="-5dp"
+                            android:src="@mipmap/wicket_keeper" />
+
+                        <com.view.MTextView
+                            android:id="@+id/player9TxtView"
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="-8dp"
+                            android:background="#3C4CB2"
+                            android:gravity="center"
+                            android:lines="1"
+                            android:padding="2dp"
+                            android:text="Name Raj"
+                            android:textColor="#FFFFFF"
+                            android:textSize="@dimen/txt_size_12" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="15dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <com.view.MTextView
+                        android:id="@+id/payer10CreditTxtView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="8.7 CR"
+                        android:textAllCaps="true"
+                        android:textColor="#FFFFFF"
+                        android:textSize="@dimen/txt_size_12" />
+
+                    <ImageView
+                        android:id="@+id/player10ImgView"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="-5dp"
+                        android:src="@mipmap/wicket_keeper" />
+
+                    <com.view.MTextView
+                        android:id="@+id/player10TxtView"
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="-8dp"
+                        android:background="#3C4CB2"
+                        android:gravity="center"
+                        android:lines="1"
+                        android:padding="2dp"
+                        android:text="Name Raj"
+                        android:textColor="#FFFFFF"
+                        android:textSize="@dimen/txt_size_12" />
+                </LinearLayout>
+            </LinearLayout>
+        </RelativeLayout>
+    </ScrollView>
+
+
+</LinearLayout>

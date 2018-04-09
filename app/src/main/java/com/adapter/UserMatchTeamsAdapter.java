@@ -32,9 +32,6 @@ public class UserMatchTeamsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     FooterViewHolder footerHolder;
     private OnItemClickListener mItemClickListener;
 
-    public String selectedCaptainId = "";
-    public String selectedViceCaptainId = "";
-
     public UserMatchTeamsAdapter(Context mContext, ArrayList<HashMap<String, String>> list, GeneralFunctions generalFunc, boolean isFooterEnabled) {
         this.mContext = mContext;
         this.list = list;
@@ -85,7 +82,7 @@ public class UserMatchTeamsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             viewHolder.batCountTxtView.setText(item.get("batCount"));
             viewHolder.allCountTxtView.setText(item.get("allCount"));
             viewHolder.bowlCountTxtView.setText(item.get("bowlCount"));
-            viewHolder.teamCountTxtView.setText("TEAM "+(position + 1));
+            viewHolder.teamCountTxtView.setText("TEAM " + (position + 1));
 //            viewHolder.contentArea.setOnClickListener(new View.OnClickListener() {
 //                @Override
 //                public void onClick(View view) {
@@ -95,6 +92,20 @@ public class UserMatchTeamsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 //                    }
 //                }
 //            });
+
+            viewHolder.previewTeamTxtView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            });
+
+            viewHolder.editTeamTxtView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            });
         } else if (holder instanceof HeaderViewHolder) {
             final HashMap<String, String> item = list.get(position);
             HeaderViewHolder headerHolder = (HeaderViewHolder) holder;
@@ -105,6 +116,9 @@ public class UserMatchTeamsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             this.footerHolder = footerHolder;
         }
 
+    }
+
+    private void openTeamPreview(){
 
     }
 
@@ -166,6 +180,8 @@ public class UserMatchTeamsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         public MTextView captainTxtView;
         public MTextView viceCaptainTxtView;
         public MTextView teamCountTxtView;
+        public MTextView previewTeamTxtView;
+        public MTextView editTeamTxtView;
         public View contentArea;
 
         public ViewHolder(View view) {
@@ -178,6 +194,8 @@ public class UserMatchTeamsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             captainTxtView = (MTextView) view.findViewById(R.id.captainTxtView);
             viceCaptainTxtView = (MTextView) view.findViewById(R.id.viceCaptainTxtView);
             teamCountTxtView = (MTextView) view.findViewById(R.id.teamCountTxtView);
+            previewTeamTxtView = (MTextView) view.findViewById(R.id.previewTeamTxtView);
+            editTeamTxtView = (MTextView) view.findViewById(R.id.editTeamTxtView);
             contentArea = view;
         }
     }
