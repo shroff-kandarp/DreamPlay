@@ -2,10 +2,12 @@ package com.dreamplay;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -14,6 +16,7 @@ import android.widget.RadioButton;
 import com.general.files.ExecuteWebServerUrl;
 import com.general.files.GeneralFunctions;
 import com.general.files.SetOnTouchList;
+import com.general.files.StartActProcess;
 import com.utils.Utils;
 import com.view.GenerateAlertBox;
 import com.view.MButton;
@@ -36,7 +39,10 @@ public class MyProfileActivity extends BaseActivity {
     ImageView backImgView;
     MTextView titleTxt;
 
+    MTextView changePassTxtView;
+
     MaterialEditText nameBox;
+    MaterialEditText teamNameBox;
     MaterialEditText dobBox;
     MaterialEditText addressBox;
     MaterialEditText cityBox;
@@ -44,6 +50,7 @@ public class MyProfileActivity extends BaseActivity {
     MaterialEditText countryBox;
     MaterialEditText mobileBox;
     MaterialEditText emailBox;
+    MaterialEditText passwordBox;
 
     RadioButton maleRadioBtn;
     RadioButton feMaleRadioBtn;
@@ -64,6 +71,9 @@ public class MyProfileActivity extends BaseActivity {
     ArrayList<String> items_state_ids = new ArrayList<String>();
 
     boolean isAllInformationDisabled = false;
+
+    String currentEmailAddress = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,10 +82,13 @@ public class MyProfileActivity extends BaseActivity {
         generalFunc = new GeneralFunctions(getActContext());
 
         titleTxt = (MTextView) findViewById(R.id.titleTxt);
+        changePassTxtView = (MTextView) findViewById(R.id.changePassTxtView);
         backImgView = (ImageView) findViewById(R.id.backImgView);
 
         loadingBar = (ProgressBar) findViewById(R.id.loadingBar);
 
+        teamNameBox = (MaterialEditText) findViewById(R.id.teamNameBox);
+        passwordBox = (MaterialEditText) findViewById(R.id.passwordBox);
         nameBox = (MaterialEditText) findViewById(R.id.nameBox);
         dobBox = (MaterialEditText) findViewById(R.id.dobBox);
         addressBox = (MaterialEditText) findViewById(R.id.addressBox);
@@ -97,6 +110,7 @@ public class MyProfileActivity extends BaseActivity {
         backImgView.setOnClickListener(new setOnClickList());
         dobBox.setOnClickListener(new setOnClickList());
         btn_type2.setOnClickListener(new setOnClickList());
+        changePassTxtView.setOnClickListener(new setOnClickList());
 
         setLabels();
         removeInput();
@@ -107,6 +121,9 @@ public class MyProfileActivity extends BaseActivity {
         titleTxt.setText("My Profile");
         btn_type2.setText("Edit Profile");
         nameBox.setBothText("Name", "Enter your name");
+        teamNameBox.setBothText("Team Name", "Enter your team name");
+        passwordBox.setBothText("Password", "Your Password");
+
         dobBox.setBothText("DOB", "Enter your date of birth");
         addressBox.setBothText("Address", "Enter your address");
         cityBox.setBothText("City", "Enter your city");
@@ -120,6 +137,10 @@ public class MyProfileActivity extends BaseActivity {
         Drawable ic_addr = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, Utils.dipToPixels(getActContext(), 25), Utils.dipToPixels(getActContext(), 25), true));
 
         addressBox.setCompoundDrawablesWithIntrinsicBounds(null, null, ic_addr, null);
+
+
+        passwordBox.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        passwordBox.setText("**********");
     }
 
     public void removeInput() {
@@ -136,6 +157,7 @@ public class MyProfileActivity extends BaseActivity {
         dobBox.setOnClickListener(new setOnClickList());
     }
 
+    String currentPassword = "";
 
     public void getUserData() {
         containerView.setVisibility(View.GONE);
@@ -164,6 +186,8 @@ public class MyProfileActivity extends BaseActivity {
                         if (obj_msg != null) {
 
                             String vName = generalFunc.getJsonValue("vName", obj_msg);
+                            String vTeamName = generalFunc.getJsonValue("vTeamName", obj_msg);
+                            String vPassword = generalFunc.getJsonValue("vPassword", obj_msg);
                             String dDOB = generalFunc.getJsonValue("dDOB", obj_msg);
                             String vEmail = generalFunc.getJsonValue("vEmail", obj_msg);
                             String vMobile = generalFunc.getJsonValue("vMobile", obj_msg);
@@ -173,12 +197,19 @@ public class MyProfileActivity extends BaseActivity {
                             String vCountry = generalFunc.getJsonValue("vCountry", obj_msg);
                             String vState = generalFunc.getJsonValue("vState", obj_msg);
 
+                            currentPassword = vPassword;
+                            currentEmailAddress = vEmail;
+
+                            if (vPassword.equals("")) {
+                                changePassTxtView.setText("Set Password");
+                            }
+
                             nameBox.setText(generalFunc.getJsonValue("vName", obj_msg));
-                            if(!vName.equals("")&& !eProfileEditEnabled.equalsIgnoreCase("Yes")){
+                            if (!vName.equals("") && !eProfileEditEnabled.equalsIgnoreCase("Yes")) {
                                 nameBox.setEnabled(false);
                             }
                             dobBox.setText(generalFunc.getJsonValue("dDOB", obj_msg));
-                            if(!dDOB.equals("")&& !eProfileEditEnabled.equalsIgnoreCase("Yes")){
+                            if (!dDOB.equals("") && !eProfileEditEnabled.equalsIgnoreCase("Yes")) {
                                 dobBox.setEnabled(false);
                             }
 
@@ -189,51 +220,56 @@ public class MyProfileActivity extends BaseActivity {
                                     feMaleRadioBtn.setChecked(true);
                                 }
 
-                                if(!eProfileEditEnabled.equalsIgnoreCase("Yes")){
+                                if (!eProfileEditEnabled.equalsIgnoreCase("Yes")) {
                                     maleRadioBtn.setEnabled(false);
                                     feMaleRadioBtn.setEnabled(false);
                                 }
                             }
 
                             emailBox.setText(vEmail);
-                            if(!vEmail.equals("") && !eProfileEditEnabled.equalsIgnoreCase("Yes")){
+                            if (!vEmail.equals("") && !eProfileEditEnabled.equalsIgnoreCase("Yes")) {
                                 emailBox.setEnabled(false);
                             }
 
+                            teamNameBox.setText(vTeamName);
+                            if (!vTeamName.equals("") && !eProfileEditEnabled.equalsIgnoreCase("Yes")) {
+                                teamNameBox.setEnabled(false);
+                            }
+
                             mobileBox.setText(vMobile);
-                            if(!vMobile.equals("")&& !eProfileEditEnabled.equalsIgnoreCase("Yes")){
+                            if (!vMobile.equals("") && !eProfileEditEnabled.equalsIgnoreCase("Yes")) {
                                 mobileBox.setEnabled(false);
                             }
 
                             cityBox.setText(vCity);
-                            if(!vCity.equals("")&& !eProfileEditEnabled.equalsIgnoreCase("Yes")){
+                            if (!vCity.equals("") && !eProfileEditEnabled.equalsIgnoreCase("Yes")) {
                                 cityBox.setEnabled(false);
                             }
 
                             addressBox.setText(tAddress);
-                            if(!tAddress.equals("")&& !eProfileEditEnabled.equalsIgnoreCase("Yes")){
+                            if (!tAddress.equals("") && !eProfileEditEnabled.equalsIgnoreCase("Yes")) {
                                 addressBox.setEnabled(false);
                             }
 
                             if (generalFunc.getJsonValue("eMobileVerified", obj_msg).equalsIgnoreCase("Yes")) {
                                 mobileBox.setEnabled(false);
-                            }else{
+                            } else {
                                 mobileBox.setEnabled(true);
                             }
 
                             if (generalFunc.getJsonValue("eEmailVerified", obj_msg).equalsIgnoreCase("Yes")) {
                                 emailBox.setEnabled(false);
-                            }else{
+                            } else {
                                 emailBox.setEnabled(true);
                             }
 
                             countryBox.setText(vCountry);
-                            if(!vCountry.equals("")&& !eProfileEditEnabled.equalsIgnoreCase("Yes")){
+                            if (!vCountry.equals("") && !eProfileEditEnabled.equalsIgnoreCase("Yes")) {
                                 countryBox.setEnabled(false);
                             }
 
                             stateBox.setText(vState);
-                            if(!vState.equals("")&& !eProfileEditEnabled.equalsIgnoreCase("Yes")){
+                            if (!vState.equals("") && !eProfileEditEnabled.equalsIgnoreCase("Yes")) {
                                 stateBox.setEnabled(false);
                             }
 
@@ -241,7 +277,7 @@ public class MyProfileActivity extends BaseActivity {
 
                             iCountryId = generalFunc.getJsonValue("iCountryId", obj_msg);
 
-                            if(nameBox.isEnabled() ==false && dobBox.isEnabled() ==false && maleRadioBtn.isEnabled() ==false && feMaleRadioBtn.isEnabled() ==false && emailBox.isEnabled() ==false && mobileBox.isEnabled() ==false && cityBox.isEnabled() ==false && addressBox.isEnabled() ==false && countryBox.isEnabled() ==false && stateBox.isEnabled() ==false){
+                            if (nameBox.isEnabled() == false && dobBox.isEnabled() == false && maleRadioBtn.isEnabled() == false && feMaleRadioBtn.isEnabled() == false && emailBox.isEnabled() == false && mobileBox.isEnabled() == false && cityBox.isEnabled() == false && addressBox.isEnabled() == false && countryBox.isEnabled() == false && stateBox.isEnabled() == false) {
                                 isAllInformationDisabled = true;
                             }
                         }
@@ -308,18 +344,28 @@ public class MyProfileActivity extends BaseActivity {
             } else if (i == dobBox.getId()) {
                 chooseDate();
             } else if (i == stateBox.getId()) {
-                if(iStateId.equals("") || GeneralFunctions.parseInt(0,iStateId) == 0){
+                if (iStateId.equals("") || GeneralFunctions.parseInt(0, iStateId) == 0) {
 
                     if (list_state != null) {
                         list_state.show();
                     }
                 }
-            }else if (i == btn_type2.getId()) {
-                if(isAllInformationDisabled){
-                    generalFunc.showGeneralMessage("","Profile editing has been disabled.");
+            } else if (i == btn_type2.getId()) {
+                if (isAllInformationDisabled) {
+                    generalFunc.showGeneralMessage("", "Profile editing has been disabled.");
                     return;
                 }
                 checkData();
+            } else if (i == changePassTxtView.getId()) {
+                if(currentEmailAddress.equals("")){
+                    generalFunc.showGeneralMessage("", "Please set your email id and update your profile information to change password.");
+                    return;
+                }
+
+                Bundle bn = new Bundle();
+                bn.putString("CurrentPassword", currentPassword);
+                bn.putString("CurrentEmail", currentEmailAddress);
+                (new StartActProcess(getActContext())).startActForResult(ForgetPassActivity.class, bn,Utils.CHANGE_PASSWORD_REQ_CODE);
             }
         }
     }
@@ -327,22 +373,20 @@ public class MyProfileActivity extends BaseActivity {
 
     public void checkData() {
         boolean nameEntered = Utils.checkText(nameBox) ? true : Utils.setErrorFields(nameBox, "Required");
-        boolean emailEntered = Utils.checkText(emailBox) ?
-                (generalFunc.isEmailValid(Utils.getText(emailBox)) ? true : Utils.setErrorFields(emailBox, "Invalid email"))
-                : Utils.setErrorFields(emailBox, "Required");
+        boolean emailEntered = Utils.checkText(emailBox) ? (generalFunc.isEmailValid(Utils.getText(emailBox)) ? true : Utils.setErrorFields(emailBox, "Invalid email")) : Utils.setErrorFields(emailBox, "Required");
         boolean mobileEntered = Utils.checkText(mobileBox) ? (Utils.getText(mobileBox).toString().length() != 10 ? Utils.setErrorFields(mobileBox, "Mobile must should be 10 digits long.") : true) : Utils.setErrorFields(mobileBox, "Required");
 //        boolean countryEntered = isCountrySelected ? true : false;
 //        if (countryEntered == false) {
 //            Utils.setErrorFields(countryBox, "Required");
 //        }
-        if (nameEntered == false || emailEntered == false || mobileEntered == false ) {
+        if (nameEntered == false || emailEntered == false || mobileEntered == false) {
             return;
         }
 
         updateProfileData();
     }
 
-    public void updateProfileData(){
+    public void updateProfileData() {
         HashMap<String, String> parameters = new HashMap<>();
         parameters.put("type", "updateProfileInformation");
         parameters.put("iMemberId", generalFunc.getMemberId());
@@ -350,6 +394,7 @@ public class MyProfileActivity extends BaseActivity {
         parameters.put("vMobile", Utils.getText(mobileBox));
         parameters.put("vEmail", Utils.getText(emailBox));
         parameters.put("dDOB", Utils.getText(dobBox));
+        parameters.put("vTeamName", Utils.getText(teamNameBox));
         parameters.put("eGender", maleRadioBtn.isChecked() ? "Male" : (feMaleRadioBtn.isChecked() ? "Female" : ""));
         parameters.put("tAddress", Utils.getText(addressBox));
         parameters.put("vCity", Utils.getText(cityBox));
@@ -369,6 +414,7 @@ public class MyProfileActivity extends BaseActivity {
                     boolean isDataAvail = GeneralFunctions.checkDataAvail(Utils.action_str, responseString);
 
                     if (isDataAvail) {
+                        generalFunc.storeUserData(generalFunc.getJsonValue("message1", responseString));
 
                         final GenerateAlertBox generateAlert = new GenerateAlertBox(getActContext());
                         generateAlert.setCancelable(false);
@@ -395,27 +441,33 @@ public class MyProfileActivity extends BaseActivity {
         });
         exeWebServer.execute();
     }
+
     public void chooseDate() {
 
         Calendar now = Calendar.getInstance();
-        DatePickerDialog dpd = DatePickerDialog.newInstance(
-                new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
-                        monthOfYear = monthOfYear + 1;
-                        String day = dayOfMonth < 10 ? ("0" + dayOfMonth) : ("" + dayOfMonth);
-                        String month = monthOfYear < 10 ? ("0" + monthOfYear) : ("" + monthOfYear);
+        DatePickerDialog dpd = DatePickerDialog.newInstance(new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+                monthOfYear = monthOfYear + 1;
+                String day = dayOfMonth < 10 ? ("0" + dayOfMonth) : ("" + dayOfMonth);
+                String month = monthOfYear < 10 ? ("0" + monthOfYear) : ("" + monthOfYear);
 
-                        dobBox.setText("" + year + "-" + month + "-" + day);
-                        isDOBSelected = true;
-                    }
-                },
-                now.get(Calendar.YEAR),
-                now.get(Calendar.MONTH),
-                now.get(Calendar.DAY_OF_MONTH)
-        );
+                dobBox.setText("" + year + "-" + month + "-" + day);
+                isDOBSelected = true;
+            }
+        }, now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH));
         dpd.setMaxDate(now);
         dpd.setTitle("Select Date of birth");
         dpd.show(getFragmentManager(), "Datepickerdialog");
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == Utils.CHANGE_PASSWORD_REQ_CODE && resultCode == RESULT_OK){
+            changePassTxtView.setText("Change Password");
+            getUserData();
+        }
     }
 }

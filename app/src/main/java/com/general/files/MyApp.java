@@ -1,9 +1,10 @@
 package com.general.files;
 
 import android.app.Activity;
-import android.app.Application;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.support.multidex.MultiDex;
+import android.support.multidex.MultiDexApplication;
 import android.view.WindowManager;
 
 import com.crashlytics.android.Crashlytics;
@@ -20,14 +21,14 @@ import io.fabric.sdk.android.Fabric;
 /**
  * Created by Admin on 28-06-2016.
  */
-public class MyApp extends Application {
+public class MyApp extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
         Fabric.with(this, new Crashlytics());
         FirebaseApp.initializeApp(this);
         setScreenOrientation();
-//        MultiDex.install(this);
+        MultiDex.install(this);
 
         FacebookSdk.sdkInitialize(getApplicationContext());
         AppEventsLogger.activateApp(this);

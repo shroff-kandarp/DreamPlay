@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.adapter.UserMatchTeamsAdapter;
@@ -35,6 +36,8 @@ public class UserMatchTeamsActivity extends AppCompatActivity {
 
     ArrayList<HashMap<String, String>> list;
 
+    public LinearLayout previewContainerView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +49,7 @@ public class UserMatchTeamsActivity extends AppCompatActivity {
 
         titleTxt = (MTextView) findViewById(R.id.titleTxt);
         backImgView = (ImageView) findViewById(R.id.backImgView);
+        previewContainerView = (LinearLayout) findViewById(R.id.previewContainerView);
 
         loading = (ProgressBar) findViewById(R.id.loading);
         noDataTxt = (MTextView) findViewById(R.id.noDataTxt);
@@ -152,12 +156,17 @@ public class UserMatchTeamsActivity extends AppCompatActivity {
                             }
                             HashMap<String, String> map = new HashMap<String, String>();
 
+                            map.put("PlayerDetailsList", obj_players_arr != null ? obj_players_arr.toString() : "");
                             map.put("captainName", captainName);
                             map.put("viceCaptainName", viceCaptainName);
                             map.put("wkCount",""+wkCount);
                             map.put("batCount",""+batCount);
                             map.put("allCount",""+allCount);
                             map.put("bowlCount",""+bowlCount);
+                            map.put("iUserTeamId",""+generalFunc.getJsonValue("iUserTeamId",obj_temp));
+                            map.put("iContestId",""+generalFunc.getJsonValue("iContestId",obj_temp));
+                            map.put("iMatchId",""+generalFunc.getJsonValue("iMatchId",obj_temp));
+                            map.put("iJoinId",""+generalFunc.getJsonValue("iJoinId",obj_temp));
                             map.put("TYPE",""+adapter.TYPE_ITEM);
 
                             list.add(map);

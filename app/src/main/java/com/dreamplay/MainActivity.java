@@ -76,6 +76,7 @@ public class MainActivity extends BaseActivity implements DrawerMenuRecycleAdapt
         setupViewPager();
         tabLayout.setupWithViewPager(viewPager);
 
+
     }
 
     @Override
@@ -86,6 +87,8 @@ public class MainActivity extends BaseActivity implements DrawerMenuRecycleAdapt
 //            bannerSlider.parseCustomAttributes(bannerSlider.attrSet, this);
 //            bannerDataSet = true;
 //        }
+
+        setLabels();
     }
 
     public void setLabels() {

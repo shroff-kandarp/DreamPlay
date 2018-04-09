@@ -181,6 +181,9 @@ public class CreateTeamActivity extends AppCompatActivity {
         parameters.put("iMatchId", getIntent().getStringExtra("iMatchId"));
         parameters.put("isLoadUserData", "Yes");
         parameters.put("isLoadTeamOfMatchData", "Yes");
+        if(getIntent().getStringExtra("iUserTeamId") != null){
+            parameters.put("iUserTeamId", getIntent().getStringExtra("iUserTeamId"));
+        }
 
         ExecuteWebServerUrl exeWebServer = new ExecuteWebServerUrl(parameters);
         exeWebServer.setLoaderConfig(getActContext(), false, generalFunc);
@@ -578,6 +581,9 @@ public class CreateTeamActivity extends AppCompatActivity {
         parameters.put("iMemberId", generalFunc.getMemberId());
         parameters.put("iMatchId", getIntent().getStringExtra("iMatchId"));
         parameters.put("iContestId", getIntent().getStringExtra("iConstestId"));
+        if(getIntent().getStringExtra("iUserTeamId") != null){
+            parameters.put("iUserTeamId", getIntent().getStringExtra("iUserTeamId"));
+        }
         parameters.put("SelectedPlayerList", listOfPlayerIds);
         parameters.put("CAPTAIN_ID", CAPTAIN_ID);
         parameters.put("VICE_CAPTAIN_ID", VICE_CAPTAIN_ID);

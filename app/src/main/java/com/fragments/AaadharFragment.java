@@ -163,7 +163,6 @@ public class AaadharFragment extends Fragment implements UploadImage.SetResponse
 
                         if (obj_msg != null) {
 
-                            String tPanDOB = generalFunc.getJsonValue("tPanDOB", obj_msg);
                             String vAadharState = generalFunc.getJsonValue("vAadharState", obj_msg);
                             String vState = generalFunc.getJsonValue("vState", obj_msg);
                             final String vAadharImage = generalFunc.getJsonValue("vAadharImage", obj_msg);
@@ -183,7 +182,7 @@ public class AaadharFragment extends Fragment implements UploadImage.SetResponse
                                 iStateId = generalFunc.getJsonValue("iStateId", obj_msg);
                             }
 
-                            if (!tPanDOB.equals("") && !vAadharCity.equals("") && !vState.equals("") && !vAadharNum.equals("")) {
+                            if ( !vAadharCity.equals("") && !vState.equals("") && !vAadharNum.equals("")) {
                                 stateBox.setOnClickListener(null);
                                 cityBox.setEnabled(false);
                                 aadharCardNumBox.setEnabled(false);
@@ -413,8 +412,6 @@ public class AaadharFragment extends Fragment implements UploadImage.SetResponse
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-        Utils.printLog("Image", "Selected::");
 
         if (requestCode == ImageSourceDialog.CAMERA_CAPTURE_IMAGE_REQUEST_CODE) {
             boolean isStoragePermissionAvail = generalFunc.isStoragePermissionGranted();

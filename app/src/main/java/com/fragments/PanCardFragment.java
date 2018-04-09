@@ -121,7 +121,7 @@ public class PanCardFragment extends Fragment implements UploadImage.SetResponse
 
     public void setLabels() {
 
-        nameBox.setBothText("Name", "Enter name");
+        nameBox.setBothText("Name (As per Pan Card)", "Enter name as per pan card");
         dobBox.setBothText("DOB", "Enter date of birth");
 
         stateBox.setBothText("State", "Select your state");
@@ -368,7 +368,7 @@ public class PanCardFragment extends Fragment implements UploadImage.SetResponse
 
     public void checkData() {
 
-        boolean isPanCardNumEntered = Utils.checkText(panCardNumBox) ? (Utils.getText(panCardNumBox).toString().length() != 8 ? Utils.setErrorFields(panCardNumBox, "Pan card number must be 8 character long.") : true) : Utils.setErrorFields(panCardNumBox, "Required");
+        boolean isPanCardNumEntered = Utils.checkText(panCardNumBox) ? (Utils.getText(panCardNumBox).toString().length() != 10 ? Utils.setErrorFields(panCardNumBox, "Pan card number must be 10 character long.") : true) : Utils.setErrorFields(panCardNumBox, "Required");
 
         if (iStateId.equals("") || isDOBSelected == false || Utils.checkText(nameBox) == false || isPanCardNumEntered == false) {
 

@@ -50,5 +50,14 @@
             android:layout_centerInParent="true"
             android:visibility="gone" />
 
+        <LinearLayout
+            android:id="@+id/previewContainerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:visibility="gone"
+            android:gravity="bottom"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical"/>
     </RelativeLayout>
 </LinearLayout>

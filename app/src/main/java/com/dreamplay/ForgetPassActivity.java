@@ -12,6 +12,7 @@ import android.widget.ImageView;
 
 import com.general.files.ExecuteWebServerUrl;
 import com.general.files.GeneralFunctions;
+import com.general.files.StartActProcess;
 import com.utils.Utils;
 import com.view.CreateRoundedView;
 import com.view.GenerateAlertBox;
@@ -119,16 +120,43 @@ public class ForgetPassActivity extends AppCompatActivity {
         });
     }
 
+    public boolean isCurrentPassEnable() {
+        if (generalFunc.isUserLoggedIn() && getIntent().getStringExtra("CurrentPassword") != null && !getIntent().getStringExtra("CurrentPassword").equals("")) {
+            return true;
+        }
+        return false;
+    }
+
+    public String getCurrentPassword() {
+        if (generalFunc.isUserLoggedIn() && getIntent().getStringExtra("CurrentPassword") != null) {
+            return getIntent().getStringExtra("CurrentPassword");
+        }
+        return "";
+    }
+
     public void setData() {
-        emailBox.setBothText("Email", "Enter your email");
+        emailBox.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS | InputType.TYPE_CLASS_TEXT);
+
+        if (isCurrentPassEnable()) {
+            emailBox.setBothText("Current Password", "Enter your current password");
+            emailBox.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        } else {
+            emailBox.setBothText("Email", "Enter your email");
+            if (generalFunc.isUserLoggedIn()) {
+                emailBox.setText(getIntent().getStringExtra("CurrentEmail") != null ? getIntent().getStringExtra("CurrentEmail") : getIntent().getStringExtra("CurrentEmail"));
+                if (getIntent().getStringExtra("CurrentEmail") != null) {
+                    emailBox.setEnabled(false);
+                }
+            }
+        }
+
         verificationCodeBox.setBothText("Verification Code", "Enter verification code");
         resetPassBox.setBothText("New Password", "Enter new password");
         reResetPassBox.setBothText("Re Enter Password", "Re Enter password");
 
-        titleTxt.setText("Reset Password");
+        titleTxt.setText(isCurrentPassEnable() ? "Change Password" : ((generalFunc.isUserLoggedIn() && getCurrentPassword().equals("")) ? "Set Password" : "Reset Password"));
 
         btn_type2.setText("NEXT");
-        emailBox.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS | InputType.TYPE_CLASS_TEXT);
 
         resetPassBox.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         resetPassBox.setTypeface(generalFunc.getDefaultFont(getActContext()));
@@ -179,21 +207,24 @@ public class ForgetPassActivity extends AppCompatActivity {
 
 
     public void checkData() {
-        boolean emailEntered = Utils.checkText(emailBox) ?
-                (generalFunc.isEmailValid(Utils.getText(emailBox)) ? true : Utils.setErrorFields(emailBox, "Invalid email"))
-                : Utils.setErrorFields(emailBox, "Required");
+        if (isCurrentPassEnable()) {
+            boolean passwordEntered = Utils.checkText(emailBox) ? (Utils.getText(emailBox).contains(" ") ? Utils.setErrorFields(emailBox, "Password should not contain whitespace.") : (Utils.getText(emailBox).length() >= Utils.minPasswordLength ? true : Utils.setErrorFields(emailBox, "Password must be" + " " + Utils.minPasswordLength + " or more character long."))) : Utils.setErrorFields(emailBox, "Required");
+
+            if (passwordEntered == false) {
+                return;
+            }
+        } else {
+            boolean emailEntered = Utils.checkText(emailBox) ? (generalFunc.isEmailValid(Utils.getText(emailBox)) ? true : Utils.setErrorFields(emailBox, "Invalid email")) : Utils.setErrorFields(emailBox, "Required");
 
 
-        if (emailEntered == false) {
-            return;
+            if (emailEntered == false) {
+                return;
+            }
         }
 
         if (!verificationCode.equals("")) {
             if (resetPassArea.getVisibility() == View.VISIBLE) {
-                boolean passwordEntered = Utils.checkText(resetPassBox) ?
-                        (Utils.getText(resetPassBox).contains(" ") ? Utils.setErrorFields(resetPassBox, "Password should not contain whitespace.")
-                                : (Utils.getText(resetPassBox).length() >= Utils.minPasswordLength ? true : Utils.setErrorFields(resetPassBox, "Password must be" + " " + Utils.minPasswordLength + " or more character long.")))
-                        : Utils.setErrorFields(resetPassBox, "Required");
+                boolean passwordEntered = Utils.checkText(resetPassBox) ? (Utils.getText(resetPassBox).contains(" ") ? Utils.setErrorFields(resetPassBox, "Password should not contain whitespace.") : (Utils.getText(resetPassBox).length() >= Utils.minPasswordLength ? true : Utils.setErrorFields(resetPassBox, "Password must be" + " " + Utils.minPasswordLength + " or more character long."))) : Utils.setErrorFields(resetPassBox, "Required");
 
                 boolean rePassEntered = Utils.checkText(reResetPassBox) ? (Utils.getText(resetPassBox).toString().equals(Utils.getText(reResetPassBox)) ? true : Utils.setErrorFields(reResetPassBox, "Password doen't match. Please check again.")) : Utils.setErrorFields(reResetPassBox, "Required");
 
@@ -220,6 +251,10 @@ public class ForgetPassActivity extends AppCompatActivity {
         HashMap<String, String> parameters = new HashMap<>();
         parameters.put("type", "sendResetPassword");
         parameters.put("vEmail", Utils.getText(emailBox));
+        parameters.put("iMemberId", generalFunc.getMemberId());
+        if (generalFunc.isUserLoggedIn() && !getCurrentPassword().equals("")) {
+            parameters.put("vCurrentPassword", Utils.getText(emailBox));
+        }
 
         ExecuteWebServerUrl exeWebServer = new ExecuteWebServerUrl(parameters);
         exeWebServer.setLoaderConfig(getActContext(), true, generalFunc);
@@ -236,9 +271,15 @@ public class ForgetPassActivity extends AppCompatActivity {
                     if (isDataAvail) {
 
                         emailBox.setVisibility(View.GONE);
-                        verificationCodeBox.setVisibility(View.VISIBLE);
+                        if (isCurrentPassEnable()) {
+                            verificationCodeBox.setVisibility(View.GONE);
+                            resetPassArea.setVisibility(View.VISIBLE);
+                            verificationCode = "----";
+                        } else {
+                            verificationCodeBox.setVisibility(View.VISIBLE);
 
-                        verificationCode = generalFunc.getJsonValue("VerificationCode", responseString);
+                            verificationCode = generalFunc.getJsonValue("VerificationCode", responseString);
+                        }
                     }
 
                     generalFunc.showGeneralMessage("", generalFunc.getJsonValue(Utils.message_str, responseString));
@@ -277,6 +318,9 @@ public class ForgetPassActivity extends AppCompatActivity {
                             @Override
                             public void handleBtnClick(int btn_id) {
                                 if (btn_id == 1) {
+                                    if (getCallingActivity() != null) {
+                                        (new StartActProcess(getActContext())).setOkResult();
+                                    }
                                     backImgView.performClick();
                                 }
                             }
