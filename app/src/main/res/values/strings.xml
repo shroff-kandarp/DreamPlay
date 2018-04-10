@@ -2,9 +2,9 @@
     <string name="app_name">DreamPlay</string>
 
 
-    <string name="italicFont">fonts/LobsterTwo-Italic.ttf</string>
-    <string name="semiBoldFont">fonts/LobsterTwo-Bold.ttf</string>
-    <string name="defaultFont">fonts/Lobster-Regular.ttf</string>
+    <string name="italicFont">fonts/TrebuchetMSItalic.ttf</string>
+    <string name="semiBoldFont">fonts/TrebuchetMSBold.ttf</string>
+    <string name="defaultFont">fonts/TrebuchetMS.ttf</string>
 
     <string name="facebook_app_id">348110495688418</string>
     <string name="fb_login_protocol_scheme">fb348110495688418</string>

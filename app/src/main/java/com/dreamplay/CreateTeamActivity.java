@@ -87,6 +87,7 @@ public class CreateTeamActivity extends AppCompatActivity {
     ArrayList<HashMap<String, String>> listBowlerData = new ArrayList<>();
     ArrayList<HashMap<String, String>> listAllRounderData = new ArrayList<>();
     ArrayList<HashMap<String, String>> listOtherData = new ArrayList<>();
+    ArrayList<HashMap<String, String>> listOfAllPlayersData = new ArrayList<>();
     public String selectedType = "";
 
     @Override
@@ -166,8 +167,15 @@ public class CreateTeamActivity extends AppCompatActivity {
     }
 
     public void setLabels() {
-        titleTxt.setText("CREATE TEAM");
-        btn_type2.setText("Create Team");
+        if(getIntent().getStringExtra("iUserTeamId") == null){
+
+            titleTxt.setText("CREATE TEAM");
+            btn_type2.setText("Create Team");
+        }else{
+
+            titleTxt.setText("EDIT TEAM");
+            btn_type2.setText("Edit Team");
+        }
     }
 
 
@@ -198,7 +206,7 @@ public class CreateTeamActivity extends AppCompatActivity {
 
                     if (isDataAvail) {
 
-                        JSONObject obj_msg = generalFunc.getJsonObject(Utils.message_str, responseString);
+//                        JSONObject obj_msg = generalFunc.getJsonObject(Utils.message_str, responseString);
                         JSONObject obj_matchData = generalFunc.getJsonObject("MatchData", responseString);
                         obj_userData = generalFunc.getJsonObject("MemberData", responseString);
 //                        totalAvailCredit = GeneralFunctions.parseDouble(0, generalFunc.getJsonValue("WalletBalance", obj_userData));
@@ -211,6 +219,7 @@ public class CreateTeamActivity extends AppCompatActivity {
                         }
 
                         countTotalCreditsInfoTxtView.setText("CREDITS LEFT " + (int) totalAvailCredit + "/" + (int) totalAvailCredit);
+                        setSelectedPlayerList(generalFunc.getJsonArray("PlayersOfTeam", responseString));
                         buildPlayerList(generalFunc.getJsonObject("PlayersOfMatch", responseString));
                         wicketKeeperArea.performClick();
                         containerView.setVisibility(View.VISIBLE);
@@ -282,8 +291,11 @@ public class CreateTeamActivity extends AppCompatActivity {
         }
     }
 
+
+
     public void buildPlayerList(JSONObject obj_PlayersOfMatch) {
 
+        int countOfSelectedBowler = 0;
         JSONArray bowlersArr = generalFunc.getJsonArray("Bowlers", obj_PlayersOfMatch);
         if (bowlersArr != null) {
             for (int i = 0; i < bowlersArr.length(); i++) {
@@ -305,10 +317,27 @@ public class CreateTeamActivity extends AppCompatActivity {
                 mapData.put("TYPE", "" + adapter.TYPE_ITEM);
 
                 listBowlerData.add(mapData);
+                listOfAllPlayersData.add(mapData);
+
+                if(adapter.chosenPlayersList.contains(generalFunc.getJsonValue("iPlayerId", obj_temp))){
+                    int countOfPlayer = GeneralFunctions.parseInt(0,bowlerCountTxtView.getText().toString());
+                    bowlerCountTxtView.setText(""+(countOfPlayer+1));
+
+
+                    totalAvailCredit = totalAvailCredit - GeneralFunctions.parseDouble(0.0, generalFunc.getJsonValue("tCredits", obj_temp));
+
+                    countOfSelectedBowler = countOfSelectedBowler + 1;
+
+                    if(countOfSelectedBowler >= 5){
+
+                        new CreateRoundedView(Color.parseColor("#32CD32"), Utils.dipToPixels(getActContext(), 15), Utils.dipToPixels(getActContext(), 0),getResources().getColor(R.color.appThemeColor_1), bowlerCountTxtView);
+                    }
+                }
             }
         }
 
 
+        int countOfSelectedBatsMan = 0;
         JSONArray batsmanArr = generalFunc.getJsonArray("Batsman", obj_PlayersOfMatch);
         if (batsmanArr != null) {
             for (int i = 0; i < batsmanArr.length(); i++) {
@@ -330,6 +359,21 @@ public class CreateTeamActivity extends AppCompatActivity {
                 mapData.put("TYPE", "" + adapter.TYPE_ITEM);
 
                 listBastManData.add(mapData);
+                listOfAllPlayersData.add(mapData);
+
+                if(adapter.chosenPlayersList.contains(generalFunc.getJsonValue("iPlayerId", obj_temp))){
+                    int countOfPlayer = GeneralFunctions.parseInt(0,batsManCountTxtView.getText().toString());
+                    batsManCountTxtView.setText(""+(countOfPlayer+1));
+
+                    totalAvailCredit = totalAvailCredit - GeneralFunctions.parseDouble(0.0, generalFunc.getJsonValue("tCredits", obj_temp));
+
+                    countOfSelectedBatsMan = countOfSelectedBatsMan + 1;
+
+                    if(countOfSelectedBatsMan >= 5){
+
+                        new CreateRoundedView(Color.parseColor("#32CD32"), Utils.dipToPixels(getActContext(), 15), Utils.dipToPixels(getActContext(), 0),getResources().getColor(R.color.appThemeColor_1), batsManCountTxtView);
+                    }
+                }
             }
         }
 
@@ -355,6 +399,16 @@ public class CreateTeamActivity extends AppCompatActivity {
                 mapData.put("TYPE", "" + adapter.TYPE_ITEM);
 
                 listWicketKeeperData.add(mapData);
+                listOfAllPlayersData.add(mapData);
+
+                if(adapter.chosenPlayersList.contains(generalFunc.getJsonValue("iPlayerId", obj_temp))){
+                    int countOfPlayer = GeneralFunctions.parseInt(0,wicketCountTxtView.getText().toString());
+                    wicketCountTxtView.setText(""+(countOfPlayer+1));
+
+                    totalAvailCredit = totalAvailCredit - GeneralFunctions.parseDouble(0.0, generalFunc.getJsonValue("tCredits", obj_temp));
+
+                    new CreateRoundedView(Color.parseColor("#32CD32"), Utils.dipToPixels(getActContext(), 15), Utils.dipToPixels(getActContext(), 0),getResources().getColor(R.color.appThemeColor_1), wicketCountTxtView);
+                }
             }
         }
 
@@ -379,9 +433,12 @@ public class CreateTeamActivity extends AppCompatActivity {
                 mapData.put("TYPE", "" + adapter.TYPE_ITEM);
 
                 listOtherData.add(mapData);
+                listOfAllPlayersData.add(mapData);
+
             }
         }
 
+        int countOfSelectedAllRounder = 0;
         JSONArray allrounderArr = generalFunc.getJsonArray("Allrounder", obj_PlayersOfMatch);
         if (allrounderArr != null) {
             for (int i = 0; i < allrounderArr.length(); i++) {
@@ -403,8 +460,43 @@ public class CreateTeamActivity extends AppCompatActivity {
                 mapData.put("TYPE", "" + adapter.TYPE_ITEM);
 
                 listAllRounderData.add(mapData);
+                listOfAllPlayersData.add(mapData);
+
+                if(adapter.chosenPlayersList.contains(generalFunc.getJsonValue("iPlayerId", obj_temp))){
+                    int countOfPlayer = GeneralFunctions.parseInt(0,allRounderCountTxtView.getText().toString());
+                    allRounderCountTxtView.setText(""+(countOfPlayer+1));
+
+
+                    totalAvailCredit = totalAvailCredit - GeneralFunctions.parseDouble(0.0, generalFunc.getJsonValue("tCredits", obj_temp));
+
+                    countOfSelectedAllRounder = countOfSelectedAllRounder + 1;
+
+                    if(countOfSelectedAllRounder >= 3){
+
+                        new CreateRoundedView(Color.parseColor("#32CD32"), Utils.dipToPixels(getActContext(), 15), Utils.dipToPixels(getActContext(), 0),getResources().getColor(R.color.appThemeColor_1), allRounderCountTxtView);
+                    }
+                }
             }
         }
+
+        adapter.setAllPlayersList(listOfAllPlayersData);
+    }
+
+    public void setSelectedPlayerList(JSONArray arrSelectedPlayers){
+        if(arrSelectedPlayers == null){
+            return;
+        }
+        for (int i=0;i<arrSelectedPlayers.length();i++) {
+            JSONObject obj_temp = generalFunc.getJsonObject(arrSelectedPlayers,i);
+            String iPlayerId = generalFunc.getJsonValue("iPlayerId",obj_temp);
+            if(!adapter.chosenPlayersList.contains(iPlayerId)){
+                adapter.chosenPlayersList.add(iPlayerId);
+                adapter.totalSelectedPlayers = adapter.totalSelectedPlayers + 1;
+            }
+        }
+        countTotalPlayersTxtView.setText("PLAYERS " + adapter.chosenPlayersList.size() + "/11");
+        countTotalCreditsInfoTxtView.setText("CREDITS LEFT " + String.format("%.2f", totalAvailCredit) + "/" + (int) OrigAvailCredit);
+        adapter.notifyDataSetChanged();
     }
 
     public Context getActContext() {

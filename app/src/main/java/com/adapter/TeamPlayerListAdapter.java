@@ -31,6 +31,7 @@ public class TeamPlayerListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public static final int TYPE_FOOTER = 3;
     public GeneralFunctions generalFunc;
     ArrayList<HashMap<String, String>> list;
+    ArrayList<HashMap<String, String>> listOfAllPlayersData;
     Context mContext;
     boolean isFooterEnabled = false;
     View footerView;
@@ -61,6 +62,9 @@ public class TeamPlayerListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public void setDataList(ArrayList<HashMap<String, String>> list) {
         this.list = list;
     }
+    public void setAllPlayersList(ArrayList<HashMap<String, String>> listOfAllPlayersData) {
+        this.listOfAllPlayersData = listOfAllPlayersData;
+    }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -85,30 +89,32 @@ public class TeamPlayerListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
         int countOfTeam2 = 0;
         String team2 = "";
+        Utils.printLog("countOfTeam","Size::"+chosenPlayersList.size()+"::"+chosenPlayersList.toString());
         for (int i = 0; i < chosenPlayersList.size(); i++) {
             String temp_player_id = chosenPlayersList.get(i);
-            for (int j = 0; j < list.size(); j++) {
+            for (int j = 0; j < listOfAllPlayersData.size(); j++) {
 
-                if(!temp_player_id.equals(list.get(j).get("iPlayerId"))){
+                if(!temp_player_id.equals(listOfAllPlayersData.get(j).get("iPlayerId"))){
                     continue;
                 }
                 if(team1.equals("")){
-                    team1 = list.get(j).get("vTeamName");
+                    team1 = listOfAllPlayersData.get(j).get("vTeamName");
                     countOfTeam1 = countOfTeam1 +1;
-                }
-
-                if(!team1.equals("") && team2.equals("") && !list.get(j).get("vTeamName").equals(team1)){
-
-                    team2 = list.get(j).get("vTeamName");
+                }else if(team2.equals("") && !listOfAllPlayersData.get(j).get("vTeamName").equals(team1)){
+                    team2 = listOfAllPlayersData.get(j).get("vTeamName");
                     countOfTeam2 = countOfTeam2 +1;
-                }
-                String tempTeamName =  list.get(j).get("vTeamName");
+                }else{
+                    String tempTeamName =  listOfAllPlayersData.get(j).get("vTeamName");
 
-                if(tempTeamName.equals(team1)){
-                    countOfTeam1 = countOfTeam1 +1;
-                }else if(tempTeamName.equals(team2)){
-                    countOfTeam2 = countOfTeam2 +1;
+                    if(tempTeamName.equals(team1)){
+                        countOfTeam1 = countOfTeam1 +1;
+                    }else if(tempTeamName.equals(team2)){
+                        countOfTeam2 = countOfTeam2 +1;
+                    }
+
                 }
+
+
             }
         }
 
@@ -116,14 +122,14 @@ public class TeamPlayerListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         Utils.printLog("countOfTeam","countOfTeam2::"+countOfTeam2);
         String selectedPlayerTeamName = "";
 
-        for (int j = 0; j < list.size(); j++) {
+        for (int j = 0; j < listOfAllPlayersData.size(); j++) {
 
-           String iPlayerId_tmp =  list.get(j).get("iPlayerId");
+           String iPlayerId_tmp =  listOfAllPlayersData.get(j).get("iPlayerId");
            if(iPlayerId_tmp.equals(iPlayerId)){
-               selectedPlayerTeamName =  list.get(j).get("vTeamName");
+               selectedPlayerTeamName =  listOfAllPlayersData.get(j).get("vTeamName");
            }
         }
-        if((countOfTeam1 >= 6 && selectedPlayerTeamName.equals(team1)) || (countOfTeam2 >= 6 && selectedPlayerTeamName.equals(team2) )){
+        if((countOfTeam1 >= 7 && selectedPlayerTeamName.equals(team1)) || (countOfTeam2 >= 7 && selectedPlayerTeamName.equals(team2) )){
             return false;
         }
 
@@ -180,15 +186,16 @@ public class TeamPlayerListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 @Override
                 public void onClick(View view) {
 
-                    if (chosenPlayersList.size() >= 11) {
+                    if (chosenPlayersList.size() >= 11 && !chosenPlayersList.contains(item.get("iPlayerId"))) {
                         GeneralFunctions.showMessage(GeneralFunctions.getCurrentView((Activity) mContext), "More then 11 players selection are not allowed.");
                         return;
                     }
 
-//                    if(!isPlayerSelectedAllowedForSelectedTeam(item.get("iPlayerId"))){
-//                        GeneralFunctions.showMessage(GeneralFunctions.getCurrentView((Activity) mContext), "Maximum 7 players are allowed from same team.");
-//                        return;
-//                    }
+                    if(!chosenPlayersList.contains(item.get("iPlayerId")) && !isPlayerSelectedAllowedForSelectedTeam(item.get("iPlayerId"))){
+                        GeneralFunctions.showMessage(GeneralFunctions.getCurrentView((Activity) mContext), "Maximum 7 players are allowed from same team.");
+                        return;
+                    }
+
                     if (chosenPlayersList.contains(item.get("iPlayerId"))) {
                         chosenPlayersList.remove(item.get("iPlayerId"));
                         totalSelectedPlayers = totalSelectedPlayers - 1;

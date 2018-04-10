@@ -1,6 +1,7 @@
 package com.dreamplay;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
@@ -286,6 +287,15 @@ public class ContestsActivity extends AppCompatActivity {
 
 
             }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == Utils.CREATE_TEAM_REQ_CODE && resultCode == RESULT_OK){
+            getMatchData();
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.dreamplay;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -89,6 +90,7 @@ public class UserMatchTeamsActivity extends AppCompatActivity {
         if (list.size() > 0) {
             list.clear();
         }
+        adapter.notifyDataSetChanged();
 
         final HashMap<String, String> parameters = new HashMap<String, String>();
         parameters.put("type", "getUserMatchTeams");
@@ -218,6 +220,15 @@ public class UserMatchTeamsActivity extends AppCompatActivity {
                     break;
 
             }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == Utils.CREATE_TEAM_REQ_CODE && resultCode == RESULT_OK){
+            getUserMatchTeams();
         }
     }
 }
