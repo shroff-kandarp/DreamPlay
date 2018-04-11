@@ -643,7 +643,7 @@ public class CreateTeamActivity extends AppCompatActivity {
             return;
         }
 
-        if (totalAvailCredit == 0 || totalAvailCredit < 0) {
+        if (/*totalAvailCredit == 0 || */totalAvailCredit < 0) {
             generalFunc.showGeneralMessage("", "You don't have much credits to continue. Please choose another players");
             return;
         }

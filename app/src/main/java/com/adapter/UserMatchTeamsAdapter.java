@@ -191,6 +191,7 @@ public class UserMatchTeamsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             switch (i) {
                 case 0:
                     wicketKeeperTxtView.setText(generalFunc.getJsonValue("vPlayerName", obj_temp));
+                    wicketKeeperCreditTxtView.setText(generalFunc.getJsonValue("tCredits", obj_temp) + " CR");
                     break;
                 case 1:
                     if (generalFunc.getJsonValue("ePlayerType", obj_temp).equals("Batsman")) {
@@ -200,6 +201,7 @@ public class UserMatchTeamsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     } else {
                         player1ImgView.setImageResource(R.mipmap.ic_wk_hal);
                     }
+                    payer1CreditTxtView.setText(generalFunc.getJsonValue("tCredits", obj_temp) + " CR");
                     player1TxtView.setText(generalFunc.getJsonValue("vPlayerName", obj_temp));
                     break;
                 case 2:
@@ -210,6 +212,7 @@ public class UserMatchTeamsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     } else {
                         player2ImgView.setImageResource(R.mipmap.ic_wk_hal);
                     }
+                    payer2CreditTxtView.setText(generalFunc.getJsonValue("tCredits", obj_temp) + " CR");
                     player2TxtView.setText(generalFunc.getJsonValue("vPlayerName", obj_temp));
                     break;
                 case 3:
@@ -220,6 +223,7 @@ public class UserMatchTeamsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     } else {
                         player3ImgView.setImageResource(R.mipmap.ic_wk_hal);
                     }
+                    payer3CreditTxtView.setText(generalFunc.getJsonValue("tCredits", obj_temp) + " CR");
                     player3TxtView.setText(generalFunc.getJsonValue("vPlayerName", obj_temp));
                     break;
                 case 4:
@@ -230,6 +234,7 @@ public class UserMatchTeamsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     } else {
                         player4ImgView.setImageResource(R.mipmap.ic_wk_hal);
                     }
+                    payer4CreditTxtView.setText(generalFunc.getJsonValue("tCredits", obj_temp) + " CR");
                     player4TxtView.setText(generalFunc.getJsonValue("vPlayerName", obj_temp));
                     break;
                 case 5:
@@ -240,6 +245,7 @@ public class UserMatchTeamsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     } else {
                         player5ImgView.setImageResource(R.mipmap.ic_wk_hal);
                     }
+                    payer5CreditTxtView.setText(generalFunc.getJsonValue("tCredits", obj_temp) + " CR");
                     player5TxtView.setText(generalFunc.getJsonValue("vPlayerName", obj_temp));
                     break;
                 case 6:
@@ -250,6 +256,7 @@ public class UserMatchTeamsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     } else {
                         player6ImgView.setImageResource(R.mipmap.ic_wk_hal);
                     }
+                    payer6CreditTxtView.setText(generalFunc.getJsonValue("tCredits", obj_temp) + " CR");
                     player6TxtView.setText(generalFunc.getJsonValue("vPlayerName", obj_temp));
                     break;
                 case 7:
@@ -260,6 +267,7 @@ public class UserMatchTeamsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     } else {
                         player7ImgView.setImageResource(R.mipmap.ic_wk_hal);
                     }
+                    payer7CreditTxtView.setText(generalFunc.getJsonValue("tCredits", obj_temp) + " CR");
                     player7TxtView.setText(generalFunc.getJsonValue("vPlayerName", obj_temp));
                     break;
                 case 8:
@@ -270,6 +278,7 @@ public class UserMatchTeamsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     } else {
                         player8ImgView.setImageResource(R.mipmap.ic_wk_hal);
                     }
+                    payer8CreditTxtView.setText(generalFunc.getJsonValue("tCredits", obj_temp) + " CR");
                     player8TxtView.setText(generalFunc.getJsonValue("vPlayerName", obj_temp));
                     break;
                 case 9:
@@ -280,6 +289,7 @@ public class UserMatchTeamsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     } else {
                         player9ImgView.setImageResource(R.mipmap.ic_wk_hal);
                     }
+                    payer9CreditTxtView.setText(generalFunc.getJsonValue("tCredits", obj_temp) + " CR");
                     player9TxtView.setText(generalFunc.getJsonValue("vPlayerName", obj_temp));
                     break;
                 case 10:
@@ -290,6 +300,7 @@ public class UserMatchTeamsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     } else {
                         player10ImgView.setImageResource(R.mipmap.ic_wk_hal);
                     }
+                    payer10CreditTxtView.setText(generalFunc.getJsonValue("tCredits", obj_temp) + " CR");
                     player10TxtView.setText(generalFunc.getJsonValue("vPlayerName", obj_temp));
                     break;
             }

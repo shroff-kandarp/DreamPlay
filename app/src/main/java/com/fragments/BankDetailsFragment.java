@@ -166,11 +166,11 @@ public class BankDetailsFragment extends Fragment implements UploadImage.SetResp
                                 accountNumBox.setEnabled(false);
                                 aadharNumBox.setEnabled(false);
 
-                                bankNameBox.getLabelFocusAnimator().start();
-                                ifscCodeBox.getLabelFocusAnimator().start();
-                                accNameBox.getLabelFocusAnimator().start();
-                                accountNumBox.getLabelFocusAnimator().start();
-                                aadharNumBox.getLabelFocusAnimator().start();
+//                                bankNameBox.getLabelFocusAnimator().start();
+//                                ifscCodeBox.getLabelFocusAnimator().start();
+//                                accNameBox.getLabelFocusAnimator().start();
+//                                accountNumBox.getLabelFocusAnimator().start();
+//                                aadharNumBox.getLabelFocusAnimator().start();
                             }
                             bankNameBox.setText(vBankName);
                             ifscCodeBox.setText(vIFSCCode);

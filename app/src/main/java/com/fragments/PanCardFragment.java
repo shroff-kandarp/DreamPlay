@@ -190,23 +190,26 @@ public class PanCardFragment extends Fragment implements UploadImage.SetResponse
                             if (!vPanState.equals("")) {
                                 stateBox.setText(vPanState);
                                 iStateId = generalFunc.getJsonValue("iPanStateId", obj_msg);
-                            } else if (!vState.equals("")) {
+                            } /*else if (!vState.equals("")) {
                                 stateBox.setText(vPanState.equals("") ? generalFunc.getJsonValue("vState", obj_msg) : vPanState);
                                 iStateId = generalFunc.getJsonValue("iStateId", obj_msg);
-                            }
+                            }*/
 
-                            if (!tPanDOB.equals("") && !vPanState.equals("") && !vState.equals("") && !vPanCardNum.equals("") && !vPanCardName.equals("")) {
+                            if (!tPanDOB.equals("") && !vPanState.equals("") /*&& !vState.equals("")*/ && !vPanCardNum.equals("") && !vPanCardName.equals("")) {
                                 stateBox.setOnClickListener(null);
+
                                 dobBox.setOnClickListener(null);
+                                dobBox.setEnabled(false);
                                 nameBox.setEnabled(false);
                                 panCardNumBox.setEnabled(false);
+                                stateBox.setEnabled(false);
 
                                 isAllInfoEditable = false;
 
-                                nameBox.getLabelFocusAnimator().start();
-                                panCardNumBox.getLabelFocusAnimator().start();
-                                dobBox.getLabelFocusAnimator().start();
-                                stateBox.getLabelFocusAnimator().start();
+//                                nameBox.getLabelFocusAnimator().start();
+//                                panCardNumBox.getLabelFocusAnimator().start();
+//                                dobBox.getLabelFocusAnimator().start();
+//                                stateBox.getLabelFocusAnimator().start();
                             }
 
                             if (!vPanImage.equals("")) {

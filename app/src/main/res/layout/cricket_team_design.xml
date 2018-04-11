@@ -85,7 +85,7 @@
                         android:id="@+id/wicketKeeperImgView"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:layout_marginTop="-5dp"
+                        android:layout_marginTop="-2dp"
                         android:src="@mipmap/wicket_keeper" />
 
                     <com.view.MTextView
@@ -135,13 +135,13 @@
                             android:text="8.7 CR"
                             android:textAllCaps="true"
                             android:textColor="#FFFFFF"
-                            android:textSize="@dimen/txt_size_12" />
+                            android:textSize="@dimen/txt_size_14" />
 
                         <ImageView
                             android:id="@+id/player1ImgView"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
-                            android:layout_marginTop="-5dp"
+                            android:layout_marginTop="-2dp"
                             android:src="@mipmap/wicket_keeper" />
 
                         <com.view.MTextView
@@ -176,13 +176,13 @@
                             android:text="8.7 CR"
                             android:textAllCaps="true"
                             android:textColor="#FFFFFF"
-                            android:textSize="@dimen/txt_size_12" />
+                            android:textSize="@dimen/txt_size_14" />
 
                         <ImageView
                             android:id="@+id/player2ImgView"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
-                            android:layout_marginTop="-5dp"
+                            android:layout_marginTop="-2dp"
                             android:src="@mipmap/wicket_keeper" />
 
                         <com.view.MTextView
@@ -215,13 +215,13 @@
                             android:text="8.7 CR"
                             android:textAllCaps="true"
                             android:textColor="#FFFFFF"
-                            android:textSize="@dimen/txt_size_12" />
+                            android:textSize="@dimen/txt_size_14" />
 
                         <ImageView
                             android:id="@+id/player3ImgView"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
-                            android:layout_marginTop="-5dp"
+                            android:layout_marginTop="-2dp"
                             android:src="@mipmap/wicket_keeper" />
 
                         <com.view.MTextView
@@ -262,13 +262,13 @@
                             android:text="8.7 CR"
                             android:textAllCaps="true"
                             android:textColor="#FFFFFF"
-                            android:textSize="@dimen/txt_size_12" />
+                            android:textSize="@dimen/txt_size_14" />
 
                         <ImageView
                             android:id="@+id/player4ImgView"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
-                            android:layout_marginTop="-5dp"
+                            android:layout_marginTop="-2dp"
                             android:src="@mipmap/wicket_keeper" />
 
                         <com.view.MTextView
@@ -303,13 +303,13 @@
                             android:text="8.7 CR"
                             android:textAllCaps="true"
                             android:textColor="#FFFFFF"
-                            android:textSize="@dimen/txt_size_12" />
+                            android:textSize="@dimen/txt_size_14" />
 
                         <ImageView
                             android:id="@+id/player5ImgView"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
-                            android:layout_marginTop="-5dp"
+                            android:layout_marginTop="-2dp"
                             android:src="@mipmap/wicket_keeper" />
 
                         <com.view.MTextView
@@ -342,13 +342,13 @@
                             android:text="8.7 CR"
                             android:textAllCaps="true"
                             android:textColor="#FFFFFF"
-                            android:textSize="@dimen/txt_size_12" />
+                            android:textSize="@dimen/txt_size_14" />
 
                         <ImageView
                             android:id="@+id/player6ImgView"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
-                            android:layout_marginTop="-5dp"
+                            android:layout_marginTop="-2dp"
                             android:src="@mipmap/wicket_keeper" />
 
                         <com.view.MTextView
@@ -389,13 +389,13 @@
                             android:text="8.7 CR"
                             android:textAllCaps="true"
                             android:textColor="#FFFFFF"
-                            android:textSize="@dimen/txt_size_12" />
+                            android:textSize="@dimen/txt_size_14" />
 
                         <ImageView
                             android:id="@+id/player7ImgView"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
-                            android:layout_marginTop="-5dp"
+                            android:layout_marginTop="-2dp"
                             android:src="@mipmap/wicket_keeper" />
 
                         <com.view.MTextView
@@ -430,13 +430,13 @@
                             android:text="8.7 CR"
                             android:textAllCaps="true"
                             android:textColor="#FFFFFF"
-                            android:textSize="@dimen/txt_size_12" />
+                            android:textSize="@dimen/txt_size_14" />
 
                         <ImageView
                             android:id="@+id/player8ImgView"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
-                            android:layout_marginTop="-5dp"
+                            android:layout_marginTop="-2dp"
                             android:src="@mipmap/wicket_keeper" />
 
                         <com.view.MTextView
@@ -469,13 +469,13 @@
                             android:text="8.7 CR"
                             android:textAllCaps="true"
                             android:textColor="#FFFFFF"
-                            android:textSize="@dimen/txt_size_12" />
+                            android:textSize="@dimen/txt_size_14" />
 
                         <ImageView
                             android:id="@+id/player9ImgView"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
-                            android:layout_marginTop="-5dp"
+                            android:layout_marginTop="-2dp"
                             android:src="@mipmap/wicket_keeper" />
 
                         <com.view.MTextView
@@ -509,13 +509,13 @@
                         android:text="8.7 CR"
                         android:textAllCaps="true"
                         android:textColor="#FFFFFF"
-                        android:textSize="@dimen/txt_size_12" />
+                        android:textSize="@dimen/txt_size_14" />
 
                     <ImageView
                         android:id="@+id/player10ImgView"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:layout_marginTop="-5dp"
+                        android:layout_marginTop="-2dp"
                         android:src="@mipmap/wicket_keeper" />
 
                     <com.view.MTextView

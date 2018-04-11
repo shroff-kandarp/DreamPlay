@@ -204,6 +204,11 @@ public class TeamPlayerListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
                     } else {
                         if (totalSizeForSelection > totalSelectedPlayers) {
+                            if(createTeamAct.totalAvailCredit < GeneralFunctions.parseDouble(0.0, viewHolder.creditsTxtView.getText().toString())){
+
+                                GeneralFunctions.showMessage(GeneralFunctions.getCurrentView((Activity) mContext), "No more credits are available to select this player.");
+                                return;
+                            }
                             chosenPlayersList.add(item.get("iPlayerId"));
                             totalSelectedPlayers = totalSelectedPlayers + 1;
                             viewHolder.selectionView.setVisibility(View.VISIBLE);

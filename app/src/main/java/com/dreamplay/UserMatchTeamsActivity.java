@@ -177,7 +177,7 @@ public class UserMatchTeamsActivity extends AppCompatActivity {
                         adapter.notifyDataSetChanged();
 
                     } else {
-                        noDataTxt.setText("No data available");
+                        noDataTxt.setText(generalFunc.getJsonValue("message",responseString));
                         noDataTxt.setVisibility(View.VISIBLE);
                     }
                 } else {

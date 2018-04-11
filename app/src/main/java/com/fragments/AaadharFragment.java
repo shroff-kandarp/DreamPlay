@@ -177,21 +177,22 @@ public class AaadharFragment extends Fragment implements UploadImage.SetResponse
                             if (!vAadharState.equals("")) {
                                 stateBox.setText(vAadharState);
                                 iStateId = generalFunc.getJsonValue("iPanStateId", obj_msg);
-                            } else if (!vState.equals("")) {
+                            } /*else if (!vState.equals("")) {
                                 stateBox.setText(vAadharState.equals("") ? generalFunc.getJsonValue("vState", obj_msg) : vAadharState);
                                 iStateId = generalFunc.getJsonValue("iStateId", obj_msg);
-                            }
+                            }*/
 
-                            if ( !vAadharCity.equals("") && !vState.equals("") && !vAadharNum.equals("")) {
+                            if ( !vAadharCity.equals("") && !vAadharState.equals("") && !vAadharNum.equals("")) {
                                 stateBox.setOnClickListener(null);
                                 cityBox.setEnabled(false);
                                 aadharCardNumBox.setEnabled(false);
+                                stateBox.setEnabled(false);
 
                                 isAllInfoEditable = false;
 
-                                aadharCardNumBox.getLabelFocusAnimator().start();
-                                cityBox.getLabelFocusAnimator().start();
-                                stateBox.getLabelFocusAnimator().start();
+//                                aadharCardNumBox.getLabelFocusAnimator().start();
+//                                cityBox.getLabelFocusAnimator().start();
+//                                stateBox.getLabelFocusAnimator().start();
                             }
 
                             if (!vAadharImage.equals("")) {

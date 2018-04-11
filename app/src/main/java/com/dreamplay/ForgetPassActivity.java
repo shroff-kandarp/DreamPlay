@@ -282,7 +282,9 @@ public class ForgetPassActivity extends AppCompatActivity {
                         }
                     }
 
-                    generalFunc.showGeneralMessage("", generalFunc.getJsonValue(Utils.message_str, responseString));
+                    if (!isCurrentPassEnable()) {
+                        generalFunc.showGeneralMessage("", generalFunc.getJsonValue(Utils.message_str, responseString));
+                    }
 
                 } else {
                     generalFunc.showError();
@@ -297,6 +299,7 @@ public class ForgetPassActivity extends AppCompatActivity {
         parameters.put("type", "changePassword");
         parameters.put("vEmail", Utils.getText(emailBox));
         parameters.put("newPassword", Utils.getText(resetPassBox));
+        parameters.put("iMemberId",generalFunc.getMemberId());
 
         ExecuteWebServerUrl exeWebServer = new ExecuteWebServerUrl(parameters);
         exeWebServer.setLoaderConfig(getActContext(), true, generalFunc);
