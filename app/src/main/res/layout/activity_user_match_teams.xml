@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5F5"
+    android:background="#F2F2F2"
     android:orientation="vertical">
 
     <include
@@ -13,7 +13,6 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/dataRecyclerView"
@@ -32,16 +31,38 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true" />
 
-        <com.view.MTextView
-            android:id="@+id/noDataTxt"
+        <LinearLayout
+            android:id="@+id/noTeamArea"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:gravity="center"
-            android:text="No data available."
-            android:textColor="#1C1C1C"
-            android:textSize="@dimen/txt_size_16"
-            android:visibility="gone" />
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="25dp"
+            android:orientation="vertical"
+            android:padding="15dp"
+            android:visibility="gone">
+
+            <com.view.MTextView
+                android:id="@+id/noTeamsTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:text="Create up"
+                android:textColor="#1C1C1C"
+                android:textSize="@dimen/txt_size_16" />
+
+
+            <include
+                android:id="@+id/addTeamBtn"
+                layout="@layout/btn_type_2"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/all_btn_height"
+                android:layout_marginTop="10dp" />
+
+        </LinearLayout>
+
 
         <com.view.ErrorView
             android:id="@+id/errorView"
@@ -54,10 +75,10 @@
             android:id="@+id/previewContainerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:clickable="true"
-            android:visibility="gone"
-            android:gravity="bottom"
             android:layout_alignParentBottom="true"
-            android:orientation="vertical"/>
+            android:clickable="true"
+            android:gravity="bottom"
+            android:orientation="vertical"
+            android:visibility="gone" />
     </RelativeLayout>
 </LinearLayout>
