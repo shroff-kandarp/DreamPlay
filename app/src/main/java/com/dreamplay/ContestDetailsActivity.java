@@ -30,7 +30,6 @@ public class ContestDetailsActivity extends AppCompatActivity {
 
     GeneralFunctions generalFunc;
 
-
     ImageView leftImgView;
     ImageView rightTeamImgView;
     MTextView infoTxtView;
