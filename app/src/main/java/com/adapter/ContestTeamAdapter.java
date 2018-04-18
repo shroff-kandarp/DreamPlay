@@ -75,6 +75,7 @@ public class ContestTeamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
             viewHolder.teamCountTxtView.setText(teamCount > 1 ? "Joined with " + teamCount + " team" : "Joined with " + teamCount + " teams.");
 
+            viewHolder.teamPointsTxtView.setText(item.get("tPoints").equals("") ? "--" : item.get("tPoints"));
             viewHolder.teamRankTxtView.setText(item.get("tRank").equals("") ? "--" : item.get("tRank"));
         } else if (holder instanceof HeaderViewHolder) {
             final HashMap<String, String> item = list.get(position);
@@ -142,6 +143,7 @@ public class ContestTeamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         public MTextView memberNameTxtView;
         public MTextView teamCountTxtView;
+        public MTextView teamPointsTxtView;
         public MTextView teamRankTxtView;
         public View contentArea;
 
@@ -149,6 +151,7 @@ public class ContestTeamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             super(view);
 
             memberNameTxtView = (MTextView) view.findViewById(R.id.memberNameTxtView);
+            teamPointsTxtView = (MTextView) view.findViewById(R.id.teamPointsTxtView);
             teamCountTxtView = (MTextView) view.findViewById(R.id.teamCountTxtView);
             teamRankTxtView = (MTextView) view.findViewById(R.id.teamRankTxtView);
             contentArea = view;

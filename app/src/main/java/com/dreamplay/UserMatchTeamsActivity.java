@@ -92,7 +92,7 @@ public class UserMatchTeamsActivity extends AppCompatActivity implements UserMat
 
 
     public void setLabels() {
-        titleTxt.setText("MY TEAMS");
+        titleTxt.setText(isOpenForSelection == false ? "MY TEAMS" : "CHOOSE TEAM");
         addTeamBtn.setText("Create Team");
         addMoreTeamBtn.setText("Create Team");
     }

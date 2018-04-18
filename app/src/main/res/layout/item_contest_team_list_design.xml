@@ -37,13 +37,24 @@
 
 
     <com.view.MTextView
+        android:id="@+id/teamPointsTxtView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.35"
+        android:gravity="right"
+        android:paddingRight="10dp"
+        android:textColor="#272727"
+        android:textSize="@dimen/txt_size_14" />
+
+    <com.view.MTextView
         android:id="@+id/teamRankTxtView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_weight="0.35"
-        android:textColor="#272727"
         android:gravity="right"
         android:paddingRight="10dp"
+        android:textColor="#272727"
         android:textSize="@dimen/txt_size_14" />
 </LinearLayout>
