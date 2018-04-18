@@ -294,7 +294,7 @@ public class ContestsActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == Utils.CREATE_TEAM_REQ_CODE && resultCode == RESULT_OK){
+        if((requestCode == Utils.CREATE_TEAM_REQ_CODE || requestCode == Utils.CHOOSE_TEAM_REQ_CODE) && resultCode == RESULT_OK){
             getMatchData();
         }
     }

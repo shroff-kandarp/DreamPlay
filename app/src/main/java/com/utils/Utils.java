@@ -61,6 +61,7 @@ public class Utils {
     public static final int CHOOSE_CAPTAIN_REQ_CODE = 138;
     public static final int CONTEST_DETAILS_REQ_CODE = 139;
     public static final int CHANGE_PASSWORD_REQ_CODE = 140;
+    public static final int CHOOSE_TEAM_REQ_CODE = 141;
 
 
     private static final AtomicInteger sNextGeneratedId = new AtomicInteger(1);

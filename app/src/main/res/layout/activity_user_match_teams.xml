@@ -81,4 +81,13 @@
             android:orientation="vertical"
             android:visibility="gone" />
     </RelativeLayout>
+
+    <include
+        android:id="@+id/addMoreTeamBtn"
+        layout="@layout/btn_type_2"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/all_btn_height"
+        android:layout_marginTop="10dp"
+        android:visibility="gone" />
+
 </LinearLayout>

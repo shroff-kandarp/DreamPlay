@@ -97,15 +97,15 @@ public class UserMatchTeamsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             viewHolder.allCountTxtView.setText(item.get("allCount"));
             viewHolder.bowlCountTxtView.setText(item.get("bowlCount"));
             viewHolder.teamCountTxtView.setText("TEAM " + (position + 1));
-//            viewHolder.contentArea.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//
-//                    if (mItemClickListener != null) {
-//                        mItemClickListener.onItemClickList(view, position);
-//                    }
-//                }
-//            });
+            viewHolder.contentArea.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    if (mItemClickListener != null) {
+                        mItemClickListener.onItemClickList(view, position);
+                    }
+                }
+            });
 
             viewHolder.previewTeamTxtView.setOnClickListener(new View.OnClickListener() {
                 @Override

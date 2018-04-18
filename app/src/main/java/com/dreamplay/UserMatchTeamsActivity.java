@@ -18,6 +18,7 @@ import com.general.files.StartActProcess;
 import com.utils.Utils;
 import com.view.CreateRoundedView;
 import com.view.ErrorView;
+import com.view.GenerateAlertBox;
 import com.view.MButton;
 import com.view.MTextView;
 import com.view.MaterialRippleLayout;
@@ -28,7 +29,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class UserMatchTeamsActivity extends AppCompatActivity {
+public class UserMatchTeamsActivity extends AppCompatActivity implements UserMatchTeamsAdapter.OnItemClickListener {
 
     public GeneralFunctions generalFunc;
     MTextView titleTxt;
@@ -42,6 +43,7 @@ public class UserMatchTeamsActivity extends AppCompatActivity {
     ErrorView errorView;
 
     MButton addTeamBtn;
+    MButton addMoreTeamBtn;
 
     ArrayList<HashMap<String, String>> list;
 
@@ -66,6 +68,9 @@ public class UserMatchTeamsActivity extends AppCompatActivity {
         errorView = (ErrorView) findViewById(R.id.errorView);
         noTeamArea = findViewById(R.id.noTeamArea);
         addTeamBtn = ((MaterialRippleLayout) (findViewById(R.id.addTeamBtn))).getChildView();
+        addMoreTeamBtn = ((MaterialRippleLayout) findViewById(R.id.addMoreTeamBtn)).getChildView();
+
+        isOpenForSelection = getIntent().getStringExtra("isOpenForSelection") == null ? false : (getIntent().getStringExtra("isOpenForSelection").equalsIgnoreCase("Yes") ? true : false);
 
         list = new ArrayList<>();
         adapter = new UserMatchTeamsAdapter(getActContext(), list, generalFunc, false);
@@ -76,15 +81,20 @@ public class UserMatchTeamsActivity extends AppCompatActivity {
         setLabels();
 
         addTeamBtn.setId(Utils.generateViewId());
+        addMoreTeamBtn.setId(Utils.generateViewId());
 
         backImgView.setOnClickListener(new setOnClickList());
         addTeamBtn.setOnClickListener(new setOnClickList());
+        addMoreTeamBtn.setOnClickListener(new setOnClickList());
+
+        adapter.setOnItemClickListener(this);
     }
 
 
     public void setLabels() {
         titleTxt.setText("MY TEAMS");
         addTeamBtn.setText("Create Team");
+        addMoreTeamBtn.setText("Create Team");
     }
 
 
@@ -191,13 +201,15 @@ public class UserMatchTeamsActivity extends AppCompatActivity {
                         }
 
                         adapter.notifyDataSetChanged();
-
+                        ((MaterialRippleLayout) findViewById(R.id.addMoreTeamBtn)).setVisibility(View.VISIBLE);
                     } else {
                         noTeamsTxt.setText(generalFunc.getJsonValue("message", responseString));
                         noTeamArea.setVisibility(View.VISIBLE);
+                        ((MaterialRippleLayout) findViewById(R.id.addMoreTeamBtn)).setVisibility(View.GONE);
                     }
                 } else {
                     generateErrorView();
+                    ((MaterialRippleLayout) findViewById(R.id.addMoreTeamBtn)).setVisibility(View.GONE);
                 }
             }
         });
@@ -225,6 +237,62 @@ public class UserMatchTeamsActivity extends AppCompatActivity {
         return UserMatchTeamsActivity.this;
     }
 
+    @Override
+    public void onItemClickList(View v, int position) {
+
+        if (isOpenForSelection) {
+
+            final HashMap<String, String> item = list.get(position);
+
+            joinContestWithTeam(item.get("iUserTeamId"));
+        }
+    }
+
+    public void joinContestWithTeam(String iUserTeamId) {
+        HashMap<String, String> parameters = new HashMap<>();
+        parameters.put("type", "joinContestWithTeamId");
+        parameters.put("iMemberId", generalFunc.getMemberId());
+        parameters.put("iUserTeamId", iUserTeamId);
+        parameters.put("iContestId", getIntent().getStringExtra("iConstestId"));
+
+        ExecuteWebServerUrl exeWebServer = new ExecuteWebServerUrl(parameters);
+        exeWebServer.setLoaderConfig(getActContext(), true, generalFunc);
+
+        exeWebServer.setDataResponseListener(new ExecuteWebServerUrl.SetDataResponse() {
+            @Override
+            public void setResponse(final String responseString) {
+
+                if (responseString != null && !responseString.equals("")) {
+                    boolean isDataAvail = GeneralFunctions.checkDataAvail(Utils.action_str, responseString);
+
+                    if (isDataAvail) {
+
+
+                        final GenerateAlertBox generateAlert = new GenerateAlertBox(getActContext());
+                        generateAlert.setCancelable(false);
+                        generateAlert.setBtnClickList(new GenerateAlertBox.HandleAlertBtnClick() {
+                            @Override
+                            public void handleBtnClick(int btn_id) {
+                                (new StartActProcess(getActContext())).setOkResult();
+                                backImgView.performClick();
+                            }
+                        });
+
+                        generateAlert.setContentMessage("", generalFunc.getJsonValue(Utils.message_str, responseString));
+                        generateAlert.setPositiveBtn("OK");
+                        generateAlert.showAlertBox();
+                    } else {
+                        generalFunc.showGeneralMessage("", generalFunc.getJsonValue(Utils.message_str, responseString));
+                    }
+
+                } else {
+                    generalFunc.showError();
+                }
+            }
+        });
+        exeWebServer.execute();
+    }
+
     public class setOnClickList implements View.OnClickListener {
 
         @Override
@@ -235,13 +303,60 @@ public class UserMatchTeamsActivity extends AppCompatActivity {
                 UserMatchTeamsActivity.super.onBackPressed();
 
             } else if (i == addTeamBtn.getId()) {
-                Bundle bn = new Bundle();
-                bn.putString("iMatchId", getIntent().getStringExtra("iMatchId"));
-                bn.putString("iConstestId", "");
-                bn.putString("PAGE_TYPE", "");
-                (new StartActProcess(getActContext())).startActForResult(CreateTeamActivity.class, bn, Utils.CREATE_TEAM_REQ_CODE);
+//                Bundle bn = new Bundle();
+//                bn.putString("iMatchId", getIntent().getStringExtra("iMatchId"));
+//                bn.putString("iConstestId", "");
+//                bn.putString("PAGE_TYPE", "");
+//                (new StartActProcess(getActContext())).startActForResult(CreateTeamActivity.class, bn, Utils.CREATE_TEAM_REQ_CODE);
+                checkEligibilityToCreateTeam();
+            } else if (i == addMoreTeamBtn.getId()) {
+//                Bundle bn = new Bundle();
+//                bn.putString("iMatchId", getIntent().getStringExtra("iMatchId"));
+//                bn.putString("iConstestId", "");
+//                bn.putString("PAGE_TYPE", "");
+//                (new StartActProcess(getActContext())).startActForResult(CreateTeamActivity.class, bn, Utils.CREATE_TEAM_REQ_CODE);
+                checkEligibilityToCreateTeam();
             }
         }
+    }
+
+
+    public void checkEligibilityToCreateTeam() {
+
+        HashMap<String, String> parameters = new HashMap<>();
+        parameters.put("type", "checkContestJoinOrTeamEligibility");
+        parameters.put("iMemberId", generalFunc.getMemberId());
+        parameters.put("iMatchId", getIntent().getStringExtra("iMatchId"));
+
+        ExecuteWebServerUrl exeWebServer = new ExecuteWebServerUrl(parameters);
+        exeWebServer.setLoaderConfig(getActContext(), true, generalFunc);
+
+        exeWebServer.setDataResponseListener(new ExecuteWebServerUrl.SetDataResponse() {
+            @Override
+            public void setResponse(final String responseString) {
+
+                if (responseString != null && !responseString.equals("")) {
+                    boolean isDataAvail = GeneralFunctions.checkDataAvail(Utils.action_str, responseString);
+
+                    if (isDataAvail) {
+
+                        Bundle bn = new Bundle();
+                        bn.putString("iMatchId", getIntent().getStringExtra("iMatchId"));
+                        bn.putString("iConstestId", "");
+                        bn.putString("PAGE_TYPE", "");
+                        (new StartActProcess(getActContext())).startActForResult(CreateTeamActivity.class, bn, Utils.CREATE_TEAM_REQ_CODE);
+
+
+                    } else {
+                        generalFunc.showGeneralMessage("", generalFunc.getJsonValue(Utils.message_str, responseString));
+                    }
+
+                } else {
+                    generalFunc.showError();
+                }
+            }
+        });
+        exeWebServer.execute();
     }
 
     @Override

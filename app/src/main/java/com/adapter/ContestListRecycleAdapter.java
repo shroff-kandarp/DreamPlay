@@ -15,6 +15,8 @@ import com.dreamplay.ContestsActivity;
 import com.dreamplay.CreateTeamActivity;
 import com.dreamplay.JoinedContestActivity;
 import com.dreamplay.R;
+import com.dreamplay.UserMatchTeamsActivity;
+import com.general.files.ExecuteWebServerUrl;
 import com.general.files.GeneralFunctions;
 import com.general.files.StartActProcess;
 import com.utils.Utils;
@@ -114,11 +116,7 @@ public class ContestListRecycleAdapter extends RecyclerView.Adapter<RecyclerView
             viewHolder.joinArea.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Bundle bn = new Bundle();
-                    bn.putString("iMatchId", item.get("iMatchId"));
-                    bn.putString("iConstestId", item.get("iConstestId"));
-                    bn.putString("PAGE_TYPE", contestAct == null ? joinedContestAct.PAGE_TYPE : contestAct.PAGE_TYPE);
-                    (new StartActProcess(mContext)).startActForResult(CreateTeamActivity.class, bn, Utils.CREATE_TEAM_REQ_CODE);
+                    checkEligibilityToJoin(item);
                 }
             });
 
@@ -162,6 +160,55 @@ public class ContestListRecycleAdapter extends RecyclerView.Adapter<RecyclerView
         }
 
 
+    }
+
+    public void checkEligibilityToJoin(final HashMap<String, String> item) {
+
+        HashMap<String, String> parameters = new HashMap<>();
+        parameters.put("type", "checkContestJoinOrTeamEligibility");
+        parameters.put("iMemberId", generalFunc.getMemberId());
+        parameters.put("iMatchId", item.get("iMatchId"));
+        parameters.put("isFromJoin", "Yes");
+
+        ExecuteWebServerUrl exeWebServer = new ExecuteWebServerUrl(parameters);
+        exeWebServer.setLoaderConfig(mContext, true, generalFunc);
+
+        exeWebServer.setDataResponseListener(new ExecuteWebServerUrl.SetDataResponse() {
+            @Override
+            public void setResponse(final String responseString) {
+
+                if (responseString != null && !responseString.equals("")) {
+                    boolean isDataAvail = GeneralFunctions.checkDataAvail(Utils.action_str, responseString);
+
+                    if (isDataAvail) {
+
+                        if (generalFunc.getJsonValue("isShowTeamSelection", responseString).equalsIgnoreCase("Yes")) {
+                            Bundle bn = new Bundle();
+                            bn.putString("iMatchId", item.get("iMatchId"));
+                            bn.putString("isOpenForSelection", "Yes");
+                            bn.putString("iConstestId", item.get("iConstestId"));
+                            bn.putString("PAGE_TYPE", contestAct == null ? joinedContestAct.PAGE_TYPE : contestAct.PAGE_TYPE);
+                            (new StartActProcess(mContext)).startActForResult(UserMatchTeamsActivity.class, bn,Utils.CHOOSE_TEAM_REQ_CODE);
+                        } else {
+
+                            Bundle bn = new Bundle();
+                            bn.putString("iMatchId", item.get("iMatchId"));
+                            bn.putString("iConstestId", item.get("iConstestId"));
+                            bn.putString("PAGE_TYPE", contestAct == null ? joinedContestAct.PAGE_TYPE : contestAct.PAGE_TYPE);
+                            (new StartActProcess(mContext)).startActForResult(CreateTeamActivity.class, bn, Utils.CREATE_TEAM_REQ_CODE);
+                        }
+
+
+                    } else {
+                        generalFunc.showGeneralMessage("", generalFunc.getJsonValue(Utils.message_str, responseString));
+                    }
+
+                } else {
+                    generalFunc.showError();
+                }
+            }
+        });
+        exeWebServer.execute();
     }
 
     @Override
